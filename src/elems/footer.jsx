@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 function Footer() {
   return (
     <footer className="bg-ink text-cream mt-32">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-10 grid grid-cols-1 md:grid-cols-12 gap-12">
         {/* Wordmark + statement */}
         <div className="md:col-span-5">
-          <img src="/maxi-lockup-light.png" alt="Maxi AI Development" width="220" height="74" className="h-14 w-auto" />
-          <p className="font-prose italic text-cream/90 mt-8 max-w-sm leading-relaxed">
+          <img src="/maxi-lockup-light.png" alt="Maxi AI Development" width="1028" height="400" className="h-auto w-40" />
+          <p className="font-prose italic text-cream max-w-sm leading-relaxed">
             Building software and AI infrastructure for businesses that intend to stay.
           </p>
         </div>
@@ -26,15 +26,15 @@ function Footer() {
 
         <div className="md:col-span-4">
           <span className="eyebrow" style={{ color: '#9A95A8' }}>Office</span>
-          <p className="font-prose text-cream/80 mt-5 text-[14px] leading-relaxed not-italic">
+          <p className="font-prose text-cream mt-5 text-[14px] leading-relaxed not-italic">
             71–75 Shelton Street<br/>
             Covent Garden, London WC2H 9JQ<br/>
             United Kingdom
           </p>
-          <p className="font-mono text-cream/90 mt-5 text-[12px]">
+          <p className="font-mono text-cream mt-5 text-[12px]">
             info@maxiai.co.uk
           </p>
-          <p className="font-mono text-cream/70 mt-2 text-[11px] tracking-widest uppercase">
+          <p className="font-mono text-cream mt-2 text-[11px] tracking-widest uppercase">
             London · Stockholm · Valletta
           </p>
         </div>
@@ -42,10 +42,10 @@ function Footer() {
 
       <div className="border-t border-white/10">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="font-mono text-cream/70 text-[10px] tracking-widest uppercase">
+          <p className="font-mono text-cream text-[10px] tracking-widest uppercase">
             © {new Date().getFullYear()} Maxi AI Development Ltd
           </p>
-          <p className="font-mono text-cream/70 text-[10px] tracking-widest uppercase">
+          <p className="font-mono text-cream text-[10px] tracking-widest uppercase">
             Quiet authority · Built to last
           </p>
         </div>

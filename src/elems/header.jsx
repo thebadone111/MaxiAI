@@ -5,11 +5,11 @@ function Wordmark() {
   return (
     <Link to="/en/home" className="inline-flex items-center group" aria-label="Maxi AI Development — Home">
       <img
-        src="/maxi-lockup-transparent.png"
+        src="/maxi-lockup-transparent1.png"
         alt="Maxi AI Development"
-        width="220"
-        height="74"
-        className="h-12 md:h-14 w-auto transition-opacity group-hover:opacity-80"
+        width="1028"
+        height="400"
+        className="h-20 md:h-30 w-auto transition-opacity group-hover:opacity-80"
       />
     </Link>
   );
@@ -53,10 +53,10 @@ function Header({ variant = 'dark' }) {
 
   return (
     <header className={`w-full border-b ${variant === 'dark' ? 'border-stone' : 'border-white/15'} relative z-30`}>
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
+      <div className="max-w-[1280px] mx-auto py-5 flex items-center justify-between">
         <Wordmark />
 
-        <nav className="hidden lg:flex items-center gap-10">
+        <nav className="hidden lg:flex items-center gap-24">
           <NavLinks variant={variant} />
         </nav>
 
