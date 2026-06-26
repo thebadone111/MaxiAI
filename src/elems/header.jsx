@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function Wordmark({ variant = 'dark' }) {
-  const inkColor = variant === 'dark' ? '#1C1A2E' : '#FAF7F0';
-  const mutedColor = variant === 'dark' ? '#6B6880' : '#9A95A8';
+function Wordmark() {
   return (
-    <Link to="/en/home" className="inline-flex items-end gap-0 group" aria-label="Maxi AI Development — Home">
-      <svg width="160" height="52" viewBox="0 0 220 70" className="transition-opacity group-hover:opacity-80">
-        <line x1="0" y1="10" x2="100" y2="10" stroke="#C0392B" strokeWidth="2.5"/>
-        <text x="0" y="46" fontFamily="Fraunces, Georgia, serif" fontWeight="600" fontSize="34" fill={inkColor} letterSpacing="1">Maxi</text>
-        <text x="0" y="64" fontFamily="'DM Mono', monospace" fontWeight="300" fontSize="8" fill={mutedColor} letterSpacing="3.5">AI DEVELOPMENT LTD · LONDON</text>
-      </svg>
+    <Link to="/en/home" className="inline-flex items-center group" aria-label="Maxi AI Development — Home">
+      <img
+        src="/maxi-lockup-transparent.png"
+        alt="Maxi AI Development"
+        width="220"
+        height="74"
+        className="h-12 md:h-14 w-auto transition-opacity group-hover:opacity-80"
+      />
     </Link>
   );
 }
@@ -54,7 +54,7 @@ function Header({ variant = 'dark' }) {
   return (
     <header className={`w-full border-b ${variant === 'dark' ? 'border-stone' : 'border-white/15'} relative z-30`}>
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
-        <Wordmark variant={variant} />
+        <Wordmark />
 
         <nav className="hidden lg:flex items-center gap-10">
           <NavLinks variant={variant} />

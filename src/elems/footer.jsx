@@ -6,11 +6,7 @@ function Footer() {
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 grid grid-cols-1 md:grid-cols-12 gap-12">
         {/* Wordmark + statement */}
         <div className="md:col-span-5">
-          <svg width="200" height="64" viewBox="0 0 220 70">
-            <line x1="0" y1="10" x2="100" y2="10" stroke="#C0392B" strokeWidth="2.5"/>
-            <text x="0" y="46" fontFamily="Fraunces, Georgia, serif" fontWeight="600" fontSize="34" fill="#FAF7F0" letterSpacing="1">Maxi</text>
-            <text x="0" y="64" fontFamily="'DM Mono', monospace" fontWeight="300" fontSize="8" fill="#9A95A8" letterSpacing="3.5">AI DEVELOPMENT LTD · LONDON</text>
-          </svg>
+          <img src="/maxi-lockup-light.png" alt="Maxi AI Development" width="220" height="74" className="h-14 w-auto" />
           <p className="font-prose italic text-cream/90 mt-8 max-w-sm leading-relaxed">
             Building software and AI infrastructure for businesses that intend to stay.
           </p>
