@@ -1,117 +1,129 @@
-import Header from '../../elems/header.jsx'
-import Welcome from '../../elems/welcome.jsx'
-import Feedback from '../../elems/client_feedback.jsx'
-import Divider from '../../elems/divider.jsx'
-import TextSection from '../../elems/text_section.jsx' 
-import SimpleText from '../../elems/simple_text.jsx'
-import Partner from '../../elems/partner.jsx'
-import Footer from '../../elems/footer.jsx'
+import Header from '../../elems/header.jsx';
+import Footer from '../../elems/footer.jsx';
+import Hero from '../../elems/hero.jsx';
+import { Section, SectionHead, FeatureGrid, CTA } from '../../elems/section.jsx';
+import { Link } from 'react-router-dom';
 
 function HomeEn() {
   return (
     <>
-      <div className='max-w-screen'>
-        <Header 
-          logo_path = {"/icon-nobg.png"}
-          hero_img={"/3.jpg"}
-          hero_head={<>Comprehensive <span className='glow-text-strong'>IT</span> & <span className='glow-text-strong'>Cybersecurity</span> Solutions for <span className='glow-text-strong'>Modern Businesses</span></>}
-          hero_para={<>Whether you need a <span className='text-accent glow-text-strong'>secure website</span>, <span className='text-accent glow-text-strong'>enterprise email setup</span>, or <span className='text-accent glow-text-strong'>advanced anonymity and cybersecurity systems</span>, Maxi AI delivers robust IT solutions <span className='text-accent glow-text-strong'>tailored to your business.</span></>}
+      <Header variant="dark" />
+
+      <Hero
+        eyebrow="Maxi AI Development · London"
+        title={<>Software and <em>AI infrastructure</em>, built with the patience of a tradition.</>}
+        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and the AI assistants that handle the work no one has time for. London-based, with clients across Sweden and Hong Kong."
+        meta={[
+          { label: 'Founded', value: '2024 · London' },
+          { label: 'Clients', value: 'UK · SE · HK' },
+          { label: 'Sectors', value: 'SMB · Creator economy' },
+          { label: 'Status', value: 'Taking new work' },
+        ]}
+      />
+
+      {/* Two-tier overview */}
+      <Section>
+        <SectionHead
+          eyebrow="The Practice"
+          title={<>Two disciplines, one <em>workshop.</em></>}
+          lead="We run a small studio that does one thing well in two registers: dependable infrastructure for established businesses, and the AI workforce that the next generation of creators is starting to need."
         />
-        <Welcome 
-          header = {<>Welcome to <span>Maxi Ai Devleopment</span></>}
-          para = {<>Maxi AI Development Ltd specialises in secure website creation, advanced cybersecurity systems, and end-to-end IT infrastructure. With a customer-first approach and a commitment to reliability, we deliver tailored digital solutions that keep your business connected and protected — from the first domain to full enterprise integration.</>}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-stone border border-stone">
+          <div className="bg-cream p-12">
+            <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">Tier 01</span>
+            <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
+              Your on-demand <em className="text-signal not-italic">tech department.</em>
+            </h3>
+            <p className="font-prose text-[16px] text-ink-mid leading-relaxed mb-8">
+              Secure websites, cybersecurity frameworks, IT infrastructure, bespoke software. Every engagement runs through a single dedicated programmer — one point of contact, end to end. The kind of relationship that survives a decade, not a procurement cycle.
+            </p>
+            <Link to="/en/services" className="btn-ghost">
+              See the services <span className="font-mono">→</span>
+            </Link>
+          </div>
+
+          <div className="bg-cream p-12">
+            <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">Tier 02</span>
+            <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
+              AI assistants, built for <em className="text-signal not-italic">creators.</em>
+            </h3>
+            <p className="font-prose text-[16px] text-ink-mid leading-relaxed mb-8">
+              An always-on workforce for the creator who runs a real business but has no team. Qualifies leads, answers DMs, books appointments — across chat, voice, and two-way SMS. Trained to your voice, your offer, your calendar.
+            </p>
+            <Link to="/en/ai-product" className="btn-ghost">
+              See the product <span className="font-mono">→</span>
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* What we believe */}
+      <Section dark>
+        <SectionHead
+          dark
+          eyebrow="What we believe"
+          title={<>Built to <em>last</em>, not to demo.</>}
+          lead="The technology industry has spent fifteen years optimising for the launch tweet. We optimise for the third year of a client relationship — when nothing's exciting, everything works, and the bills get paid on time."
         />
-        <Divider />
-        <Feedback 
-          header={<>Maxi AI Development <span className="text-[#1E2EEB]">Expertise</span></>}
-          para={<>With years of technical experience, Maxi AI Development Ltd delivers secure, scalable, and tailored IT solutions for businesses of all sizes. From website creation and hosting to cybersecurity and enterprise infrastructure, we provide the reliability and protection you need to operate with confidence. We offer:</>}
-          text_arr={[
-            [            
-              <h2 className="mb-5 md:text-3xl font-medium">Web Development & Hosting</h2>,
-              <p className='font-light md:text-lg'>Designing, building, and hosting professional websites that combine performance, security, and ease of management — ensuring your business is always online and accessible.</p>
-            ],
-            [  
-              <h2 className="mb-5 md:text-3xl font-medium">Cybersecurity & Anonymity Systems</h2>,
-              <p className='font-light md:text-lg'>Protecting your digital assets with advanced cybersecurity frameworks, anonymity tools, and proactive monitoring — keeping your operations secure in an evolving threat landscape.</p>
-            ],
-            [  
-              <h2 className="mb-5 md:text-3xl font-medium">IT Infrastructure & Cloud Services</h2>,
-              <p className='font-light md:text-lg'>Implementing and managing enterprise IT systems, from email and domain setup to Microsoft 365 and Google Workspace — scalable solutions that grow with your business.</p>
-            ]
+
+        <FeatureGrid
+          dark
+          columns={3}
+          items={[
+            {
+              title: 'Precision over flourish',
+              body: 'Every decision is reversible, documented, and explained. Software that someone else can read in five years — including us.',
+            },
+            {
+              title: 'Revenue, not runway',
+              body: 'We build on what our services earn. That discipline finds its way into how we treat the work we do for you.',
+            },
+            {
+              title: 'One dedicated builder',
+              body: 'You speak to the person writing your code. Not an account manager, not a ticket queue. The shortest possible path between question and answer.',
+            },
           ]}
-          button={true}
         />
-        <SimpleText 
-          text={<>Secure systems. Smarter technology. Lasting impact.</>}
+      </Section>
+
+      {/* Notable clients */}
+      <Section>
+        <SectionHead
+          eyebrow="Selected engagements"
+          title={<>The companies we <em>keep.</em></>}
+          lead="A few of the businesses currently running on systems we built and maintain. Most clients we've had for years; none we've lost to dissatisfaction."
         />
-        <TextSection
-          header={<h2 className='text-5xl lg:text-7xl text-[#1E2EEB]'>Why Choose Maxi AI Development?</h2>}
-          text_arr={[
-            [
-              <h3 className="mb-5 text-3xl lg:text-4xl font-semibold">
-                Tailored IT Solutions
-              </h3>, 
-              <p className="text-lg lg:text-2xl leading-relaxed">
-                Every business is unique. We adapt our digital services to your specific needs — from simple websites to complex enterprise infrastructure.
-              </p>
-            ],
-            [
-              <h3 className="mb-5 text-3xl lg:text-4xl font-semibold">
-                Proven Expertise
-              </h3>,
-              <p className="text-lg lg:text-2xl leading-relaxed">
-                Years of experience in web development, cybersecurity, and IT management ensure secure, reliable, and professional solutions.
-              </p>
-            ],
-            [
-              <h3 className="mb-5 text-3xl lg:text-4xl font-semibold">
-                Scalable Capacity
-              </h3>,
-              <p className="text-lg lg:text-2xl leading-relaxed">
-                From small businesses to large enterprises, we deliver solutions that grow with your operations — scalable, efficient, and future-ready.
-              </p>
-            ],
-            [
-              <h3 className="mb-5 text-3xl lg:text-4xl font-semibold">
-                Security You Can Trust
-              </h3>,
-              <p className="text-lg lg:text-2xl leading-relaxed">
-                We build with security in mind — protecting your websites, data, and IT systems with robust frameworks and best practices.
-              </p>
-            ]
-          ]}
-          img_name="/4.jpg"
-          img_alt="Service illustration"
-          reverse={false}
-        />
-        <Divider />
-        <Feedback 
-          header={<>How it Works</>}
-          para={<>Getting started with Maxi AI Development is simple:</>}
-          text_arr={[
-            [            
-              <h2 className="mb-5 lg:text-4xl">Consultation</h2>,
-              <p>We begin with a detailed discussion of your business needs, digital goals, and security requirements to understand your exact challenges.</p>
-            ],
-            [  
-              <h2 className="mb-5 lg:text-4xl">Planning & Strategy</h2>,
-              <p>Together we define the scope, solutions, and roadmap — giving you full clarity before implementation begins.</p>
-            ], 
-            [
-              <h2 className="mb-5 lg:text-4xl">Implementation & Support</h2>,
-              <p>From website creation to IT infrastructure and cybersecurity, we handle everything end-to-end — ensuring your systems are secure, reliable, and future-ready.</p>
-            ]
-          ]}
-          button={false}
-        />
-        <Partner 
-          header={<>Secure Foundations Start Here</>}
-          para={<>Ready to upgrade your business IT? Trust Maxi AI Development for the expertise, security, and infrastructure your company deserves.</>}
-        />
-        <Footer />
-      </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-stone border border-stone">
+          {[
+            { name: 'Minifinans AB', sector: 'Financial services · Sweden' },
+            { name: 'Ashford Partners Ltd', sector: 'Advisory · United Kingdom' },
+            { name: 'Nordic Fiber', sector: 'Infrastructure · Sweden' },
+            { name: 'SConcierge', sector: 'Hospitality · Hong Kong' },
+          ].map((c, i) => (
+            <div key={i} className="bg-cream p-10 flex flex-col justify-between min-h-[180px]">
+              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h4 className="font-display font-semibold text-[20px] mt-6">{c.name}</h4>
+                <p className="font-mono text-[11px] text-ink-mid mt-2 tracking-wide">{c.sector}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <CTA
+        eyebrow="Begin"
+        title={<>A short conversation is the <em>fastest way</em> to find out if we fit.</>}
+        body="No deck, no sales call. Tell us what you're building, and we'll tell you honestly whether we're the right studio for it."
+      />
+
+      <Footer />
     </>
-  )
+  );
 }
 
-export default HomeEn
+export default HomeEn;
