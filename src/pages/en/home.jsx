@@ -1,6 +1,7 @@
 import Header from '../../elems/header.jsx';
 import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
+import Reveal from '../../elems/reveal.jsx';
 import { Section, SectionHead, FeatureGrid, CTA } from '../../elems/section.jsx';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +29,7 @@ function HomeEn() {
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-stone border border-stone">
-          <div className="bg-cream p-12">
+          <Reveal variant="up" className="bg-cream p-12 lift">
             <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">Tier 01</span>
             <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
               Your on-demand <em className="text-signal not-italic">tech department.</em>
@@ -39,9 +40,9 @@ function HomeEn() {
             <Link to="/en/services" className="btn-ghost">
               See the services <span className="font-mono">→</span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="bg-cream p-12">
+          <Reveal variant="up" delay={150} className="bg-cream p-12 lift">
             <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">Tier 02</span>
             <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
               Custom AI-integrated SaaS for <em className="text-signal not-italic">creators.</em>
@@ -52,7 +53,7 @@ function HomeEn() {
             <Link to="/en/ai-product" className="btn-ghost">
               See the product <span className="font-mono">→</span>
             </Link>
-          </div>
+          </Reveal>
         </div>
       </Section>
 
@@ -99,12 +100,12 @@ function HomeEn() {
             { n: '02', title: 'Speak plainly', body: 'No jargon designed to keep you out of the conversation. If we cannot explain it to you in plain English, we do not understand it well enough to ship it.' },
             { n: '03', title: 'One builder per client', body: 'The person who writes your code is the person you call. The shortest possible path between a question and an answer.' },
             { n: '04', title: 'Discretion is part of the work', body: 'We work with founders, financial firms, and creators whose audiences number in the millions. We do not talk about it unless they ask us to.' },
-          ].map((p) => (
-            <div key={p.n} className="border-t border-stone pt-8">
+          ].map((p, i) => (
+            <Reveal key={p.n} variant="up" delay={i * 100} className="border-t border-stone pt-8">
               <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">{p.n}</span>
               <h3 className="font-display font-semibold text-[26px] mt-4 mb-3">{p.title}</h3>
               <p className="font-prose text-[17px] text-ink-soft leading-relaxed">{p.body}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -125,15 +126,15 @@ function HomeEn() {
             { name: 'Nordic Fiber', sector: 'Infrastructure · Sweden' },
             { name: 'sconcierge', sector: 'Hospitality · Malta' },
           ].map((c, i) => (
-            <div key={i} className="bg-ink p-10 flex flex-col justify-between min-h-[180px]">
-              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-cream/70">
+            <Reveal key={i} variant="up" delay={i * 110} className="bg-ink p-10 flex flex-col justify-between min-h-[200px] lift">
+              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div>
-                <h4 className="font-display font-semibold text-[22px] mt-6 text-cream">{c.name}</h4>
-                <p className="font-mono text-[12px] text-cream/90 mt-2 tracking-wide">{c.sector}</p>
+                <h4 className="font-display font-semibold text-[24px] mt-6 text-cream">{c.name}</h4>
+                <p className="font-ui text-[15px] font-medium text-cream mt-3 leading-snug">{c.sector}</p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>

@@ -1,6 +1,7 @@
 import Header from '../../elems/header.jsx';
 import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
+import Reveal from '../../elems/reveal.jsx';
 import { Section, SectionHead, FeatureGrid, CTA } from '../../elems/section.jsx';
 
 function ServicesEn() {
@@ -63,11 +64,11 @@ function ServicesEn() {
             { step: '02', title: 'Proposal', body: 'A short, written proposal: scope, price, who is doing the work, and what the first three months look like. No surprises.' },
             { step: '03', title: 'Build & hold', body: 'We build the thing, then we hold it — quietly, in the background, while you get on with the rest of your business. That holding pattern is where most of the value lives.' },
           ].map((s, i) => (
-            <div key={i} className="bg-ink p-10">
+            <Reveal key={i} variant="up" delay={i * 130} className="bg-ink p-10 lift">
               <span className="font-mono text-[28px] text-signal font-light">{s.step}</span>
               <h3 className="font-display font-semibold text-[24px] mt-6 mb-4 text-cream">{s.title}</h3>
               <p className="font-prose text-[17px] text-cream leading-relaxed">{s.body}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>
