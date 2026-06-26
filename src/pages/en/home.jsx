@@ -12,10 +12,10 @@ function HomeEn() {
       <Hero
         eyebrow="Maxi AI Development · London"
         title={<>Software and <em>AI infrastructure</em>, built with the patience of a tradition.</>}
-        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and the custom AI-integrated SaaS that the next generation of creators is starting to need. London-based, with clients across Sweden, Malta, and Hong Kong."
+        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and the custom AI-integrated SaaS that the next generation of creators is starting to need. London-based; we work with clients wherever they are."
         meta={[
           { label: 'Founded', value: '2024 · London' },
-          { label: 'Clients', value: 'UK · SE · MT · HK' },
+          { label: 'Clients', value: 'Worldwide' },
         ]}
       />
 
@@ -126,12 +126,12 @@ function HomeEn() {
             { name: 'sconcierge', sector: 'Hospitality · Malta' },
           ].map((c, i) => (
             <div key={i} className="bg-ink p-10 flex flex-col justify-between min-h-[180px]">
-              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-cream/50">
+              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-cream/70">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div>
                 <h4 className="font-display font-semibold text-[22px] mt-6 text-cream">{c.name}</h4>
-                <p className="font-mono text-[12px] text-cream/70 mt-2 tracking-wide">{c.sector}</p>
+                <p className="font-mono text-[12px] text-cream/90 mt-2 tracking-wide">{c.sector}</p>
               </div>
             </div>
           ))}

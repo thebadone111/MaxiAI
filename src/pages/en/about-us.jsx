@@ -69,8 +69,8 @@ function AboutUsEn() {
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h3 className="font-display font-semibold text-[28px] mt-6 text-cream">{c.city}</h3>
-              <p className="font-mono text-[11px] tracking-widest uppercase text-cream/60 mt-1">{c.country}</p>
-              <p className="font-prose text-[17px] text-cream/85 leading-relaxed mt-6">{c.note}</p>
+              <p className="font-mono text-[11px] tracking-widest uppercase text-cream/80 mt-1">{c.country}</p>
+              <p className="font-prose text-[17px] text-cream leading-relaxed mt-6">{c.note}</p>
             </div>
           ))}
         </div>

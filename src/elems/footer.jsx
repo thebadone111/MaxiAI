@@ -11,7 +11,7 @@ function Footer() {
             <text x="0" y="46" fontFamily="Fraunces, Georgia, serif" fontWeight="600" fontSize="34" fill="#FAF7F0" letterSpacing="1">Maxi</text>
             <text x="0" y="64" fontFamily="'DM Mono', monospace" fontWeight="300" fontSize="8" fill="#9A95A8" letterSpacing="3.5">AI DEVELOPMENT LTD · LONDON</text>
           </svg>
-          <p className="font-prose italic text-cream/70 mt-8 max-w-sm leading-relaxed">
+          <p className="font-prose italic text-cream/90 mt-8 max-w-sm leading-relaxed">
             Building software and AI infrastructure for businesses that intend to stay.
           </p>
         </div>
@@ -35,10 +35,10 @@ function Footer() {
             Covent Garden, London WC2H 9JQ<br/>
             United Kingdom
           </p>
-          <p className="font-mono text-cream/70 mt-5 text-[12px]">
+          <p className="font-mono text-cream/90 mt-5 text-[12px]">
             info@maxiai.co.uk
           </p>
-          <p className="font-mono text-cream/50 mt-2 text-[11px] tracking-widest uppercase">
+          <p className="font-mono text-cream/70 mt-2 text-[11px] tracking-widest uppercase">
             London · Stockholm · Valletta
           </p>
         </div>
@@ -46,10 +46,10 @@ function Footer() {
 
       <div className="border-t border-white/10">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="font-mono text-cream/50 text-[10px] tracking-widest uppercase">
+          <p className="font-mono text-cream/70 text-[10px] tracking-widest uppercase">
             © {new Date().getFullYear()} Maxi AI Development Ltd
           </p>
-          <p className="font-mono text-cream/50 text-[10px] tracking-widest uppercase">
+          <p className="font-mono text-cream/70 text-[10px] tracking-widest uppercase">
             Quiet authority · Built to last
           </p>
         </div>
