@@ -110,7 +110,7 @@ function ContactUsEn() {
 
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid mb-3">Office</p>
-                <p className="font-prose text-[16px] text-ink leading-relaxed">
+                <p className="font-prose text-[18px] text-ink leading-relaxed">
                   71–75 Shelton Street<br/>
                   Covent Garden, London WC2H 9JQ<br/>
                   United Kingdom
@@ -119,16 +119,16 @@ function ContactUsEn() {
 
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid mb-3">Markets served</p>
-                <p className="font-prose text-[16px] text-ink leading-relaxed">
+                <p className="font-prose text-[18px] text-ink leading-relaxed">
                   United Kingdom<br/>
                   Sweden<br/>
-                  Hong Kong
+                  Malta
                 </p>
               </div>
 
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid mb-3">Hours</p>
-                <p className="font-prose text-[16px] text-ink leading-relaxed">
+                <p className="font-prose text-[18px] text-ink leading-relaxed">
                   Monday – Friday<br/>
                   09:00 – 18:00 GMT
                 </p>

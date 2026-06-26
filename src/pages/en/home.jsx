@@ -12,12 +12,10 @@ function HomeEn() {
       <Hero
         eyebrow="Maxi AI Development · London"
         title={<>Software and <em>AI infrastructure</em>, built with the patience of a tradition.</>}
-        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and the AI assistants that handle the work no one has time for. London-based, with clients across Sweden and Hong Kong."
+        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and the custom AI-integrated SaaS that the next generation of creators is starting to need. London-based, with clients across Sweden, Malta, and Hong Kong."
         meta={[
           { label: 'Founded', value: '2024 · London' },
-          { label: 'Clients', value: 'UK · SE · HK' },
-          { label: 'Sectors', value: 'SMB · Creator economy' },
-          { label: 'Status', value: 'Taking new work' },
+          { label: 'Clients', value: 'UK · SE · MT · HK' },
         ]}
       />
 
@@ -26,16 +24,16 @@ function HomeEn() {
         <SectionHead
           eyebrow="The Practice"
           title={<>Two disciplines, one <em>workshop.</em></>}
-          lead="We run a small studio that does one thing well in two registers: dependable infrastructure for established businesses, and the AI workforce that the next generation of creators is starting to need."
+          lead="We run a small studio that does one thing well in two registers: dependable infrastructure for established businesses, and the bespoke SaaS the next generation of creators needs to run their operations at scale."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-stone border border-stone">
           <div className="bg-cream p-12">
-            <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">Tier 01</span>
+            <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">Tier 01</span>
             <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
               Your on-demand <em className="text-signal not-italic">tech department.</em>
             </h3>
-            <p className="font-prose text-[16px] text-ink-mid leading-relaxed mb-8">
+            <p className="font-prose text-[18px] text-ink-soft leading-relaxed mb-8">
               Secure websites, cybersecurity frameworks, IT infrastructure, bespoke software. Every engagement runs through a single dedicated programmer — one point of contact, end to end. The kind of relationship that survives a decade, not a procurement cycle.
             </p>
             <Link to="/en/services" className="btn-ghost">
@@ -44,12 +42,12 @@ function HomeEn() {
           </div>
 
           <div className="bg-cream p-12">
-            <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">Tier 02</span>
+            <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">Tier 02</span>
             <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
-              AI assistants, built for <em className="text-signal not-italic">creators.</em>
+              Custom AI-integrated SaaS for <em className="text-signal not-italic">creators.</em>
             </h3>
-            <p className="font-prose text-[16px] text-ink-mid leading-relaxed mb-8">
-              An always-on workforce for the creator who runs a real business but has no team. Qualifies leads, answers DMs, books appointments — across chat, voice, and two-way SMS. Trained to your voice, your offer, your calendar.
+            <p className="font-prose text-[18px] text-ink-soft leading-relaxed mb-8">
+              Cross-platform uploaders, unified dashboards, bespoke operational infrastructure — built around the way you actually run your business. The product layer modern creators have outgrown the generic tools for.
             </p>
             <Link to="/en/ai-product" className="btn-ghost">
               See the product <span className="font-mono">→</span>
@@ -87,28 +85,53 @@ function HomeEn() {
         />
       </Section>
 
-      {/* Notable clients */}
+      {/* Operating principles — adapted from About */}
       <Section>
         <SectionHead
-          eyebrow="Selected engagements"
-          title={<>The companies we <em>keep.</em></>}
-          lead="A few of the businesses currently running on systems we built and maintain. Most clients we've had for years; none we've lost to dissatisfaction."
+          eyebrow="Operating principles"
+          title={<>What we are willing to be known <em>for.</em></>}
+          lead="Four positions we hold across every engagement — the ones that shape what we build and how we behave when no one is watching."
         />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-stone border border-stone">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {[
+            { n: '01', title: 'Build for the third year', body: 'Most software lives or dies in year three of its operation. We optimise for that year, not for the launch tweet.' },
+            { n: '02', title: 'Speak plainly', body: 'No jargon designed to keep you out of the conversation. If we cannot explain it to you in plain English, we do not understand it well enough to ship it.' },
+            { n: '03', title: 'One builder per client', body: 'The person who writes your code is the person you call. The shortest possible path between a question and an answer.' },
+            { n: '04', title: 'Discretion is part of the work', body: 'We work with founders, financial firms, and creators whose audiences number in the millions. We do not talk about it unless they ask us to.' },
+          ].map((p) => (
+            <div key={p.n} className="border-t border-stone pt-8">
+              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">{p.n}</span>
+              <h3 className="font-display font-semibold text-[26px] mt-4 mb-3">{p.title}</h3>
+              <p className="font-prose text-[17px] text-ink-soft leading-relaxed">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Notable clients */}
+      <Section dark>
+        <SectionHead
+          dark
+          eyebrow="Selected engagements"
+          title={<>The companies we <em>keep.</em></>}
+          lead="A few of the businesses currently running on systems we built and maintain. Most clients we have had for years; none we have lost to dissatisfaction."
+        />
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border border-white/10">
           {[
             { name: 'Minifinans AB', sector: 'Financial services · Sweden' },
             { name: 'Ashford Partners Ltd', sector: 'Advisory · United Kingdom' },
             { name: 'Nordic Fiber', sector: 'Infrastructure · Sweden' },
-            { name: 'SConcierge', sector: 'Hospitality · Hong Kong' },
+            { name: 'sconcierge', sector: 'Hospitality · Malta' },
           ].map((c, i) => (
-            <div key={i} className="bg-cream p-10 flex flex-col justify-between min-h-[180px]">
-              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid">
+            <div key={i} className="bg-ink p-10 flex flex-col justify-between min-h-[180px]">
+              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-cream/50">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div>
-                <h4 className="font-display font-semibold text-[20px] mt-6">{c.name}</h4>
-                <p className="font-mono text-[11px] text-ink-mid mt-2 tracking-wide">{c.sector}</p>
+                <h4 className="font-display font-semibold text-[22px] mt-6 text-cream">{c.name}</h4>
+                <p className="font-mono text-[12px] text-cream/70 mt-2 tracking-wide">{c.sector}</p>
               </div>
             </div>
           ))}

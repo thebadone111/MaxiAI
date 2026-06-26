@@ -12,16 +12,16 @@ function Hero({ eyebrow, title, lead, meta }) {
           {title}
         </h1>
         {lead && (
-          <p className="font-prose text-[18px] md:text-[22px] leading-[1.55] text-ink-mid mt-10 max-w-[640px]">
+          <p className="font-prose text-[20px] md:text-[24px] leading-[1.6] text-ink-soft mt-10 max-w-[720px]">
             {lead}
           </p>
         )}
         {meta && (
-          <div className="flex flex-wrap gap-x-12 gap-y-4 mt-14">
+          <div className="flex flex-wrap gap-x-14 gap-y-5 mt-14">
             {meta.map((m, i) => (
-              <div key={i} className="flex flex-col gap-1">
-                <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid">{m.label}</span>
-                <span className="font-ui text-[14px] text-ink">{m.value}</span>
+              <div key={i} className="flex flex-col gap-1.5">
+                <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-ink-mid">{m.label}</span>
+                <span className="font-ui text-[16px] font-medium text-ink">{m.value}</span>
               </div>
             ))}
           </div>

@@ -66,7 +66,7 @@ function ServicesEn() {
             <div key={i} className="bg-ink p-10">
               <span className="font-mono text-[28px] text-signal font-light">{s.step}</span>
               <h3 className="font-display font-semibold text-[24px] mt-6 mb-4 text-cream">{s.title}</h3>
-              <p className="font-prose text-[15px] text-cream/70 leading-relaxed">{s.body}</p>
+              <p className="font-prose text-[17px] text-cream/85 leading-relaxed">{s.body}</p>
             </div>
           ))}
         </div>

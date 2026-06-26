@@ -19,7 +19,7 @@ export function SectionHead({ eyebrow, title, lead, dark = false, align = 'left'
         {title}
       </h2>
       {lead && (
-        <p className={`font-prose text-[17px] md:text-[19px] leading-[1.6] mt-8 ${dark ? 'text-cream/70' : 'text-ink-mid'}`}>
+        <p className={`font-prose text-[19px] md:text-[21px] leading-[1.65] mt-8 ${dark ? 'text-cream/85' : 'text-ink-soft'}`}>
           {lead}
         </p>
       )}
@@ -39,7 +39,7 @@ export function FeatureGrid({ items, columns = 3, dark = false }) {
           <h3 className={`font-display font-semibold text-[22px] md:text-[26px] mt-6 mb-4 ${dark ? 'text-cream' : 'text-ink'}`}>
             {it.title}
           </h3>
-          <p className={`font-prose text-[15px] leading-[1.65] ${dark ? 'text-cream/70' : 'text-ink-mid'}`}>
+          <p className={`font-prose text-[17px] leading-[1.65] ${dark ? 'text-cream/85' : 'text-ink-soft'}`}>
             {it.body}
           </p>
         </div>
@@ -62,7 +62,7 @@ export function CTA({ eyebrow, title, body, linkTo = '/en/contact-us', linkLabel
               {title}
             </h2>
             {body && (
-              <p className="font-prose text-[17px] md:text-[19px] leading-[1.6] text-cream/70 mt-8 max-w-[560px]">
+              <p className="font-prose text-[19px] md:text-[21px] leading-[1.65] text-cream/85 mt-8 max-w-[600px]">
                 {body}
               </p>
             )}

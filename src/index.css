@@ -9,9 +9,9 @@
   --color-ink:       #1C1A2E;  /* deep ink, primary text + wordmark */
   --color-cream:     #FAF7F0;  /* paper / primary background */
   --color-signal:    #C0392B;  /* signal red, accent + rule */
-  --color-ink-mid:   #6B6880;  /* subtext / captions */
+  --color-ink-mid:   #4A4860;  /* subtext / captions (darkened for legibility) */
   --color-stone:     #E8E4D8;  /* dividers / subtle surfaces */
-  --color-ink-soft:  #3D3B50;  /* mid-dark */
+  --color-ink-soft:  #2A2842;  /* prose body (darkened for legibility) */
 
   /* Fonts */
   --font-display: 'Fraunces', serif;

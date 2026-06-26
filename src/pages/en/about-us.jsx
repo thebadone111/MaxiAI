@@ -15,7 +15,7 @@ function AboutUsEn() {
         meta={[
           { label: 'Incorporated', value: '2024 · London' },
           { label: 'Founders', value: '2' },
-          { label: 'Clients reached', value: 'UK · Sweden · Hong Kong' },
+          { label: 'Clients reached', value: 'UK · Sweden · Malta' },
         ]}
       />
 
@@ -32,7 +32,7 @@ function AboutUsEn() {
             <p className="font-mono text-[11px] tracking-widest uppercase text-ink-mid mb-6">
               Commercial · Marketing · Brand
             </p>
-            <p className="font-prose text-[16px] text-ink-mid leading-relaxed">
+            <p className="font-prose text-[18px] text-ink-soft leading-relaxed">
               Oliver leads the commercial side of the business — the conversations with clients, the brand voice, the way the company shows up in the world. The reason most clients hear of us in the first place.
             </p>
           </div>
@@ -43,7 +43,7 @@ function AboutUsEn() {
             <p className="font-mono text-[11px] tracking-widest uppercase text-ink-mid mb-6">
               Technical lead · Architecture · Delivery
             </p>
-            <p className="font-prose text-[16px] text-ink-mid leading-relaxed">
+            <p className="font-prose text-[18px] text-ink-soft leading-relaxed">
               Tiger owns the architecture, the delivery, and the long-term direction of the AI product. The person actually writing the code on most engagements, and the person you'll likely speak to about what's possible.
             </p>
           </div>
@@ -55,14 +55,14 @@ function AboutUsEn() {
           dark
           eyebrow="Where we work"
           title={<>London-based. Useful in <em>three time zones.</em></>}
-          lead="The studio is registered and run from London, but our work has never been confined to it. Our long-running clients sit across the United Kingdom, Sweden, and Hong Kong — three markets where the appetite for careful, technical work is consistently underserved."
+          lead="The studio is registered and run from London, but our work has never been confined to it. Our long-running clients sit across the United Kingdom, Sweden, and Malta — three markets where the appetite for careful, technical work is consistently underserved."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
           {[
             { city: 'London', country: 'United Kingdom', note: 'Headquarters, financial services, advisory.' },
             { city: 'Stockholm', country: 'Sweden', note: 'Fintech, infrastructure, retail tech.' },
-            { city: 'Hong Kong', country: 'SAR', note: 'Hospitality, concierge, family office software.' },
+            { city: 'Valletta', country: 'Malta', note: 'Hospitality, concierge, family office software.' },
           ].map((c, i) => (
             <div key={i} className="bg-ink p-10">
               <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">
@@ -70,7 +70,7 @@ function AboutUsEn() {
               </span>
               <h3 className="font-display font-semibold text-[28px] mt-6 text-cream">{c.city}</h3>
               <p className="font-mono text-[11px] tracking-widest uppercase text-cream/60 mt-1">{c.country}</p>
-              <p className="font-prose text-[15px] text-cream/70 leading-relaxed mt-6">{c.note}</p>
+              <p className="font-prose text-[17px] text-cream/85 leading-relaxed mt-6">{c.note}</p>
             </div>
           ))}
         </div>
@@ -92,7 +92,7 @@ function AboutUsEn() {
             <div key={p.n} className="border-t border-stone pt-8">
               <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">{p.n}</span>
               <h3 className="font-display font-semibold text-[26px] mt-4 mb-3">{p.title}</h3>
-              <p className="font-prose text-[16px] text-ink-mid leading-relaxed">{p.body}</p>
+              <p className="font-prose text-[18px] text-ink-soft leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>

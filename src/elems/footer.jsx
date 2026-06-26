@@ -39,7 +39,7 @@ function Footer() {
             info@maxiai.co.uk
           </p>
           <p className="font-mono text-cream/50 mt-2 text-[11px] tracking-widest uppercase">
-            London · Stockholm · Hong Kong
+            London · Stockholm · Valletta
           </p>
         </div>
       </div>
