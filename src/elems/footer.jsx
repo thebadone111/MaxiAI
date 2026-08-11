@@ -27,8 +27,8 @@ function Footer() {
         <div className="md:col-span-4">
           <span className="eyebrow" style={{ color: '#9A95A8' }}>Office</span>
           <p className="font-prose text-cream mt-5 text-[14px] leading-relaxed not-italic">
-            71–75 Shelton Street<br/>
-            Covent Garden, London WC2H 9JQ<br/>
+            Flat 2 82 Crouch Hill <br />
+            N89ED, London <br />
             United Kingdom
           </p>
           <p className="font-mono text-cream mt-5 text-[12px]">
