@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import Header from '../elems/header.jsx';
 import Footer from '../elems/footer.jsx';
+import PageMeta from '../elems/pagemeta.jsx';
 
 function NotFound() {
   return (
     <>
+      <PageMeta route="/en/404" />
       <Header variant="dark" />
       <section className="bg-cream min-h-[70vh] flex items-center">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-32">

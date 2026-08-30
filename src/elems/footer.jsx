@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { contact, marketsLong } from '../data/site.js';
 
 function Footer() {
   return (
@@ -27,15 +28,20 @@ function Footer() {
         <div className="md:col-span-4">
           <span className="eyebrow" style={{ color: '#9A95A8' }}>Office</span>
           <p className="font-prose text-cream mt-5 text-[14px] leading-relaxed not-italic">
-            71–75 Shelton Street<br/>
-            Covent Garden, London WC2H 9JQ<br/>
-            United Kingdom
+            {contact.address.map((line, i) => (
+              <span key={i}>
+                {line}
+                {i < contact.address.length - 1 && <br />}
+              </span>
+            ))}
           </p>
           <p className="font-mono text-cream mt-5 text-[12px]">
-            info@maxiai.co.uk
+            <a href={`mailto:${contact.email}`} className="hover:text-signal transition-colors">{contact.email}</a>
           </p>
-          <p className="font-mono text-cream mt-2 text-[11px] tracking-widest uppercase">
-            London · Stockholm · Valletta
+
+          <span className="eyebrow block mt-8" style={{ color: '#9A95A8' }}>Working in</span>
+          <p className="font-mono text-cream mt-3 text-[11px] tracking-widest uppercase leading-relaxed">
+            {marketsLong}
           </p>
         </div>
       </div>

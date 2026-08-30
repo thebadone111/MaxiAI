@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import Reveal from './reveal.jsx';
 
-export function Section({ children, dark = false, className = '' }) {
+export function Section({ children, dark = false, className = '', id }) {
   return (
-    <section className={`${dark ? 'bg-ink text-cream' : 'bg-cream text-ink'} py-24 md:py-32 ${className}`}>
+    <section id={id} className={`${dark ? 'bg-ink text-cream' : 'bg-cream text-ink'} py-24 md:py-32 ${className}`}>
       <div className="max-w-[1280px] mx-auto px-6 md:px-10">
         {children}
       </div>
@@ -55,7 +55,77 @@ export function FeatureGrid({ items, columns = 3, dark = false }) {
   );
 }
 
-export function CTA({ eyebrow, title, body, linkTo = '/en/contact-us', linkLabel = 'Talk to us' }) {
+/**
+ * PriceTable — the published pricing block.
+ * Rows are { label, price, note }. Reads as a rate card, not a plan grid;
+ * the point is that a visitor can see the number without booking a call.
+ */
+export function PriceTable({ rows, footnote }) {
+  return (
+    <div className="border-t border-stone">
+      {rows.map((r, i) => (
+        <Reveal
+          key={i}
+          variant="up"
+          delay={i * 90}
+          className="border-b border-stone py-8 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 md:items-baseline"
+        >
+          <div className="md:col-span-4">
+            <h3 className="font-display font-semibold text-[22px] md:text-[26px] text-ink">{r.label}</h3>
+          </div>
+          <div className="md:col-span-3">
+            <span className="font-mono text-[20px] md:text-[24px] text-signal">{r.price}</span>
+          </div>
+          <div className="md:col-span-5">
+            <p className="font-prose text-[17px] text-ink-soft leading-[1.65]">{r.note}</p>
+          </div>
+        </Reveal>
+      ))}
+      {footnote && (
+        <Reveal variant="fade" delay={200}>
+          <p className="font-prose italic text-[17px] text-ink-mid mt-8">{footnote}</p>
+        </Reveal>
+      )}
+    </div>
+  );
+}
+
+/**
+ * TwoColumnList — "what's covered" against "what starts a separate
+ * conversation". Used on the programme page, where being explicit about
+ * the boundary is the whole point.
+ */
+export function TwoColumnList({ columns }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-stone border border-stone">
+      {columns.map((col, i) => (
+        <Reveal key={i} variant="up" delay={i * 130} className="bg-cream p-10 md:p-12">
+          <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <h3 className="font-display font-semibold text-[24px] mt-6 mb-6 text-ink">{col.title}</h3>
+          <ul className="space-y-3">
+            {col.items.map((item, j) => (
+              <li key={j} className="font-prose text-[17px] text-ink-soft leading-[1.6] flex gap-3">
+                <span className="text-signal font-mono text-[13px] mt-1">—</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+export function CTA({
+  eyebrow,
+  title,
+  body,
+  linkTo = '/en/contact-us',
+  linkLabel = 'Talk to us',
+  secondary,
+}) {
   return (
     <section className="bg-cream py-24 md:py-32">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10">
@@ -74,11 +144,32 @@ export function CTA({ eyebrow, title, body, linkTo = '/en/contact-us', linkLabel
                   {body}
                 </p>
               )}
-              <div className="mt-12">
+              <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <Link to={linkTo} className="btn-primary" style={{ background: '#C0392B', borderColor: '#C0392B' }}>
                   {linkLabel}
                   <span style={{ fontFamily: 'DM Mono, monospace' }}>→</span>
                 </Link>
+
+                {secondary && (
+                  <>
+                    <span className="font-mono text-[13px] text-cream/40">·</span>
+                    {secondary.href ? (
+                      <a
+                        href={secondary.href}
+                        className="font-prose italic text-[17px] text-cream/80 underline underline-offset-4 decoration-1 hover:text-signal transition-colors"
+                      >
+                        {secondary.label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={secondary.to}
+                        className="font-prose italic text-[17px] text-cream/80 underline underline-offset-4 decoration-1 hover:text-signal transition-colors"
+                      >
+                        {secondary.label}
+                      </Link>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
