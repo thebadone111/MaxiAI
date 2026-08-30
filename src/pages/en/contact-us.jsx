@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import Header from '../../elems/header.jsx';
 import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
+import PageMeta from '../../elems/pagemeta.jsx';
+import { contact } from '../../data/site.js';
 
 function ContactForm() {
   const formRef = useRef(null);
@@ -13,6 +14,7 @@ function ContactForm() {
     if (e.currentTarget.elements['company_website']?.value) return;
     try {
       setStatus({ sending: true, ok: null, msg: '' });
+      const emailjs = (await import('@emailjs/browser')).default;
       await emailjs.sendForm(
         import.meta.env.VITE_EMAIL_SERVICE_ID,
         import.meta.env.VITE_EMAIL_TEMPLATE_ID,
@@ -23,7 +25,7 @@ function ContactForm() {
       formRef.current?.reset();
     } catch (err) {
       console.error(err);
-      setStatus({ sending: false, ok: false, msg: 'Something went wrong. Please email info@maxiai.co.uk directly.' });
+      setStatus({ sending: false, ok: false, msg: `Something went wrong. Please email ${contact.email} directly.` });
     }
   };
 
@@ -80,12 +82,17 @@ function ContactForm() {
 function ContactUsEn() {
   return (
     <>
+      <PageMeta route="/en/contact-us" />
       <Header variant="dark" />
 
       <Hero
         eyebrow="Contact"
-        title={<>Tell us what <em>you're building.</em></>}
-        lead="A real reply from a real person — usually within a working day. No drip campaign, no scheduling bot. If we're not the right studio for the work, we'll tell you who is."
+        title={<>Tell us what <em>you're working on.</em></>}
+        lead="Thirty minutes is usually enough for both of us to know whether this is worth continuing. If it isn't, we'll say so — we'd rather turn work down than take it on badly."
+        meta={[
+          { label: 'Response time', value: 'Within one working day' },
+          { label: 'Office', value: 'London' },
+        ]}
       />
 
       <section className="bg-cream pb-32">
@@ -103,20 +110,22 @@ function ContactUsEn() {
             <div className="space-y-12">
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid mb-3">Email</p>
-                <a href="mailto:info@maxiai.co.uk" className="font-display text-[28px] text-ink hover:text-signal transition-colors">
-                  info@maxiai.co.uk
+                <a href={`mailto:${contact.email}`} className="font-display text-[28px] text-ink hover:text-signal transition-colors">
+                  {contact.email}
                 </a>
               </div>
 
               <div>
                 <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-mid mb-3">Office</p>
                 <p className="font-prose text-[18px] text-ink leading-relaxed">
-                  71–75 Shelton Street<br/>
-                  Covent Garden, London WC2H 9JQ<br/>
-                  United Kingdom
+                  {contact.address.map((line, i) => (
+                    <span key={i}>
+                      {line}
+                      {i < contact.address.length - 1 && <br />}
+                    </span>
+                  ))}
                 </p>
               </div>
-
             </div>
           </aside>
         </div>

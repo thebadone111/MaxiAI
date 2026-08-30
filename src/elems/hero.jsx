@@ -1,6 +1,8 @@
 import Reveal from './reveal.jsx';
+import Actions from './actions.jsx';
+import { STATUS } from '../data/site.js';
 
-function Hero({ eyebrow, title, lead, meta, status = 'Currently taking new engagements' }) {
+function Hero({ eyebrow, title, lead, actions, meta, status = STATUS }) {
   return (
     <section className="bg-cream relative overflow-hidden">
       {/* Subtle stone accent in corner */}
@@ -24,6 +26,12 @@ function Hero({ eyebrow, title, lead, meta, status = 'Currently taking new engag
             <p className="font-prose text-[20px] md:text-[24px] leading-[1.6] text-ink-soft mt-10 max-w-[720px]">
               {lead}
             </p>
+          </Reveal>
+        )}
+
+        {actions && (
+          <Reveal variant="up" delay={550}>
+            <Actions {...actions} className="mt-12" />
           </Reveal>
         )}
 

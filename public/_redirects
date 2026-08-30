@@ -1,0 +1,20 @@
+# Cloudflare Pages.
+#
+# Every real route is prerendered to its own HTML file by `npm run build`,
+# and Pages serves an existing static file ahead of any rule below. These
+# 301s therefore only catch the unprefixed aliases people type or link to.
+#
+# The final catch-all is a safety net: if the deploy ever runs a build that
+# skips the prerender step, without it every route but / would 404.
+/            /en/home        301
+/en          /en/home        301
+/home        /en/home        301
+/services    /en/services    301
+/programme   /en/programme   301
+/ai-product  /en/ai-product  301
+/about       /en/about-us    301
+/about-us    /en/about-us    301
+/contact     /en/contact-us  301
+/contact-us  /en/contact-us  301
+
+/*           /index.html     200
