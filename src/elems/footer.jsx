@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { contact, marketsLong } from '../data/site.js';
+import { legalEntity } from '../data/legal.js';
 
 function Footer() {
   return (
@@ -47,13 +48,20 @@ function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="font-mono text-cream text-[10px] tracking-widest uppercase">
-            © {new Date().getFullYear()} Maxi AI Development Ltd
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+          {/* Statutory identity — the details a UK company should be findable by */}
+          <p className="font-mono text-cream text-[10px] tracking-widest uppercase leading-relaxed">
+            © {new Date().getFullYear()} {legalEntity.name}
+            <span className="text-cream/50"> · Company no. {legalEntity.companyNo} · ICO {legalEntity.icoRegNo}</span>
           </p>
-          <p className="font-mono text-cream text-[10px] tracking-widest uppercase">
-            Quiet authority · Built to last
-          </p>
+
+          <nav aria-label="Legal" className="flex items-center gap-4 font-mono text-[10px] tracking-widest uppercase">
+            <Link to="/en/privacy" className="text-cream hover:text-signal transition-colors">Privacy</Link>
+            <span className="text-cream/30">·</span>
+            <Link to="/en/tos" className="text-cream hover:text-signal transition-colors">Terms</Link>
+            <span className="text-cream/30">·</span>
+            <span className="text-cream/50">Quiet authority</span>
+          </nav>
         </div>
       </div>
     </footer>

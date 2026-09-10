@@ -36,6 +36,16 @@ export const routeMeta = {
     description:
       'Tell us what you’re working on. A short conversation, a written proposal, and an honest answer about whether we’re a fit.',
   },
+  '/en/privacy': {
+    title: 'Privacy Notice — Maxi AI Development',
+    description:
+      'What personal data we hold, why we are allowed to hold it, how long we keep it, and how to make us stop. Includes how we handle publicly available business contact information when prospecting in the UK. ICO registration ZB907965.',
+  },
+  '/en/tos': {
+    title: 'Terms of Service — Maxi AI Development',
+    description:
+      'The terms on which you may use maxiai.co.uk: permitted use, intellectual property, enquiries, the status of published prices, liability and governing law. Client engagements are governed separately.',
+  },
   '/en/404': {
     title: 'Not found — Maxi AI Development',
     description: 'The page you were looking for isn’t here.',

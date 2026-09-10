@@ -7,6 +7,8 @@ import ProgrammeEn from './pages/en/programme';
 import AIProductEn from './pages/en/ai-product';
 import AboutUsEn from './pages/en/about-us';
 import ContactUsEn from './pages/en/contact-us';
+import PrivacyEn from './pages/en/privacy';
+import TosEn from './pages/en/tos';
 import NotFound from './pages/404';
 
 /**
@@ -29,6 +31,10 @@ function AppRoutes() {
         <Route path="/en/about-us" element={<AboutUsEn />} />
         <Route path="/en/contact-us" element={<ContactUsEn />} />
 
+        {/* Legal */}
+        <Route path="/en/privacy" element={<PrivacyEn />} />
+        <Route path="/en/tos" element={<TosEn />} />
+
         {/* Unprefixed aliases */}
         <Route path="/home" element={<Navigate to="/en/home" replace />} />
         <Route path="/services" element={<Navigate to="/en/services" replace />} />
@@ -38,6 +44,10 @@ function AppRoutes() {
         <Route path="/about" element={<Navigate to="/en/about-us" replace />} />
         <Route path="/contact-us" element={<Navigate to="/en/contact-us" replace />} />
         <Route path="/contact" element={<Navigate to="/en/contact-us" replace />} />
+        <Route path="/privacy" element={<Navigate to="/en/privacy" replace />} />
+        <Route path="/privacy-policy" element={<Navigate to="/en/privacy" replace />} />
+        <Route path="/tos" element={<Navigate to="/en/tos" replace />} />
+        <Route path="/terms" element={<Navigate to="/en/tos" replace />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
