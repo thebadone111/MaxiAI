@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore
 import { useNavigate } from 'react-router-dom';
 import { contact, price } from '../data/site.js';
 import { lockScroll } from '../motion/smooth.js';
-import { useVisuals } from '../visuals/mode.jsx';
 import { KEY as INTRO_KEY } from '../intro/state.js';
 
 /*
@@ -24,7 +23,6 @@ export const useShortcutLabel = () =>
 
 function useCommands(close) {
   const navigate = useNavigate();
-  const { mode, setMode } = useVisuals();
   const go = useCallback((to) => () => { close(); navigate(to); }, [close, navigate]);
 
   return useMemo(() => [
@@ -52,20 +50,13 @@ function useCommands(close) {
     { group: 'Do', label: 'Call us', hint: contact.phone, run: () => { window.location.href = contact.phoneHref; }, keywords: 'phone ring' },
 
     {
-      group: 'Preferences',
-      label: mode === 'photo' ? 'Show code visuals' : 'Show photographs',
-      hint: `now: ${mode}`,
-      keywords: 'visuals photo code style theme',
-      run: (done) => { setMode(mode === 'photo' ? 'code' : 'photo'); done('Switched'); },
-    },
-    {
       group: 'Preferences', label: 'Replay the intro', hint: 'Reloads the page', keywords: 'animation',
       run: () => {
         try { sessionStorage.removeItem(INTRO_KEY); } catch { /* ignore */ }
         window.location.reload();
       },
     },
-  ], [go, mode, setMode]);
+  ], [go]);
 }
 
 function match(cmd, q) {

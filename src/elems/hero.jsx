@@ -18,7 +18,7 @@ import Visual from '../visuals/Visual.jsx';
  * actions and meta are still moving, which is what makes it one event.
  *
  * `visual` names a slot in src/visuals/registry.jsx; it renders to the
- * right of the type on wide screens (photo or code, per the visual mode).
+ * right of the type on wide screens.
  */
 function Hero({ eyebrow, title, lead, actions, meta, status = STATUS, visual }) {
   const arrived = useIntroDone();

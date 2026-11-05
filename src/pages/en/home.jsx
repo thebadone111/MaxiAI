@@ -63,7 +63,7 @@ function HomeEn() {
         </div>
       </Section>
 
-      {/* The window that opens: a photograph, or the editor typing itself */}
+      {/* The window that opens: the editor typing itself */}
       <HomeReveal caption="Every engagement, written down and running" />
 
       {/* What we believe */}

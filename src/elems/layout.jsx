@@ -4,7 +4,6 @@ import Header from './header.jsx';
 import Footer from './footer.jsx';
 import Curtain from './curtain.jsx';
 import CommandPalette from './command.jsx';
-import { VisualsProvider } from '../visuals/mode.jsx';
 import { scrollToEl, scrollToTop, startSmoothScroll } from '../motion/smooth.js';
 import Intro from '../intro/Intro.jsx';
 
@@ -62,24 +61,22 @@ export default function Layout() {
   }, [pathname, hash]);
 
   return (
-    <VisualsProvider>
-      <Intro>
-        <a href="#main" className="skip-link" onClick={(e) => {
-          e.preventDefault();
-          const main = document.getElementById('main');
-          scrollToEl(main, { immediate: true });
-          main?.focus({ preventScroll: true });
-        }}>
-          Skip to content
-        </a>
-        <Header />
-        <main id="main" tabIndex={-1} className="outline-none pt-[var(--header-h)]">
-          <Outlet />
-        </main>
-        <Footer />
-        <Curtain />
-        <CommandPalette />
-      </Intro>
-    </VisualsProvider>
+    <Intro>
+      <a href="#main" className="skip-link" onClick={(e) => {
+        e.preventDefault();
+        const main = document.getElementById('main');
+        scrollToEl(main, { immediate: true });
+        main?.focus({ preventScroll: true });
+      }}>
+        Skip to content
+      </a>
+      <Header />
+      <main id="main" tabIndex={-1} className="outline-none pt-[var(--header-h)]">
+        <Outlet />
+      </main>
+      <Footer />
+      <Curtain />
+      <CommandPalette />
+    </Intro>
   );
 }

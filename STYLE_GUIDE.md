@@ -120,29 +120,28 @@ batch of rect reads.
 - Query flags: `?intro` replays it, `?intro=off` skips it. Dev only: `?still` shows the reduced
   version, and `?at=2.4` freezes the frame at that second.
 
-## 6. Visual variants — photo vs code
+## 6. Visuals — procedural, not photographed
 
-Two renderings of every visual slot exist side by side until one is chosen
-([`src/visuals/`](src/visuals)):
+The site uses no photography. Every visual is an SVG/DOM "instrument" panel in
+[`src/visuals/code.jsx`](src/visuals/code.jsx), named by slot in
+[`src/visuals/Visual.jsx`](src/visuals/Visual.jsx). They are crisp at any size, cost a few KB,
+and render complete in the prerendered HTML.
 
-| Slot | Photo | Code |
-|---|---|---|
-| `homeHero` | London architecture, parallax | **LiveSystem**: a schematic that draws itself, with ticking metrics |
-| `homeReveal` | Data-centre aisle opening to full bleed | **The editor that opens**: `care-plan.ts` types itself as you scroll, and `maxi deploy` runs |
-| `services` | Patch cables | Infrastructure topology, drawn on scroll |
-| `about` | London at dusk | The four markets, with live local times |
-| `aiProduct` | Creator desk | One post fanning out to six channels |
-| `programme` | A shopfront | The care plan as a 90-day uptime record |
+| Slot | Panel |
+|---|---|
+| `homeHero` | **LiveSystem**: a schematic that draws itself as the page arrives, with ticking metrics |
+| Home reveal scene | **The editor that opens**: `care-plan.ts` types itself as you scroll, and `maxi deploy` runs |
+| `services` | Infrastructure topology, drawn on scroll |
+| `about` | The four markets, with live local times |
+| `aiProduct` | One post fanning out to six channels |
+| `programme` | The care plan as a 90-day uptime record |
 
-- The default is `VISUAL_MODE` in `src/data/site.js`; it is what the prerender bakes in.
-- `?visuals=photo|code` overrides it for the visit, and the ⌘K palette toggles it.
-- Photographs come from Pexels and are exported to AVIF + WebP by
-  [`tools/photos/export.py`](tools/photos/export.py). Licences are in
-  [`photo-candidates/MANIFEST.md`](photo-candidates/MANIFEST.md).
-- Figures are **not rendered below 1024px**, so a phone never downloads them.
-- **To choose:** delete the losing column in `src/visuals/Visual.jsx`, its branch in
-  `HomeReveal`, `src/visuals/mode.jsx` and the palette command, plus `public/img/` and the
-  photo pipeline if code wins.
+Drawing on scroll is one registered custom property, `--p` (0→1), written by `useDraw()`.
+Each node carries its own start, `--s`. The initial value is 1, so without JavaScript every
+diagram is complete. Panels are **not rendered below 1024px**.
+
+A stock-photography variant was built alongside and rejected. It is in the history at
+`e7a21a0` (`src/visuals/photo.jsx`, `tools/photos/`) if it is ever wanted.
 
 ## 7. Chrome and signature details
 
@@ -153,7 +152,7 @@ Two renderings of every visual slot exist side by side until one is chosen
   change and lifts away. Skipped on the first load, on hash-only navigation, and under reduced
   motion.
 - **⌘K / Ctrl K / `/`:** the command palette. It offers every page and section, the prices,
-  copying the email address, calling us, the visual variant and replaying the intro.
+  copying the email address, calling us and replaying the intro.
 - **Decode:** eyebrows, indices and prices resolve out of mono glyphs when they scroll in. The real
   text is in the HTML.
 - **Live details:** London time in the hero status line and the footer; local times on the market

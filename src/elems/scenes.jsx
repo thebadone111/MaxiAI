@@ -1,9 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { useHydrated, useMinWidth, useReducedMotion, useScrollProgress } from '../motion/hooks.js';
-import { useVisuals } from '../visuals/mode.jsx';
-import { PhotoReveal } from '../visuals/photo.jsx';
 import { EditorReveal } from '../visuals/code.jsx';
-import { PHOTOS } from '../photos.js';
 import { Section, SectionHead } from './section.jsx';
 import Reveal from './reveal.jsx';
 
@@ -18,23 +15,18 @@ const easeOut = (x) => 1 - Math.pow(1 - x, 3);
 /* ─── The window that opens ─────────────────────────────────────────────
  *
  * After Minifinans' ImageReveal. A window at 42% of the screen opens to full
- * bleed as you scroll; its content counter-scales so it never stretches, and
- * the corner radius is divided by the frame's scale so it stays a constant
- * size on screen and lands at 0. Transforms only.
- *
- * What is in the window depends on the visual mode: a photograph (zooming
- * out as it opens) or the editor (natural size — the window opens around
- * it, and it types itself as it does).
+ * bleed as you scroll; its content counter-scales so it stays at natural
+ * size — the window opens around the editor, which types itself as it
+ * does — and the corner radius is divided by the frame's scale so it stays
+ * a constant size on screen and lands at 0. Transforms only.
  */
 const START = 0.42;
 const RADIUS = 6;
 
 export function HomeReveal({ caption }) {
-  const { mode } = useVisuals();
   const frame = useRef(null);
   const inner = useRef(null);
   const listeners = useRef(new Set());
-  const zoom = mode === 'photo' ? 1.3 : 1;
 
   const register = useCallback((fn) => {
     listeners.current.add(fn);
@@ -48,7 +40,7 @@ export function HomeReveal({ caption }) {
       frame.current.style.transform = `scale(${s.toFixed(4)})`;
       frame.current.style.borderRadius = `${((RADIUS * (1 - k)) / s).toFixed(2)}px`;
     }
-    if (inner.current) inner.current.style.transform = `scale(${((zoom - (zoom - 1) * k) / s).toFixed(4)})`;
+    if (inner.current) inner.current.style.transform = `scale(${(1 / s).toFixed(4)})`;
     listeners.current.forEach((fn) => fn(p, k));
   }, { span: true, rest: 1 });
 
@@ -62,13 +54,10 @@ export function HomeReveal({ caption }) {
         >
           <div
             ref={inner}
-            key={mode}
-            className="will-move visual-swap absolute inset-0"
-            style={{ transform: `scale(${zoom / START})` }}
+            className="will-move absolute inset-0"
+            style={{ transform: `scale(${1 / START})` }}
           >
-            {mode === 'photo'
-              ? <PhotoReveal photo={PHOTOS.homeReveal} />
-              : <EditorReveal register={register} />}
+            <EditorReveal register={register} />
           </div>
         </div>
         {caption && (
