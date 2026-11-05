@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
 import Reveal from '../../elems/reveal.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
-import { Section, SectionHead, TwoColumnList, CTA } from '../../elems/section.jsx';
+import { Section, SectionHead, TwoColumnList, CTA, Index } from '../../elems/section.jsx';
+import { Split } from '../../visuals/Visual.jsx';
 import { price, contact, VAT_NOTE } from '../../data/site.js';
 
 const fieldClass =
@@ -108,7 +107,7 @@ function ApplicationForm() {
         <div className="flex gap-8 mt-4">
           {['Yes', 'No'].map((v) => (
             <label key={v} className="flex items-center gap-3 font-ui text-[16px] text-ink cursor-pointer">
-              <input type="radio" name="price_ok" value={v} required className="accent-[#C0392B] w-4 h-4" />
+              <input type="radio" name="price_ok" value={v} required className="accent-signal w-4 h-4" />
               {v}
             </label>
           ))}
@@ -118,7 +117,7 @@ function ApplicationForm() {
       <div className="pt-4">
         <button type="submit" disabled={status.sending} className="btn-primary">
           {status.sending ? 'Sending…' : 'Apply for a place'}
-          <span style={{ fontFamily: 'DM Mono, monospace' }}>→</span>
+          <span>→</span>
         </button>
 
         {status.ok !== null && (
@@ -133,7 +132,6 @@ function ProgrammeEn() {
   return (
     <>
       <PageMeta route="/en/programme" />
-      <Header variant="dark" />
 
       <Hero
         eyebrow="The Studio Programme · London & Stockholm"
@@ -181,7 +179,7 @@ function ProgrammeEn() {
             },
           ].map((p, i) => (
             <Reveal key={p.n} variant="up" delay={i * 100} className="border-t border-stone pt-8">
-              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">{p.n}</span>
+              <Index n={p.n} />
               <h3 className="font-display font-semibold text-[26px] mt-4 mb-3">{p.title}</h3>
               <p className="font-prose text-[17px] text-ink-soft leading-relaxed">{p.body}</p>
             </Reveal>
@@ -236,6 +234,7 @@ function ProgrammeEn() {
       </Section>
 
       <Section dark>
+        <Split visual="programme" dark>
         <SectionHead
           dark
           eyebrow="Who we build for"
@@ -248,6 +247,7 @@ function ProgrammeEn() {
             It's not for brand-new ventures still working out what they sell, and it's not a design competition. It's a solid, fast, honest page that makes you look like the business you already are.
           </p>
         </Reveal>
+        </Split>
       </Section>
 
       <Section>
@@ -290,8 +290,6 @@ function ProgrammeEn() {
         linkLabel="Apply for a place"
         secondary={{ href: contact.phoneHref, label: 'or call ' + contact.phone }}
       />
-
-      <Footer />
     </>
   );
 }

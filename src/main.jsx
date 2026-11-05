@@ -1,7 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import { preloadFonts } from './fonts.js'
 import './index.css'
 import App from './App.jsx'
+
+preloadFonts()
 
 const container = document.getElementById('root')
 const tree = (

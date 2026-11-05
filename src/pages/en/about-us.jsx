@@ -1,16 +1,14 @@
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
 import Reveal from '../../elems/reveal.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
-import { Section, SectionHead, CTA } from '../../elems/section.jsx';
+import { Section, SectionHead, CTA, Index } from '../../elems/section.jsx';
+import { Split } from '../../visuals/Visual.jsx';
 import { markets, marketsShort } from '../../data/site.js';
 
 function AboutUsEn() {
   return (
     <>
       <PageMeta route="/en/about-us" />
-      <Header variant="dark" />
 
       <Hero
         eyebrow="About"
@@ -55,6 +53,7 @@ function AboutUsEn() {
       </Section>
 
       <Section dark>
+        <Split visual="about" dark>
         <SectionHead
           dark
           eyebrow="Where we work"
@@ -65,14 +64,13 @@ function AboutUsEn() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
           {markets.map((m, i) => (
             <Reveal key={m.country} variant="up" delay={i * 120} className="bg-ink p-10 lift">
-              <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+              <Index n={i + 1} />
               <h3 className="font-display font-semibold text-[28px] mt-6 text-cream">{m.country}</h3>
               <p className="font-prose text-[17px] text-cream leading-relaxed mt-4">{m.note}</p>
             </Reveal>
           ))}
         </div>
+        </Split>
       </Section>
 
       <Section>
@@ -102,8 +100,6 @@ function AboutUsEn() {
         title={<>The best way to know if we fit is to <em>ask.</em></>}
         body="A short conversation, no obligation. Tell us what you're working on and we'll tell you honestly whether we can help."
       />
-
-      <Footer />
     </>
   );
 }

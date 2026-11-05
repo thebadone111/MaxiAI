@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import ScrollToHash from './elems/scroll.jsx';
+import Layout from './elems/layout.jsx';
 
 import HomeEn from './pages/en/home';
 import ServicesEn from './pages/en/services';
@@ -13,17 +13,19 @@ import NotFound from './pages/404';
 
 /**
  * Route table, shared by the browser entry and the prerenderer.
- * The unprefixed aliases exist because inbound links and older
- * search results point at /services rather than /en/services.
+ * Every page renders inside <Layout> (header, main, footer, intro, curtain,
+ * command palette), so the smooth-scroll engine survives navigation.
+ *
+ * Adding a route means editing this file, src/data/meta.js (title +
+ * description, and the prerender list) and public/_redirects.
  */
 function AppRoutes() {
   return (
-    <>
-      <ScrollToHash />
-      <Routes>
-        <Route path="/" element={<Navigate to="/en/home" replace />} />
-        <Route path="/en" element={<Navigate to="/en/home" replace />} />
+    <Routes>
+      <Route path="/" element={<Navigate to="/en/home" replace />} />
+      <Route path="/en" element={<Navigate to="/en/home" replace />} />
 
+      <Route element={<Layout />}>
         <Route path="/en/home" element={<HomeEn />} />
         <Route path="/en/services" element={<ServicesEn />} />
         <Route path="/en/programme" element={<ProgrammeEn />} />
@@ -35,23 +37,23 @@ function AppRoutes() {
         <Route path="/en/privacy" element={<PrivacyEn />} />
         <Route path="/en/tos" element={<TosEn />} />
 
-        {/* Unprefixed aliases */}
-        <Route path="/home" element={<Navigate to="/en/home" replace />} />
-        <Route path="/services" element={<Navigate to="/en/services" replace />} />
-        <Route path="/programme" element={<Navigate to="/en/programme" replace />} />
-        <Route path="/ai-product" element={<Navigate to="/en/ai-product" replace />} />
-        <Route path="/about-us" element={<Navigate to="/en/about-us" replace />} />
-        <Route path="/about" element={<Navigate to="/en/about-us" replace />} />
-        <Route path="/contact-us" element={<Navigate to="/en/contact-us" replace />} />
-        <Route path="/contact" element={<Navigate to="/en/contact-us" replace />} />
-        <Route path="/privacy" element={<Navigate to="/en/privacy" replace />} />
-        <Route path="/privacy-policy" element={<Navigate to="/en/privacy" replace />} />
-        <Route path="/tos" element={<Navigate to="/en/tos" replace />} />
-        <Route path="/terms" element={<Navigate to="/en/tos" replace />} />
-
         <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+      </Route>
+
+      {/* Unprefixed aliases */}
+      <Route path="/home" element={<Navigate to="/en/home" replace />} />
+      <Route path="/services" element={<Navigate to="/en/services" replace />} />
+      <Route path="/programme" element={<Navigate to="/en/programme" replace />} />
+      <Route path="/ai-product" element={<Navigate to="/en/ai-product" replace />} />
+      <Route path="/about-us" element={<Navigate to="/en/about-us" replace />} />
+      <Route path="/about" element={<Navigate to="/en/about-us" replace />} />
+      <Route path="/contact-us" element={<Navigate to="/en/contact-us" replace />} />
+      <Route path="/contact" element={<Navigate to="/en/contact-us" replace />} />
+      <Route path="/privacy" element={<Navigate to="/en/privacy" replace />} />
+      <Route path="/privacy-policy" element={<Navigate to="/en/privacy" replace />} />
+      <Route path="/tos" element={<Navigate to="/en/tos" replace />} />
+      <Route path="/terms" element={<Navigate to="/en/tos" replace />} />
+    </Routes>
   );
 }
 

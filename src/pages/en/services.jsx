@@ -1,7 +1,7 @@
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
 import Reveal from '../../elems/reveal.jsx';
+import { ProcessTrack } from '../../elems/scenes.jsx';
+import { Split } from '../../visuals/Visual.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
 import { Section, SectionHead, FeatureGrid, PriceTable, CTA } from '../../elems/section.jsx';
 import { price, marketsShort, VAT_NOTE } from '../../data/site.js';
@@ -10,7 +10,6 @@ function ServicesEn() {
   return (
     <>
       <PageMeta route="/en/services" />
-      <Header variant="dark" />
 
       <Hero
         eyebrow="Tier 01 · Services"
@@ -97,31 +96,21 @@ function ServicesEn() {
         />
       </Section>
 
-      <Section dark id="how-we-work">
-        <SectionHead
-          dark
-          eyebrow="How we work"
-          title={<>A practice, not a <em>process.</em></>}
-          lead="We don't have a discovery phase, a sprint zero, or a Notion template. We have a small number of careful people who do this for a living."
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-          {[
-            { step: '01', title: 'Conversation', body: 'A real conversation about what your business actually needs — not a sales script. Thirty minutes is usually enough to know whether we should keep talking.' },
-            { step: '02', title: 'Proposal', body: "A short written proposal: scope, price, who's doing the work, and what the first three months look like. No surprises." },
-            { step: '03', title: 'Build & hold', body: 'We build the thing, then we hold it — quietly, in the background, while you get on with the rest of your business. That holding pattern is where most of the value lives.' },
-          ].map((s, i) => (
-            <Reveal key={i} variant="up" delay={i * 130} className="bg-ink p-10 lift">
-              <span className="font-mono text-[28px] text-signal font-light">{s.step}</span>
-              <h3 className="font-display font-semibold text-[24px] mt-6 mb-4 text-cream">{s.title}</h3>
-              <p className="font-prose text-[17px] text-cream leading-relaxed">{s.body}</p>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
+      <ProcessTrack
+        id="how-we-work"
+        eyebrow="How we work"
+        title={<>A practice, not a <em>process.</em></>}
+        lead="We don't have a discovery phase, a sprint zero, or a Notion template. We have a small number of careful people who do this for a living."
+        items={[
+          { title: 'Conversation', body: 'A real conversation about what your business actually needs — not a sales script. Thirty minutes is usually enough to know whether we should keep talking.' },
+          { title: 'Proposal', body: "A short written proposal: scope, price, who's doing the work, and what the first three months look like. No surprises." },
+          { title: 'Build & hold', body: 'We build the thing, then we hold it — quietly, in the background, while you get on with the rest of your business. That holding pattern is where most of the value lives.' },
+        ]}
+      />
 
       {/* Step zero — how the conversation actually opens */}
       <Section id="rebuild">
+        <Split visual="services">
         <SectionHead
           eyebrow="Before any of that"
           title={<>We don't pitch. We <em>rebuild your homepage</em> and send it to you.</>}
@@ -140,6 +129,7 @@ function ServicesEn() {
             </p>
           </Reveal>
         </div>
+        </Split>
       </Section>
 
       <CTA
@@ -148,8 +138,6 @@ function ServicesEn() {
         body="That's usually the right place to start. A short call, a written proposal, and a clear answer about whether we're a fit."
         secondary={{ to: '/en/services#rebuild', label: 'or let us rebuild your homepage first' }}
       />
-
-      <Footer />
     </>
   );
 }

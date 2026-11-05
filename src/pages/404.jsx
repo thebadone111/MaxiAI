@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
-import Header from '../elems/header.jsx';
-import Footer from '../elems/footer.jsx';
 import PageMeta from '../elems/pagemeta.jsx';
 
 function NotFound() {
   return (
     <>
       <PageMeta route="/en/404" />
-      <Header variant="dark" />
       <section className="bg-cream min-h-[70vh] flex items-center">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-32">
+        <div className="wrap py-32">
           <span className="eyebrow">Error · 404</span>
           <hr className="signal-rule mt-5 mb-10" />
           <h1 className="font-display font-light text-[64px] md:text-[120px] leading-[1.02] text-ink">
@@ -28,7 +25,6 @@ function NotFound() {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 }

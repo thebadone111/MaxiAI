@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Photo masters (2400px Pexels downloads). Re-fetch from the links in
+# photo-candidates/MANIFEST.md; the exported site versions are in public/img.
+photo-candidates/*.jpg
+__pycache__/

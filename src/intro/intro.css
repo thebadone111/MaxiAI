@@ -1,0 +1,192 @@
+/* ──────────────────────────────────────────────────────────────────────
+   The entry intro (src/intro). Every keyframe delay subtracts --at, so a
+   dev freeze at ?at=2.4 shows exactly the frame at 2.4s. The beat times
+   come from timeline.js as custom properties (--t-*), so the CSS and the
+   WebGL engine read the same numbers.
+
+   Transform, opacity and clip-path only.
+   ────────────────────────────────────────────────────────────────────── */
+
+/* Before React has mounted the overlay, the head script's `intro-pending`
+   covers the prerendered page with the same ink ground. The animation is a
+   script-free failsafe: if nothing ever takes over, the cover lifts. */
+html.intro-pending body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  background: var(--color-ink);
+  animation: intro-cover-failsafe 400ms linear 7s forwards;
+}
+/* While the intro is pending, the hero waits at rest rather than showing. */
+html.intro-pending .hero-rise { opacity: 0; }
+
+@keyframes intro-cover-failsafe { to { opacity: 0; visibility: hidden; } }
+@keyframes intro-count { to { stroke-dashoffset: 0; } }
+
+.intro-reduced.intro-leaving {
+  opacity: 0;
+  transition: opacity 450ms linear;
+}
+
+/* ─── Signal ────────────────────────────────────────────────────────── */
+
+.sig {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size;
+  color: var(--color-cream);
+
+  --mark-h: clamp(108px, 24cqh, 232px);
+  --mark-w: calc(var(--mark-h) * var(--aspect));
+  --mark-top: calc(44cqh - var(--mark-h) / 2);
+  --rule-h: max(2px, calc(var(--mark-h) * 0.0105));
+}
+
+.sig-half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--color-ink);
+}
+.sig-top { top: 0; height: calc(var(--mark-top) + var(--mark-h) * var(--split) + 1px); }
+.sig-bottom { top: calc(var(--mark-top) + var(--mark-h) * var(--split)); bottom: 0; }
+
+.sig-sheet,
+.sig-sheet .sig-gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Corner readouts — the "instrument" around the scene. */
+.sig-corner {
+  position: absolute;
+  top: max(1.5rem, env(safe-area-inset-top));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+  animation: sig-in 600ms var(--ease-reveal) calc(0.2s - var(--at)) both;
+}
+.sig-corner-l { left: clamp(1.5rem, 4vw, 2.5rem); }
+.sig-corner-r { right: clamp(1.5rem, 4vw, 2.5rem); }
+
+/* The scan rules: the mark's two rules at full width. They sweep down from
+   one viewport above (the engine's scanAt() uses the same curve), contract
+   into the mark's own width, then hand over to the mark's rules. */
+.sig-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--rule-h);
+  background: var(--color-signal);
+  box-shadow: 0 0 18px 1px color-mix(in oklab, var(--color-signal) 55%, transparent);
+  animation:
+    sig-scan var(--t-scan-len) var(--ease-quart) calc(var(--t-scan) - var(--at)) both,
+    sig-contract 520ms var(--ease-expo) calc(var(--t-contract) - var(--at)) both,
+    sig-gone 220ms linear calc(var(--t-handover) + 0.12s - var(--at)) both;
+}
+.sig-scan-a { top: calc(var(--mark-top) + var(--mark-h) * var(--rule-a) - var(--rule-h) / 2); }
+.sig-scan-b { top: calc(var(--mark-top) + var(--mark-h) * var(--rule-b) - var(--rule-h) / 2); }
+
+@keyframes sig-scan {
+  from { transform: translate3d(0, -100cqh, 0); }
+  to { transform: none; }
+}
+@keyframes sig-contract {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 calc(50% - var(--mark-w) / 2)); }
+}
+@keyframes sig-gone { to { opacity: 0; } }
+@keyframes sig-in { from { opacity: 0; } }
+
+.sig-mark {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: var(--mark-top);
+  width: var(--mark-w);
+  height: var(--mark-h);
+  translate: -50% 0;
+  transform-origin: 50% 50%;
+}
+.sig-mark-svg { width: 100%; height: 100%; overflow: visible; }
+
+.sig-mark-svg path:first-child {
+  animation: sig-in 650ms var(--ease-reveal) calc(var(--t-mark) - var(--at)) both;
+  transition: fill 520ms var(--ease-reveal) 380ms;
+}
+.sig-mark-rules {
+  animation: sig-in 160ms linear calc(var(--t-handover) - var(--at)) both;
+}
+
+.sig-type {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--mark-top) + var(--mark-h) + clamp(1.5rem, 5cqh, 2.75rem));
+  text-align: center;
+  padding-inline: 1.5rem;
+}
+.sig-name {
+  min-height: 1.2em;
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.6cqw, 15px);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--color-cream);
+  white-space: nowrap;
+}
+.sig-readout {
+  margin-top: 0.9rem;
+  min-height: 1.2em;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+/* ─── Exit: the sheet tears along the rules; the mark flies home ─── */
+
+.sig-out .sig-sheet { opacity: 0; transition: opacity 260ms linear; }
+.sig-out .sig-type,
+.sig-out .sig-corner,
+.sig-out .sig-scan { opacity: 0; transition: opacity 200ms linear; }
+
+.sig-out .sig-top,
+.sig-out .sig-bottom {
+  transition: transform 950ms var(--ease-quart) 140ms;
+}
+.sig-out .sig-top { transform: translate3d(0, -101%, 0); }
+.sig-out .sig-bottom { transform: translate3d(0, 101%, 0); }
+
+.sig-mark.sig-fly {
+  transform: translate3d(var(--fly-dx), var(--fly-dy), 0) scale(var(--fly-s));
+  transition: transform 980ms var(--ease-quart) 60ms;
+}
+/* The letter turns from cream to ink as it lands on the cream page. */
+.sig-fly .sig-mark-svg path:first-child { fill: var(--color-ink); }
+
+/* Reduced motion: the scene at its rest state. Every animation in the
+   subtree resolves to exactly that frame, so this is honest — the still is
+   the end of the scene, not a stand-in for it. */
+.sig-still * { animation: none !important; }
+.sig-still .sig-scan { display: none; }
+
+/* Last, because every shorthand above resets play-state. */
+.sig-frozen:not(.sig-out) * { animation-play-state: paused !important; }
+
+@media (max-width: 520px) {
+  .sig-corner-l .sig-corner-long { display: none; }
+  .sig-readout { font-size: 10px; letter-spacing: 0.14em; }
+  .sig-name { letter-spacing: 0.3em; }
+}

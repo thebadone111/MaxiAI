@@ -1,5 +1,3 @@
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
 import {
   LegalHero,
@@ -499,7 +497,6 @@ function TosEn() {
   return (
     <>
       <PageMeta route="/en/tos" />
-      <Header variant="dark" />
 
       <LegalHero
         eyebrow="Terms of Service"
@@ -525,8 +522,6 @@ function TosEn() {
         <Xlink to="/en/privacy">Privacy Notice</Xlink>, and questions about either reach a founder
         at <Alink href={`mailto:${E.privacyEmail}`}>{E.privacyEmail}</Alink>.
       </LegalFootNote>
-
-      <Footer />
     </>
   );
 }

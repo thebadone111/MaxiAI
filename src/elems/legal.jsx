@@ -19,12 +19,12 @@ export function LegalHero({ eyebrow, title, lead, updated, meta = [] }) {
       <div
         className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full opacity-40 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #E8E4D8 0%, transparent 70%)',
+          background: 'radial-gradient(circle, var(--color-stone) 0%, transparent 70%)',
           transform: 'translate(20%, -30%)',
         }}
       />
 
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20 relative">
+      <div className="wrap pt-20 md:pt-28 pb-16 md:pb-20 relative">
         <Reveal variant="fade">
           <span className="eyebrow">{eyebrow}</span>
         </Reveal>
@@ -67,7 +67,7 @@ export function LegalHero({ eyebrow, title, lead, updated, meta = [] }) {
 
 function Contents({ sections }) {
   return (
-    <nav aria-label="Contents" className="lg:sticky lg:top-10">
+    <nav aria-label="Contents" className="lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
       <span className="eyebrow">Contents</span>
       <hr className="signal-rule mt-5 mb-8" />
       <ol className="space-y-3">
@@ -94,7 +94,7 @@ function Contents({ sections }) {
 export function LegalBody({ sections }) {
   return (
     <section className="bg-cream py-20 md:py-28">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20">
+      <div className="wrap grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20">
         <div className="lg:col-span-3">
           <Contents sections={sections} />
         </div>

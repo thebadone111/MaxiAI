@@ -56,3 +56,9 @@ export const marketsShort = markets.map((m) => m.short).join(' · ');
 
 // ── Status ────────────────────────────────────────────────
 export const STATUS = 'Currently taking new engagements';
+
+// ── Visuals ───────────────────────────────────────────────
+// Which visual variant the prerender bakes in: 'photo' (stock photography)
+// or 'code' (procedural visuals). Both exist while one is chosen; see
+// src/visuals/mode.jsx. ?visuals=photo|code overrides it per visit.
+export const VISUAL_MODE = 'code';

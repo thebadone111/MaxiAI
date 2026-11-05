@@ -1,35 +1,51 @@
 import { Link } from 'react-router-dom';
 import Reveal from './reveal.jsx';
+import { Decode } from './live.jsx';
+
+/*
+ * Layout primitives. Reveals live here, never in page files (as on
+ * Minifinans): a page composes these and gets the motion for free.
+ */
 
 export function Section({ children, dark = false, className = '', id }) {
   return (
     <section id={id} className={`${dark ? 'bg-ink text-cream' : 'bg-cream text-ink'} py-24 md:py-32 ${className}`}>
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10">
-        {children}
-      </div>
+      <div className="wrap">{children}</div>
     </section>
   );
 }
 
-export function SectionHead({ eyebrow, title, lead, dark = false, align = 'left' }) {
+/** Index number in DM Mono, decoded in on reveal: 01, 02… */
+export function Index({ n, className = '' }) {
   return (
-    <div className={`${align === 'center' ? 'text-center mx-auto' : ''} max-w-[820px] mb-16`}>
+    <Decode
+      text={String(n).padStart(2, '0')}
+      className={`font-mono text-[11px] uppercase tracking-[0.22em] text-signal ${className}`}
+      duration={400}
+    />
+  );
+}
+
+export function SectionHead({ eyebrow, title, lead, dark = false, align = 'left', children }) {
+  return (
+    <div className={`${align === 'center' ? 'mx-auto text-center' : ''} mb-16 max-w-[820px]`}>
       <Reveal variant="fade">
-        <span className="eyebrow">{eyebrow}</span>
+        <Decode text={eyebrow} className="eyebrow" />
       </Reveal>
-      <Reveal variant="rule" as="hr" delay={100} className={`mt-5 mb-8 ${align === 'center' ? 'mx-auto' : ''}`} />
-      <Reveal variant="up" delay={200}>
-        <h2 className={`font-display font-light text-[34px] md:text-[56px] leading-[1.05] ${dark ? 'text-cream' : 'text-ink'}`}>
+      <Reveal variant="rule" as="hr" delay={100} className={`mb-8 mt-5 ${align === 'center' ? 'mx-auto' : ''}`} />
+      <Reveal variant="up" delay={180}>
+        <h2 className={`font-display text-[34px] font-light leading-[1.05] md:text-[56px] ${dark ? 'text-cream' : 'text-ink'}`}>
           {title}
         </h2>
       </Reveal>
       {lead && (
-        <Reveal variant="up" delay={350}>
-          <p className={`font-prose text-[19px] md:text-[21px] leading-[1.65] mt-8 ${dark ? 'text-cream' : 'text-ink-soft'}`}>
+        <Reveal variant="up" delay={300}>
+          <p className={`mt-8 font-prose text-[19px] leading-[1.65] md:text-[21px] ${dark ? 'text-cream/90' : 'text-ink-soft'}`}>
             {lead}
           </p>
         </Reveal>
       )}
+      {children}
     </div>
   );
 }
@@ -37,19 +53,20 @@ export function SectionHead({ eyebrow, title, lead, dark = false, align = 'left'
 export function FeatureGrid({ items, columns = 3, dark = false }) {
   const colsClass = columns === 2 ? 'md:grid-cols-2' : columns === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3';
   return (
-    <div className={`grid grid-cols-1 ${colsClass} gap-px ${dark ? 'bg-white/10' : 'bg-stone'} border ${dark ? 'border-white/10' : 'border-stone'}`}>
+    <div className={`grid grid-cols-1 ${colsClass} gap-px border ${dark ? 'border-cream/10 bg-cream/10' : 'border-stone bg-stone'}`}>
       {items.map((it, i) => (
-        <Reveal key={i} variant="up" delay={i * 120} className={`${dark ? 'bg-ink' : 'bg-cream'} p-10 lift`}>
-          <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-          <h3 className={`font-display font-semibold text-[22px] md:text-[26px] mt-6 mb-4 ${dark ? 'text-cream' : 'text-ink'}`}>
-            {it.title}
-          </h3>
-          <p className={`font-prose text-[17px] leading-[1.65] ${dark ? 'text-cream' : 'text-ink-soft'}`}>
-            {it.body}
-          </p>
-        </Reveal>
+        <div key={i} className={`${dark ? 'bg-ink' : 'bg-cream'} lift group relative p-10`}>
+          <Reveal variant="up" delay={i * 90}>
+            <Index n={i + 1} />
+            <h3 className={`mb-4 mt-6 font-display text-[22px] font-semibold md:text-[26px] ${dark ? 'text-cream' : 'text-ink'}`}>
+              {it.title}
+            </h3>
+            <p className={`font-prose text-[17px] leading-[1.65] ${dark ? 'text-cream/90' : 'text-ink-soft'}`}>
+              {it.body}
+            </p>
+          </Reveal>
+          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-signal transition-transform duration-500 ease-[var(--ease-expo)] group-hover:scale-x-100" />
+        </div>
       ))}
     </div>
   );
@@ -59,6 +76,7 @@ export function FeatureGrid({ items, columns = 3, dark = false }) {
  * PriceTable — the published pricing block.
  * Rows are { label, price, note }. Reads as a rate card, not a plan grid;
  * the point is that a visitor can see the number without booking a call.
+ * Prices decode in as each row arrives.
  */
 export function PriceTable({ rows, footnote }) {
   return (
@@ -67,23 +85,23 @@ export function PriceTable({ rows, footnote }) {
         <Reveal
           key={i}
           variant="up"
-          delay={i * 90}
-          className="border-b border-stone py-8 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 md:items-baseline"
+          delay={i * 70}
+          className="group grid grid-cols-1 gap-3 border-b border-stone py-8 transition-colors hover:bg-cream-deep md:grid-cols-12 md:items-baseline md:gap-8 md:px-4"
         >
           <div className="md:col-span-4">
-            <h3 className="font-display font-semibold text-[22px] md:text-[26px] text-ink">{r.label}</h3>
+            <h3 className="font-display text-[22px] font-semibold text-ink md:text-[26px]">{r.label}</h3>
           </div>
           <div className="md:col-span-3">
-            <span className="font-mono text-[20px] md:text-[24px] text-signal">{r.price}</span>
+            <Decode text={r.price} className="tabular font-mono text-[20px] text-signal md:text-[24px]" delay={i * 70} />
           </div>
           <div className="md:col-span-5">
-            <p className="font-prose text-[17px] text-ink-soft leading-[1.65]">{r.note}</p>
+            <p className="font-prose text-[17px] leading-[1.65] text-ink-soft">{r.note}</p>
           </div>
         </Reveal>
       ))}
       {footnote && (
         <Reveal variant="fade" delay={200}>
-          <p className="font-prose italic text-[17px] text-ink-mid mt-8">{footnote}</p>
+          <p className="mt-8 font-prose text-[17px] italic text-ink-mid">{footnote}</p>
         </Reveal>
       )}
     </div>
@@ -97,21 +115,39 @@ export function PriceTable({ rows, footnote }) {
  */
 export function TwoColumnList({ columns }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-stone border border-stone">
+    <div className="grid grid-cols-1 gap-px border border-stone bg-stone md:grid-cols-2">
       {columns.map((col, i) => (
-        <Reveal key={i} variant="up" delay={i * 130} className="bg-cream p-10 md:p-12">
-          <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-          <h3 className="font-display font-semibold text-[24px] mt-6 mb-6 text-ink">{col.title}</h3>
-          <ul className="space-y-3">
-            {col.items.map((item, j) => (
-              <li key={j} className="font-prose text-[17px] text-ink-soft leading-[1.6] flex gap-3">
-                <span className="text-signal font-mono text-[13px] mt-1">—</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+        <div key={i} className="bg-cream p-10 md:p-12">
+          <Reveal variant="up" delay={i * 110}>
+            <Index n={i + 1} />
+            <h3 className="mb-6 mt-6 font-display text-[24px] font-semibold text-ink">{col.title}</h3>
+            <ul className="space-y-3">
+              {col.items.map((item, j) => (
+                <li key={j} className="flex gap-3 font-prose text-[17px] leading-[1.6] text-ink-soft">
+                  <span className="mt-1 font-mono text-[13px] text-signal">—</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Ruled points — a numbered list with a hairline above each item. The
+ * pattern the pages had written out by hand four times.
+ */
+export function RuledPoints({ items, columns = 2, size = 'md' }) {
+  return (
+    <div className={`grid grid-cols-1 gap-12 ${columns === 2 ? 'md:grid-cols-2' : ''}`}>
+      {items.map((p, i) => (
+        <Reveal key={i} variant="up" delay={(i % columns) * 100} className="border-t border-stone pt-8">
+          {p.title && <Index n={i + 1} />}
+          {p.title && <h3 className="mb-3 mt-4 font-display text-[26px] font-semibold">{p.title}</h3>}
+          <p className={`font-prose leading-relaxed text-ink-soft ${size === 'lg' ? 'text-[18px]' : 'text-[17px]'}`}>{p.body}</p>
         </Reveal>
       ))}
     </div>
@@ -128,43 +164,37 @@ export function CTA({
 }) {
   return (
     <section className="bg-cream py-24 md:py-32">
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10">
+      <div className="wrap">
         <Reveal variant="up">
-          <div className="bg-ink text-cream rounded-sm p-12 md:p-20 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[30vw] h-[30vw] rounded-full opacity-20 pointer-events-none"
-                 style={{ background: 'radial-gradient(circle, #C0392B 0%, transparent 70%)', transform: 'translate(30%, -40%)' }}/>
+          <div className="cta-panel relative overflow-hidden rounded-[2px] bg-ink p-10 text-cream md:p-20">
+            <div aria-hidden="true" className="cta-glow" />
+            <div aria-hidden="true" className="cta-grid" />
             <div className="relative max-w-[700px]">
-              <span className="eyebrow">{eyebrow}</span>
-              <Reveal variant="rule" as="hr" delay={150} className="mt-5 mb-8" />
-              <h2 className="font-display font-light text-[32px] md:text-[52px] leading-[1.05] text-cream">
+              <Decode text={eyebrow} className="eyebrow" />
+              <Reveal variant="rule" as="hr" delay={150} className="mb-8 mt-5" />
+              <h2 className="font-display text-[32px] font-light leading-[1.05] text-cream md:text-[52px]">
                 {title}
               </h2>
               {body && (
-                <p className="font-prose text-[19px] md:text-[21px] leading-[1.65] text-cream mt-8 max-w-[600px]">
+                <p className="mt-8 max-w-[600px] font-prose text-[19px] leading-[1.65] text-cream/90 md:text-[21px]">
                   {body}
                 </p>
               )}
               <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <Link to={linkTo} className="btn-primary" style={{ background: '#C0392B', borderColor: '#C0392B' }}>
+                <Link to={linkTo} className="btn-primary btn-signal">
                   {linkLabel}
-                  <span style={{ fontFamily: 'DM Mono, monospace' }}>→</span>
+                  <span>→</span>
                 </Link>
 
                 {secondary && (
                   <>
                     <span className="font-mono text-[13px] text-cream/40">·</span>
                     {secondary.href ? (
-                      <a
-                        href={secondary.href}
-                        className="font-prose italic text-[17px] text-cream/80 underline underline-offset-4 decoration-1 hover:text-signal transition-colors"
-                      >
+                      <a href={secondary.href} className="link-sweep font-prose text-[17px] italic text-cream/80 transition-colors hover:text-cream">
                         {secondary.label}
                       </a>
                     ) : (
-                      <Link
-                        to={secondary.to}
-                        className="font-prose italic text-[17px] text-cream/80 underline underline-offset-4 decoration-1 hover:text-signal transition-colors"
-                      >
+                      <Link to={secondary.to} className="link-sweep font-prose text-[17px] italic text-cream/80 transition-colors hover:text-cream">
                         {secondary.label}
                       </Link>
                     )}

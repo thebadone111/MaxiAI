@@ -1,6 +1,4 @@
 import { useRef, useState } from 'react';
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
 import { contact } from '../../data/site.js';
@@ -68,7 +66,7 @@ function ContactForm() {
       <div className="pt-4">
         <button type="submit" disabled={status.sending} className="btn-primary">
           {status.sending ? 'Sending…' : 'Send message'}
-          <span style={{ fontFamily: 'DM Mono, monospace' }}>→</span>
+          <span>→</span>
         </button>
 
         {status.ok !== null && (
@@ -83,7 +81,6 @@ function ContactUsEn() {
   return (
     <>
       <PageMeta route="/en/contact-us" />
-      <Header variant="dark" />
 
       <Hero
         eyebrow="Contact"
@@ -96,7 +93,7 @@ function ContactUsEn() {
       />
 
       <section className="bg-cream pb-32">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="wrap grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-7">
             <span className="eyebrow">Send a message</span>
             <hr className="signal-rule mt-5 mb-12" />
@@ -130,8 +127,6 @@ function ContactUsEn() {
           </aside>
         </div>
       </section>
-
-      <Footer />
     </>
   );
 }

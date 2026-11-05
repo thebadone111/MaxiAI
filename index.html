@@ -3,21 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/maxi-mark.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
     <meta name="theme-color" content="#1C1A2E" />
     <meta name="description" content="Maxi AI Development Ltd — software and AI infrastructure for businesses that intend to stay. London." />
     <title>Maxi AI Development — Software & AI infrastructure</title>
-    <noscript>
-      <!-- Sections fade in on scroll. Without JavaScript nothing ever
-           un-hides, so reveal them all up front. -->
-      <style>
-        .reveal-up, .reveal-fade { opacity: 1 !important; transform: none !important; }
-        .reveal-rule { width: 72px !important; }
-        .reveal-rule.wide { width: 200px !important; }
-      </style>
-    </noscript>
+    <script>
+      /*
+        Runs before first paint. `js` lets CSS hide what scroll reveals will
+        show (without JavaScript nothing would ever un-hide). `intro-pending`
+        covers the prerendered page with the intro's ink ground until the
+        intro mounts, so the page never flashes first.
+
+        The decision mirrors src/intro/state.js — change one, change both.
+        Failsafe: if the intro has not mounted within 4s (bundle failed to
+        load), uncover the page. CSS has a second, script-free failsafe.
+      */
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var show;
+        try {
+          var q = new URLSearchParams(location.search);
+          var v = q.has('intro') ? (q.get('intro') || 'on') : null;
+          show = v === 'off' ? false : v ? true : !sessionStorage.getItem('maxi:intro');
+        } catch (e) { show = true; }
+        if (!show) return;
+        d.classList.add('intro-pending');
+        setTimeout(function () {
+          if (!document.querySelector('[data-intro]')) d.classList.remove('intro-pending');
+        }, 4000);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

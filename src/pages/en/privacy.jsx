@@ -1,5 +1,3 @@
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
 import {
   LegalHero,
@@ -762,7 +760,6 @@ function PrivacyEn() {
   return (
     <>
       <PageMeta route="/en/privacy" />
-      <Header variant="dark" />
 
       <LegalHero
         eyebrow="Privacy"
@@ -788,8 +785,6 @@ function PrivacyEn() {
         a ticket queue. The terms governing use of this website are set out separately in our{' '}
         <Xlink to="/en/tos">Terms of Service</Xlink>.
       </LegalFootNote>
-
-      <Footer />
     </>
   );
 }

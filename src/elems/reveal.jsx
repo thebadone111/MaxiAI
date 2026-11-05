@@ -1,45 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
+import { useReveal } from '../motion/hooks.js';
 
 /**
- * Reveal — wraps children in a div that fades up the first time
- * it enters the viewport. Small, dependency-free, restrained.
+ * Reveal — reveals its element the first time it scrolls into view.
  *
- * Props:
- *   delay   — ms to delay the animation (for staggers)
- *   as      — element tag (default: div)
- *   variant — 'up' | 'fade' | 'rule'
+ * Same API as before, now driven by the shared observer in
+ * src/motion/hooks.js and the CSS in index.css:
+ *
+ *   variant — 'up' (rise) | 'fade' | 'rule' (the signal rule draws in)
+ *   delay   — ms, for staggers; becomes the --d custom property
+ *   as      — element tag (default div)
+ *   wide    — rule only: the 200px rule
  */
-function Reveal({ children, delay = 0, as: Tag = 'div', variant = 'up', className = '', ...rest }) {
-  const ref = useRef(null);
-  const [shown, setShown] = useState(false);
+const CLASS = {
+  up: 'rise',
+  fade: 'fade',
+  rule: 'signal-rule hairline-draw',
+};
 
-  useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') {
-      setShown(true);
-      return;
-    }
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setShown(true);
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
+function Reveal({ children, delay = 0, as = 'div', variant = 'up', wide = false, className = '', style, ...rest }) {
+  const ref = useReveal();
+  const Tag = as;
   return (
     <Tag
       ref={ref}
-      className={`reveal-${variant} ${shown ? 'is-shown' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}ms`, animationDelay: `${delay}ms` }}
+      className={`${CLASS[variant] ?? CLASS.up}${wide ? ' wide' : ''} ${className}`}
+      style={delay ? { '--d': `${delay}ms`, ...style } : style}
       {...rest}
     >
       {children}

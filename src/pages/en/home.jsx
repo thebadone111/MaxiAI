@@ -1,9 +1,8 @@
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
 import Reveal from '../../elems/reveal.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
-import { Section, SectionHead, FeatureGrid, CTA } from '../../elems/section.jsx';
+import { Section, SectionHead, FeatureGrid, CTA, Index } from '../../elems/section.jsx';
+import { HomeReveal, Manifesto } from '../../elems/scenes.jsx';
 import { Link } from 'react-router-dom';
 import { price, marketsShort } from '../../data/site.js';
 
@@ -11,7 +10,6 @@ function HomeEn() {
   return (
     <>
       <PageMeta route="/en/home" />
-      <Header variant="dark" />
 
       <Hero
         eyebrow="Maxi AI Development · London"
@@ -25,6 +23,7 @@ function HomeEn() {
           { label: 'Founded', value: '2024 · London' },
           { label: 'Working in', value: marketsShort },
         ]}
+        visual="homeHero"
       />
 
       {/* Two-tier overview */}
@@ -37,7 +36,7 @@ function HomeEn() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-stone border border-stone">
           <Reveal variant="up" className="bg-cream p-12 lift">
-            <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">Tier 01</span>
+            <Index n="Tier 01" />
             <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
               Your on-demand <em className="text-signal not-italic">tech department.</em>
             </h3>
@@ -50,7 +49,7 @@ function HomeEn() {
           </Reveal>
 
           <Reveal variant="up" delay={150} className="bg-cream p-12 lift">
-            <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">Tier 02</span>
+            <Index n="Tier 02" />
             <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
               Custom AI-integrated software for <em className="text-signal not-italic">creators.</em>
             </h3>
@@ -64,14 +63,19 @@ function HomeEn() {
         </div>
       </Section>
 
+      {/* The window that opens: a photograph, or the editor typing itself */}
+      <HomeReveal caption="Every engagement, written down and running" />
+
       {/* What we believe */}
       <Section dark>
         <SectionHead
           dark
           eyebrow="What we believe"
           title={<>Built to <em>last</em>, not to demo.</>}
-          lead="The technology industry has spent fifteen years optimising for the launch tweet. We optimise for the third year of a client relationship — when nothing's exciting, everything works, and the bills get paid on time."
         />
+        <div className="mb-20 max-w-[1000px]">
+          <Manifesto text="The technology industry has spent fifteen years optimising for the launch tweet. We optimise for the third year of a client relationship — when nothing's exciting, everything works, and the bills get paid on time." />
+        </div>
 
         <FeatureGrid
           dark
@@ -110,9 +114,7 @@ function HomeEn() {
             { name: 'sconcierge', sector: 'Hospitality · Malta', work: 'Operational software.' },
           ].map((c, i) => (
             <Reveal key={i} variant="up" delay={i * 110} className="bg-ink p-10 flex flex-col justify-between min-h-[220px] lift">
-              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+              <Index n={i + 1} />
               <div>
                 <h4 className="font-display font-semibold text-[24px] mt-6 text-cream">{c.name}</h4>
                 <p className="font-mono text-[11px] tracking-widest uppercase text-cream/70 mt-3 leading-snug">{c.sector}</p>
@@ -135,8 +137,6 @@ function HomeEn() {
         body="No deck, no sales call. Tell us what you're building and we'll tell you honestly whether we're the right studio for it."
         secondary={{ to: '/en/services#pricing', label: 'or see what we charge' }}
       />
-
-      <Footer />
     </>
   );
 }

@@ -1,14 +1,12 @@
-import Header from '../../elems/header.jsx';
-import Footer from '../../elems/footer.jsx';
 import Hero from '../../elems/hero.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
-import { Section, SectionHead, FeatureGrid, CTA } from '../../elems/section.jsx';
+import { Section, SectionHead, FeatureGrid, CTA, Index } from '../../elems/section.jsx';
+import { Split } from '../../visuals/Visual.jsx';
 
 function AIProductEn() {
   return (
     <>
       <PageMeta route="/en/ai-product" />
-      <Header variant="dark" />
 
       <Hero
         eyebrow="Tier 02 · Product"
@@ -51,12 +49,14 @@ function AIProductEn() {
       </Section>
 
       <Section dark>
-        <SectionHead
-          dark
-          eyebrow="Also possible"
-          title={<>AI assistants, when they <em>actually</em> fit.</>}
-          lead="If qualifying inbound, answering DMs or booking appointments is the bottleneck, we build that too — but as a piece of your broader operational stack, not a standalone chatbot dressed up as a product. AI is part of the toolkit, not the headline."
-        />
+        <Split visual="aiProduct" dark>
+          <SectionHead
+            dark
+            eyebrow="Also possible"
+            title={<>AI assistants, when they <em>actually</em> fit.</>}
+            lead="If qualifying inbound, answering DMs or booking appointments is the bottleneck, we build that too — but as a piece of your broader operational stack, not a standalone chatbot dressed up as a product. AI is part of the toolkit, not the headline."
+          />
+        </Split>
       </Section>
 
       <Section>
@@ -73,7 +73,7 @@ function AIProductEn() {
             { title: 'Built by the operators', body: 'Maxi runs on services revenue, not investor pressure. The product is shaped by what your business needs, not by what the next funding round demands.' },
           ].map((s, i) => (
             <div key={i} className="bg-cream p-10">
-              <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-signal">{String(i + 1).padStart(2, '0')}</span>
+              <Index n={i + 1} />
               <h3 className="font-display font-semibold text-[24px] mt-6 mb-4">{s.title}</h3>
               <p className="font-prose text-[17px] text-ink-soft leading-relaxed">{s.body}</p>
             </div>
@@ -87,8 +87,6 @@ function AIProductEn() {
         body="That's almost always where the work starts. A short conversation, a clear scope, and a written proposal."
         secondary={{ to: '/en/services#how-we-work', label: 'or see how we scope a build' }}
       />
-
-      <Footer />
     </>
   );
 }

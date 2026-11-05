@@ -1,60 +1,90 @@
-import Reveal from './reveal.jsx';
 import Actions from './actions.jsx';
 import { STATUS } from '../data/site.js';
+import { useIntroDone } from '../intro/state.js';
+import { LondonTime } from './live.jsx';
+import Visual from '../visuals/Visual.jsx';
 
-function Hero({ eyebrow, title, lead, actions, meta, status = STATUS }) {
+/*
+ * The page hero.
+ *
+ * Its arrival is not scroll-driven: it waits on the intro (useIntroDone),
+ * and starts on the first frame of the intro's exit so the two read as one
+ * event. On an ordinary page load `is-in` is present on the first paint and
+ * nothing animates. Delays and durations per element (after Minifinans):
+ *
+ *   eyebrow 0 · rule 80 · h1 120 · lead 320 · actions 560 · meta 700 · status 820
+ *
+ * The type is settled by the time the overlay unmounts (~1150 ms); the
+ * actions and meta are still moving, which is what makes it one event.
+ *
+ * `visual` names a slot in src/visuals/registry.jsx; it renders to the
+ * right of the type on wide screens (photo or code, per the visual mode).
+ */
+function Hero({ eyebrow, title, lead, actions, meta, status = STATUS, visual }) {
+  const arrived = useIntroDone();
+  const r = (d, dur) => ({ '--d': `${d}ms`, ...(dur && { '--dur': `${dur}ms` }) });
+
   return (
-    <section className="bg-cream relative overflow-hidden">
-      {/* Subtle stone accent in corner */}
-      <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full opacity-40 pointer-events-none"
-           style={{ background: 'radial-gradient(circle, #E8E4D8 0%, transparent 70%)', transform: 'translate(20%, -30%)' }}/>
+    <section className={`relative overflow-hidden bg-cream ${arrived ? 'is-in' : ''}`}>
+      <div className={`wrap relative pb-24 pt-20 md:pb-32 md:pt-28 ${visual ? 'lg:grid lg:grid-cols-12 lg:gap-12' : ''}`}>
+        <div className={visual ? 'lg:col-span-7' : ''}>
+          <span className="eyebrow hero-rise block" style={r(0, 500)}>{eyebrow}</span>
+          <span className="signal-rule hero-rule mb-10 mt-6" style={r(80)} />
 
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-24 md:pt-32 pb-24 md:pb-40 relative">
-        <Reveal variant="fade" delay={0}>
-          <span className="eyebrow">{eyebrow}</span>
-        </Reveal>
-        <Reveal variant="rule" as="hr" delay={150} className="mt-6 mb-10" />
-
-        <Reveal variant="up" delay={250}>
-          <h1 className="font-display text-[44px] md:text-[88px] leading-[1.02] font-light text-ink max-w-[900px]">
+          <h1
+            className={`hero-rise max-w-[900px] font-display text-[44px] font-light leading-[1.02] text-ink ${
+              visual ? 'md:text-[68px] xl:text-[76px]' : 'md:text-[80px] xl:text-[88px]'
+            }`}
+            style={r(120, 700)}
+          >
             {title}
           </h1>
-        </Reveal>
 
-        {lead && (
-          <Reveal variant="up" delay={450}>
-            <p className="font-prose text-[20px] md:text-[24px] leading-[1.6] text-ink-soft mt-10 max-w-[720px]">
+          {lead && (
+            <p
+              className="hero-rise mt-10 max-w-[720px] font-prose text-[19px] leading-[1.6] text-ink-soft md:text-[22px]"
+              style={r(320, 700)}
+            >
               {lead}
             </p>
-          </Reveal>
-        )}
+          )}
 
-        {actions && (
-          <Reveal variant="up" delay={550}>
-            <Actions {...actions} className="mt-12" />
-          </Reveal>
-        )}
+          {actions && (
+            <div className="hero-rise" style={r(560, 900)}>
+              <Actions {...actions} className="mt-12" />
+            </div>
+          )}
 
-        {meta && (
-          <Reveal variant="up" delay={650}>
-            <div className="flex flex-wrap gap-x-14 gap-y-5 mt-14">
+          {meta && (
+            <div className="hero-rise mt-14 flex flex-wrap gap-x-14 gap-y-5" style={r(700, 900)}>
               {meta.map((m, i) => (
                 <div key={i} className="flex flex-col gap-1.5">
-                  <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-ink-mid">{m.label}</span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mid">{m.label}</span>
                   <span className="font-ui text-[16px] font-medium text-ink">{m.value}</span>
                 </div>
               ))}
             </div>
-          </Reveal>
-        )}
+          )}
 
-        {status && (
-          <Reveal variant="fade" delay={900}>
-            <div className="mt-16 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.22em] uppercase text-ink-mid border-t border-stone pt-5">
-              <span className="pulse-dot" />
-              <span>{status}</span>
+          {status && (
+            <div
+              className="hero-rise mt-16 inline-flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-stone pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mid"
+              style={r(820, 900)}
+            >
+              <span className="inline-flex items-center gap-3">
+                <span className="pulse-dot" />
+                <span>{status}</span>
+              </span>
+              <span className="hidden text-stone sm:inline">/</span>
+              <LondonTime className="hidden sm:inline" />
             </div>
-          </Reveal>
+          )}
+        </div>
+
+        {visual && (
+          <div className="relative mt-16 hidden lg:col-span-5 lg:mt-0 lg:block">
+            <Visual slot={visual} hero />
+          </div>
         )}
       </div>
     </section>
