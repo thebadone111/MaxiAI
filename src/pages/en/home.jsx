@@ -71,7 +71,7 @@ function HomeEn() {
         <SectionHead
           dark
           eyebrow="What we believe"
-          title={<>Built to <em>last</em>, not to demo.</>}
+          title={<>Built to <em>Last</em>, not to demo.</>}
         />
         <div className="mb-20 max-w-[1000px]">
           <Manifesto text="The technology industry has spent fifteen years optimising for the launch tweet. We optimise for the third year of a client relationship — when nothing's exciting, everything works, and the bills get paid on time." />
