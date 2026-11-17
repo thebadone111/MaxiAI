@@ -2,7 +2,7 @@ import Hero from '../../elems/hero.jsx';
 import Reveal from '../../elems/reveal.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
 import { Section, SectionHead, FeatureGrid, RuledPoints, CTA, Index } from '../../elems/section.jsx';
-import { BrainReveal, Manifesto, ProcessTrack } from '../../elems/scenes.jsx';
+import { BrainReveal, Manifesto, NeuralScene, ProcessTrack } from '../../elems/scenes.jsx';
 
 /*
  * Tier 02 — the company brain.
@@ -82,6 +82,9 @@ function AIBrainEn() {
           ]}
         />
       </Section>
+
+      {/* How it learns: ingest, embed, connect, recall, scrubbed by scroll */}
+      <NeuralScene />
 
       {/* The window that opens: the brain answering a real-shaped question */}
       <BrainReveal />

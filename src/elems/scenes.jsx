@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { useHydrated, useMinWidth, useReducedMotion, useScrollProgress } from '../motion/hooks.js';
 import { AskBrain, EditorReveal } from '../visuals/code.jsx';
+export { default as NeuralScene } from '../visuals/neural.jsx';
 import { Section, SectionHead } from './section.jsx';
 import Reveal from './reveal.jsx';
 

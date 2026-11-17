@@ -93,6 +93,7 @@ intro's exit: eyebrow 0 → rule 80 → h1 120 → lead 320 → actions 560 → 
 | Scene | Where | Fallback |
 |---|---|---|
 | `HomeReveal`: a window at 42% of the screen opens to full bleed; the content counter-scales | Home, after "Two disciplines" | Reduced motion: fully open |
+| `NeuralScene` ([`src/visuals/neural.jsx`](src/visuals/neural.jsx)): a 2D-canvas network, scrubbed by scroll through four beats. Documents stream in as vectors (ingest), drift into labelled clusters while a loss curve falls (embed), wire into a knowledge graph with travelling signals (connect), then a red query vector lights its nearest neighbours (recall). A live readout shows documents, vectors, clusters, edges and loss | AI Brain, after "What it is" | Reduced motion: the finished graph, drawn once |
 | `BrainReveal`: the same window; inside, the brain answers a question (question types, sources light, answer writes with citations, an action waits for approval) | AI Brain, after "What it is" | Reduced motion: the finished exchange |
 | `ProcessTrack`: a sticky horizontal track with a counter and a progress rule | Services "How we work", AI Brain "How it works" | Below 1280px, under reduced motion, and in the prerender: the plain row of steps |
 | `Manifesto`: words light one by one | Home "What we believe", AI Brain "What it is" | Fully lit |
