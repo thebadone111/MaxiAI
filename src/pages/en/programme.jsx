@@ -63,7 +63,7 @@ function ApplicationForm() {
       setStatus({
         sending: false,
         ok: false,
-        msg: 'Something went wrong. Please email ' + contact.email + ' or call ' + contact.phone + '.',
+        msg: 'Something went wrong. Please email ' + contact.email + '.',
       });
     }
   };
@@ -139,7 +139,7 @@ function ProgrammeEn() {
         lead="We can produce a proper landing page and register your domain in an afternoon. That's cheap enough for us to give away — so we do, to a limited number of businesses a year, because a few of them grow into something bigger later."
         actions={{
           primary: { to: '/en/programme#apply', label: 'See if you qualify' },
-          secondary: { href: contact.phoneHref, label: 'or call us on ' + contact.phone },
+          secondary: { href: `mailto:${contact.email}`, label: 'or email us instead' },
         }}
         meta={[
           { label: 'Cost of the build', value: '£0' },
@@ -283,12 +283,12 @@ function ProgrammeEn() {
       </Section>
 
       <CTA
-        eyebrow="Or just call"
-        title={<>Easier to <em>say it out loud?</em></>}
-        body="Ring us and describe the business in a minute. If it's a fit, we'll tell you on the call."
+        eyebrow="Or just write"
+        title={<>Easier to <em>tell us in an email?</em></>}
+        body="A line or two about the business is enough. If it's a fit, we'll build the page first and send you the link."
         linkTo="/en/programme#apply"
         linkLabel="Apply for a place"
-        secondary={{ href: contact.phoneHref, label: 'or call ' + contact.phone }}
+        secondary={{ href: `mailto:${contact.email}`, label: 'or write to ' + contact.email }}
       />
     </>
   );

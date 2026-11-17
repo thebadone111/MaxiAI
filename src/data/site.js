@@ -21,9 +21,8 @@ export const VAT_NOTE = 'Prices exclude VAT, if and when applicable.';
 
 // ── Contact ───────────────────────────────────────────────
 export const contact = {
+  // No phone number is published on the site, by decision (17 Nov 2026).
   email: 'info@maxiai.co.uk',
-  phone: '+44 7435 322298',
-  phoneHref: 'tel:+447435322298',
   address: ['Flat 2, 82 Crouch Hill', 'London N8 9ED', 'United Kingdom'],
 };
 

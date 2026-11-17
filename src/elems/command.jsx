@@ -9,7 +9,7 @@ import { lockScroll } from '../motion/smooth.js';
  * A software studio's site should be operable the way its visitors' tools
  * are. Everything a visitor might come for is one keystroke and a few
  * letters away: any page or section, the prices, the email address (copied),
- * the phone number. It is a dialog with a focus trap, fully usable by
+ * and how to write to us. It is a dialog with a focus trap, fully usable by
  * keyboard, and nothing on the site depends on it.
  */
 
@@ -47,7 +47,6 @@ function useCommands(close) {
       },
     },
     { group: 'Do', label: 'Write to us', hint: 'Opens your mail app', run: () => { window.location.href = `mailto:${contact.email}`; }, keywords: 'email' },
-    { group: 'Do', label: 'Call us', hint: contact.phone, run: () => { window.location.href = contact.phoneHref; }, keywords: 'phone ring' },
 
     {
       group: 'Preferences', label: 'Replay the intro', hint: 'Reloads the page', keywords: 'animation',

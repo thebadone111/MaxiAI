@@ -40,7 +40,6 @@ const organisation = {
   logo: `${ORIGIN}/favicon-512.png`,
   image: `${ORIGIN}/og.png`,
   email: contact.email,
-  telephone: contact.phone,
   foundingDate: '2024',
   address: {
     '@type': 'PostalAddress',
