@@ -15,12 +15,33 @@ import './neural.css';
  *   04 Recall   a question arrives as a red vector; its nearest neighbours
  *               light up and are pulled in as the answer's sources
  *
- * Every position is a pure function of scroll progress (plus a small idle
- * shimmer from the clock), so it scrubs both ways and a reload lands on the
- * same frame. One canvas, one draw call per layer, nothing allocated per
- * frame. The loop only runs while the scene is on screen. Under reduced
- * motion it draws the finished graph once and never animates.
+ * Every position is a pure function of progress (plus a small idle shimmer
+ * from the clock), so it scrubs both ways and a reload lands on the same
+ * frame. The beats overlap — points are still arriving as the first ones
+ * begin to cluster — and every transition uses a smootherstep curve, so
+ * nothing starts or stops abruptly.
+ *
+ * Smoothness: the canvas never follows the raw scroll position. It follows
+ * an eased copy that glides towards it (a frame-rate-independent
+ * exponential approach), so a coarse wheel notch becomes a glide rather
+ * than a jump. Drawing is batched — one path per alpha band for the points,
+ * one stroke per edge type — about twenty canvas calls a frame instead of
+ * fifteen hundred, which is what keeps it at a steady 60fps.
+ *
+ * The loop only runs while the scene is on screen. Under reduced motion it
+ * draws the finished graph once and never animates.
  */
+
+/* The story, as fractions of the scene's scroll length. Each beat overlaps
+   the next. Change a number here and the canvas, readout and captions all
+   follow. */
+const T = {
+  ingest: [0.0, 0.3],
+  embed: [0.22, 0.6],
+  connect: [0.54, 0.8],
+  recall: [0.78, 0.97],
+};
+const EASE_MS = 160; // how quickly the drawing catches up with the scroll
 
 const CLUSTERS = [
   { name: 'clients', x: 0.2, y: 0.3 },
@@ -52,7 +73,8 @@ function mulberry32(a) {
 }
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
-const smooth = (v) => v * v * (3 - 2 * v);
+// Smootherstep: zero velocity *and* zero acceleration at both ends.
+const ease = (v) => v * v * v * (v * (v * 6 - 15) + 10);
 const span = (p, a, b) => clamp01((p - a) / (b - a));
 
 function gauss(rand) {
@@ -80,7 +102,7 @@ function build(n) {
       // home in its cluster
       cx: cl.x + gauss(rand) * 0.058,
       cy: cl.y + gauss(rand) * 0.058,
-      t: (i / n) * 0.18 + rand() * 0.03, // ingest order
+      t: (i / n) * 0.17 + rand() * 0.04, // ingest order, within T.ingest
       e: rand(), // embed stagger
       ph: rand() * Math.PI * 2,
       r: 1.3 + rand() * 1.3,
@@ -129,7 +151,8 @@ export default function NeuralScene() {
   const headEl = useRef(null);
   const footEl = useRef(null);
   const hudEl = useRef(null);
-  const state = useRef({ p: 1, net: null, w: 0, h: 0, dpr: 1, field: null });
+  // target: where the scroll is. shown: where the drawing is, gliding after it.
+  const state = useRef({ target: 1, shown: 1, net: null, w: 0, h: 0, dpr: 1, field: null });
   const hud = useRef({});
   const steps = useRef([]);
   const bar = useRef(null);
@@ -140,19 +163,20 @@ export default function NeuralScene() {
 
   // HUD and captions follow progress; written only when they change.
   const paintHud = (p) => {
-    const ingested = smooth(span(p, 0, 0.24));
+    const ingested = ease(span(p, T.ingest[0], T.ingest[1] - 0.04));
     const docs = Math.round(3212 * ingested);
     const set = (k, v) => { const el = hud.current[k]; if (el && el.textContent !== v) el.textContent = v; };
     set('docs', docs.toLocaleString('en-GB'));
     set('vectors', Math.round(docs * 15.2).toLocaleString('en-GB'));
-    set('clusters', String(p < 0.3 ? 0 : Math.min(CLUSTERS.length, Math.ceil(span(p, 0.3, 0.5) * CLUSTERS.length))));
-    set('edges', Math.round(span(p, 0.56, 0.78) * 18420).toLocaleString('en-GB'));
-    const lossK = span(p, 0.26, 0.56);
+    const emb = span(p, T.embed[0] + 0.06, T.embed[1] - 0.06);
+    set('clusters', String(emb <= 0 ? 0 : Math.min(CLUSTERS.length, Math.ceil(emb * CLUSTERS.length))));
+    set('edges', Math.round(ease(span(p, ...T.connect)) * 18420).toLocaleString('en-GB'));
+    const lossK = ease(span(p, ...T.embed));
     set('loss', LOSS[Math.min(39, Math.round(lossK * 39))].toFixed(3));
     set('epoch', String(Math.max(1, Math.round(lossK * 12))).padStart(2, '0'));
     if (lossRef.current) lossRef.current.style.strokeDashoffset = String(1 - lossK);
     if (bar.current) bar.current.style.transform = `scaleX(${p.toFixed(4)})`;
-    const i = p < 0.26 ? 0 : p < 0.56 ? 1 : p < 0.8 ? 2 : 3;
+    const i = p < T.embed[0] + 0.04 ? 0 : p < T.connect[0] + 0.02 ? 1 : p < T.recall[0] ? 2 : 3;
     if (i !== activeStep.current) {
       steps.current[activeStep.current]?.classList.remove('is-active');
       steps.current[i]?.classList.add('is-active');
@@ -165,113 +189,152 @@ export default function NeuralScene() {
     const cv = canvas.current;
     if (!cv || !s.net) return;
     const ctx = cv.getContext('2d');
-    const { p, w, h, dpr, field } = s;
+    const { shown: p, w, h, dpr, field } = s;
     const { pts, edges, nn, nnList } = s.net;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
 
     const fx = (u) => field.x + u * field.w;
     const fy = (v) => field.y + v * field.h;
-    const ingestP = p;
-    const embed = span(p, 0.26, 0.56);
-    const connect = span(p, 0.56, 0.8);
-    const recall = span(p, 0.8, 0.94);
-    const shimmer = time * 0.0006;
+    const embed = span(p, ...T.embed);
+    const connect = span(p, ...T.connect);
+    const recall = span(p, ...T.recall);
+    const shimmer = time * 0.0005;
+    const TAU = Math.PI * 2;
 
     // positions this frame
-    const X = s.X || (s.X = new Float32Array(pts.length));
-    const Y = s.Y || (s.Y = new Float32Array(pts.length));
-    const A = s.A || (s.A = new Float32Array(pts.length));
-    for (let i = 0; i < pts.length; i++) {
+    const n = pts.length;
+    const X = s.X || (s.X = new Float32Array(n));
+    const Y = s.Y || (s.Y = new Float32Array(n));
+    const A = s.A || (s.A = new Float32Array(n));
+    const ingestLen = 0.12;
+    for (let i = 0; i < n; i++) {
       const q = pts[i];
-      const k = smooth(clamp01((ingestP - q.t) / 0.07));
-      const e = smooth(clamp01((embed - q.e * 0.45) / 0.55));
+      const k = ease(clamp01((p - q.t) / ingestLen));
+      const e = ease(clamp01((embed - q.e * 0.4) / 0.6));
       const ux = q.sx + (q.rx - q.sx) * k;
       const uy = q.sy + (q.ry - q.sy) * k;
-      const jitter = 0.0035 * (1 - 0.6 * e);
+      const jitter = 0.0032 * (1 - 0.65 * e);
       X[i] = fx(ux + (q.cx - ux) * e + Math.sin(shimmer + q.ph) * jitter);
       Y[i] = fy(uy + (q.cy - uy) * e + Math.cos(shimmer * 1.3 + q.ph) * jitter);
       A[i] = k;
     }
 
-    // edges
+    // edges: each grows from one end to the other; two strokes in total
     if (connect > 0) {
       ctx.lineWidth = 1;
-      for (const ed of edges) {
-        const a = smooth(clamp01((connect - ed.s * 0.5) / 0.5));
-        if (a <= 0) continue;
-        ctx.strokeStyle = ed.cross
-          ? `rgba(250,247,240,${(0.22 * a).toFixed(3)})`
-          : `rgba(250,247,240,${(0.1 * a).toFixed(3)})`;
+      for (const cross of [false, true]) {
+        ctx.strokeStyle = cross ? 'rgba(250,247,240,0.22)' : 'rgba(250,247,240,0.1)';
+        ctx.globalAlpha = ease(clamp01(connect * 1.6));
         ctx.beginPath();
-        ctx.moveTo(X[ed.a], Y[ed.a]);
-        ctx.lineTo(X[ed.b], Y[ed.b]);
-        ctx.stroke();
-        // a signal travelling the cross-cluster links
-        if (ed.cross && a > 0.9) {
-          const t = (time * 0.00035 + ed.ph) % 1;
-          ctx.fillStyle = 'rgba(192,57,43,0.9)';
-          ctx.beginPath();
-          ctx.arc(X[ed.a] + (X[ed.b] - X[ed.a]) * t, Y[ed.a] + (Y[ed.b] - Y[ed.a]) * t, 1.6, 0, Math.PI * 2);
-          ctx.fill();
+        for (const ed of edges) {
+          if (ed.cross !== cross) continue;
+          const g = ease(clamp01((connect - ed.s * 0.45) / 0.55));
+          if (g <= 0) continue;
+          ctx.moveTo(X[ed.a], Y[ed.a]);
+          ctx.lineTo(X[ed.a] + (X[ed.b] - X[ed.a]) * g, Y[ed.a] + (Y[ed.b] - Y[ed.a]) * g);
         }
+        ctx.stroke();
       }
+      // signals travelling the cross-cluster links, one fill
+      const sig = ease(span(connect, 0.6, 1));
+      if (sig > 0) {
+        ctx.globalAlpha = sig;
+        ctx.fillStyle = 'rgba(192,57,43,0.95)';
+        ctx.beginPath();
+        for (const ed of edges) {
+          if (!ed.cross) continue;
+          const t = (time * 0.00028 + ed.ph) % 1;
+          const x = X[ed.a] + (X[ed.b] - X[ed.a]) * t;
+          const y = Y[ed.a] + (Y[ed.b] - Y[ed.a]) * t;
+          ctx.moveTo(x + 1.7, y);
+          ctx.arc(x, y, 1.7, 0, TAU);
+        }
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
     }
 
-    // recall: query vector and its nearest neighbours
-    const qx = fx(QUERY.x - 0.3 * (1 - smooth(span(recall, 0, 0.4))));
-    const qy = fy(QUERY.y - 0.25 * (1 - smooth(span(recall, 0, 0.4))));
-    if (recall > 0) {
-      const lines = smooth(span(recall, 0.35, 0.9));
-      ctx.strokeStyle = `rgba(192,57,43,${(0.75 * lines).toFixed(3)})`;
+    // recall: the query glides in, then reaches out to its neighbours
+    const arrive = ease(span(recall, 0, 0.45));
+    const qx = fx(QUERY.x - 0.3 * (1 - arrive));
+    const qy = fy(QUERY.y - 0.25 * (1 - arrive));
+    const reach = ease(span(recall, 0.35, 0.9));
+    if (reach > 0) {
+      ctx.strokeStyle = 'rgba(192,57,43,0.75)';
       ctx.lineWidth = 1;
-      nnList.forEach((i, n) => {
-        const l = clamp01(lines * K - n);
+      ctx.beginPath();
+      nnList.forEach((i, k) => {
+        const l = ease(clamp01(reach * K - k));
         if (l <= 0) return;
-        ctx.beginPath();
         ctx.moveTo(qx, qy);
         ctx.lineTo(qx + (X[i] - qx) * l, qy + (Y[i] - qy) * l);
-        ctx.stroke();
       });
+      ctx.stroke();
     }
 
-    // points
-    const dim = recall > 0 ? 1 - 0.55 * smooth(span(recall, 0.3, 0.8)) : 1;
-    for (let i = 0; i < pts.length; i++) {
-      if (A[i] <= 0) continue;
-      const hit = recall > 0.5 && nn.has(i);
-      ctx.fillStyle = hit
-        ? 'rgba(192,57,43,1)'
-        : `rgba(250,247,240,${(0.8 * A[i] * dim).toFixed(3)})`;
+    // points, batched into alpha bands
+    const dim = 1 - 0.55 * ease(span(recall, 0.3, 0.8));
+    const lit = ease(span(recall, 0.45, 0.85));
+    const BANDS = 8;
+    ctx.fillStyle = 'rgb(250,247,240)';
+    for (let band = 1; band <= BANDS; band++) {
+      const lo = (band - 1) / BANDS;
+      const hi = band / BANDS;
+      ctx.globalAlpha = 0.8 * hi * dim;
       ctx.beginPath();
-      ctx.arc(X[i], Y[i], hit ? pts[i].r + 1.4 : pts[i].r, 0, Math.PI * 2);
-      ctx.fill();
-      if (hit) {
-        ctx.strokeStyle = 'rgba(192,57,43,0.45)';
-        ctx.beginPath();
-        ctx.arc(X[i], Y[i], pts[i].r + 6, 0, Math.PI * 2);
-        ctx.stroke();
+      let any = false;
+      for (let i = 0; i < n; i++) {
+        const a = A[i];
+        if (a <= lo || a > hi || (lit > 0 && nn.has(i))) continue;
+        const r = pts[i].r;
+        ctx.moveTo(X[i] + r, Y[i]);
+        ctx.arc(X[i], Y[i], r, 0, TAU);
+        any = true;
       }
+      if (any) ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // the recalled memories: red, with a halo
+    if (lit > 0) {
+      ctx.fillStyle = `rgba(192,57,43,${lit.toFixed(3)})`;
+      ctx.beginPath();
+      for (const i of nnList) {
+        const r = pts[i].r + 1.4 * lit;
+        ctx.moveTo(X[i] + r, Y[i]);
+        ctx.arc(X[i], Y[i], r, 0, TAU);
+      }
+      ctx.fill();
+      ctx.strokeStyle = `rgba(192,57,43,${(0.45 * lit).toFixed(3)})`;
+      ctx.beginPath();
+      for (const i of nnList) {
+        const r = pts[i].r + 6;
+        ctx.moveTo(X[i] + r, Y[i]);
+        ctx.arc(X[i], Y[i], r, 0, TAU);
+      }
+      ctx.stroke();
     }
 
-    if (recall > 0) {
-      const a = smooth(span(recall, 0, 0.3));
+    if (arrive > 0) {
+      const a = arrive;
       ctx.fillStyle = `rgba(192,57,43,${a.toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(qx, qy, 5, 0, Math.PI * 2);
+      ctx.arc(qx, qy, 5, 0, TAU);
       ctx.fill();
-      ctx.strokeStyle = `rgba(192,57,43,${(0.5 * a).toFixed(3)})`;
-      const ring = 10 + ((time * 0.02) % 18);
+      // a slow sonar ring, eased in and out over each pulse
+      const pulse = (time * 0.00045) % 1;
+      ctx.strokeStyle = `rgba(192,57,43,${(0.5 * a * (1 - pulse)).toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(qx, qy, ring, 0, Math.PI * 2);
+      ctx.arc(qx, qy, 8 + ease(pulse) * 22, 0, TAU);
       ctx.stroke();
+
       ctx.font = '11px "DM Mono", ui-monospace, monospace';
       const l1 = w < 600 ? 'query · "northgate — paid?"' : 'query · "northgate quote — paid?"';
       const l2 = `top-${K} memories · cos ≥ 0.82`;
-      // Labels sit right of the query, or left of it if they would run off.
-      const room = Math.max(ctx.measureText(l1).width, ctx.measureText(l2).width) + 24;
       // Right of the query; else left of it; else pinned inside the right
       // edge and lifted clear of the point.
+      const room = Math.max(ctx.measureText(l1).width, ctx.measureText(l2).width) + 24;
       let lx = qx + 14;
       let ly = qy - 12;
       ctx.textAlign = 'start';
@@ -285,18 +348,18 @@ export default function NeuralScene() {
       }
       ctx.fillStyle = `rgba(250,247,240,${a.toFixed(3)})`;
       ctx.fillText(l1, lx, ly);
-      ctx.fillStyle = `rgba(154,149,168,${smooth(span(recall, 0.8, 1)).toFixed(3)})`;
+      ctx.fillStyle = `rgba(154,149,168,${ease(span(recall, 0.75, 1)).toFixed(3)})`;
       ctx.fillText(l2, lx, ly + 16);
       ctx.textAlign = 'start';
     }
 
     // cluster labels
-    if (embed > 0.4) {
-      const a = smooth(span(embed, 0.4, 1)) * (recall > 0 ? 1 - 0.5 * recall : 1);
+    const label = ease(span(embed, 0.45, 1)) * (1 - 0.5 * ease(recall));
+    if (label > 0) {
       ctx.font = '10px "DM Mono", ui-monospace, monospace';
       ctx.textAlign = 'center';
+      ctx.fillStyle = `rgba(154,149,168,${label.toFixed(3)})`;
       CLUSTERS.forEach((c) => {
-        ctx.fillStyle = `rgba(154,149,168,${a.toFixed(3)})`;
         ctx.fillText(c.name.toUpperCase().split('').join(' '), fx(c.x), fy(c.y) - field.h * 0.16);
       });
       ctx.textAlign = 'start';
@@ -304,9 +367,14 @@ export default function NeuralScene() {
   };
 
   const ref = useScrollProgress((p) => {
-    state.current.p = p;
-    paintHud(p);
-    if (!raf.current) draw(performance.now());
+    const s = state.current;
+    s.target = p;
+    // Off screen (or reduced motion) there is no loop to glide: jump.
+    if (!raf.current) {
+      s.shown = p;
+      paintHud(p);
+      draw(performance.now());
+    }
   }, { span: true, rest: 1 });
 
   // Size the canvas and the drawing field; rebuild the point set for the
@@ -363,9 +431,19 @@ export default function NeuralScene() {
   useEffect(() => {
     const cv = canvas.current;
     if (!cv || reducedMotion()) return;
+    let last = 0;
     const loop = (t) => {
+      const s = state.current;
+      const dt = last ? Math.min(64, t - last) : 16;
+      last = t;
+      // Exponential approach, independent of frame rate: covers ~63% of the
+      // remaining distance every EASE_MS.
+      s.shown += (s.target - s.shown) * (1 - Math.exp(-dt / EASE_MS));
+      if (Math.abs(s.target - s.shown) < 0.0001) s.shown = s.target;
+      paintHud(s.shown);
       draw(t);
-      raf.current = visible.current ? requestAnimationFrame(loop) : 0;
+      if (visible.current) raf.current = requestAnimationFrame(loop);
+      else { raf.current = 0; last = 0; }
     };
     const io = new IntersectionObserver(([e]) => {
       visible.current = e.isIntersecting;
@@ -382,7 +460,7 @@ export default function NeuralScene() {
   const h = (k) => (el) => { hud.current[k] = el; };
 
   return (
-    <section ref={ref} className="neural relative bg-ink text-cream" style={{ height: '320vh' }} aria-labelledby="neural-title">
+    <section ref={ref} className="neural relative bg-ink text-cream" style={{ height: '640vh' }} aria-labelledby="neural-title">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <canvas ref={canvas} className="absolute inset-0 h-full w-full" aria-hidden="true" />
 

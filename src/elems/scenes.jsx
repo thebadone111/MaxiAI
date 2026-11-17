@@ -28,7 +28,7 @@ const easeOut = (x) => 1 - Math.pow(1 - x, 3);
 const START = 0.42;
 const RADIUS = 6;
 
-function RevealScene({ label, children }) {
+function RevealScene({ label, height = '260vh', children }) {
   const frame = useRef(null);
   const inner = useRef(null);
   const listeners = useRef(new Set());
@@ -50,7 +50,7 @@ function RevealScene({ label, children }) {
   }, { span: true, rest: 1 });
 
   return (
-    <section ref={ref} className="relative bg-cream" style={{ height: '260vh' }} aria-label={label}>
+    <section ref={ref} className="relative bg-cream" style={{ height }} aria-label={label}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div
           ref={frame}
@@ -80,7 +80,7 @@ export function HomeReveal() {
 
 export function BrainReveal() {
   return (
-    <RevealScene label="The company brain, answering a question">
+    <RevealScene label="The company brain, answering a question" height="380vh">
       {(register) => <AskBrain register={register} />}
     </RevealScene>
   );

@@ -57,7 +57,7 @@
   display: grid;
   gap: 6px;
   opacity: 0.32;
-  transition: opacity 450ms var(--ease-reveal);
+  transition: opacity 900ms var(--ease-reveal);
 }
 .neural-step.is-active { opacity: 1; }
 .neural-step-title {
