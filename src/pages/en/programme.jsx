@@ -106,8 +106,8 @@ function ApplicationForm() {
         </legend>
         <div className="flex gap-8 mt-4">
           {['Yes', 'No'].map((v) => (
-            <label key={v} className="flex items-center gap-3 font-ui text-[16px] text-ink cursor-pointer">
-              <input type="radio" name="price_ok" value={v} required className="accent-signal w-4 h-4" />
+            <label key={v} className="flex items-center gap-3 py-2 pr-2 font-ui text-[16px] text-ink cursor-pointer">
+              <input type="radio" name="price_ok" value={v} required className="accent-signal w-5 h-5" />
               {v}
             </label>
           ))}

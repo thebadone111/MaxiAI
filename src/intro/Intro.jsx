@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { lockScroll, reducedMotion } from '../motion/smooth'
 import {
-  IntroDone, clearPending, forceStill, freezeAt, introPending, markIntroSeen,
+  IntroDone, clearPending, forceStill, freezeAt, introPending,
 } from './state'
 import Scene from './scenes/signal'
 import './intro.css'
@@ -11,7 +11,7 @@ import './intro.css'
  *
  * The page renders underneath it, always — the intro is never on the
  * critical path for the largest paint. It holds for five seconds, or until
- * the first click, key or scroll, once per visit.
+ * the first click, key or scroll.
  *
  * Difference from Minifinans: this site is prerendered. The server and the
  * hydrating client must render the same tree, and the server cannot know
@@ -41,10 +41,7 @@ function Overlay({ leaving, reduced, at, onLeave, onDone }) {
   const enter = useRef(null)
   const hold = reduced ? REDUCED_HOLD_MS : HOLD_MS
 
-  const exit = useCallback(() => {
-    markIntroSeen()
-    onLeave()
-  }, [onLeave])
+  const exit = useCallback(() => onLeave(), [onLeave])
 
   // A dev freeze holds the frame: no timer and no exit on interaction.
   useEffect(() => {

@@ -11,10 +11,10 @@ function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink text-cream">
       {/* The closing line: large, quiet, and the last thing on every page. */}
-      <div className="wrap border-b border-cream/10 pb-16 pt-24 md:pb-20 md:pt-32">
+      <div className="wrap border-b border-cream/10 pb-14 pt-20 md:pb-20 md:pt-32">
         <Reveal variant="rule" />
         <Reveal variant="up" delay={120}>
-          <p className="mt-8 max-w-[14ch] font-display text-[44px] font-light leading-[1.02] tracking-[-0.02em] text-cream md:text-[88px]">
+          <p className="mt-8 max-w-[14ch] font-display text-[clamp(2.5rem,11vw,2.875rem)] font-light leading-[1.02] tracking-[-0.02em] text-cream md:text-[88px]">
             Built for the <em className="font-normal italic text-signal">third year.</em>
           </p>
         </Reveal>
@@ -22,7 +22,7 @@ function Footer() {
           <Link to="/en/contact-us" className="btn-primary btn-signal">
             Talk to us <span>→</span>
           </Link>
-          <a href={`mailto:${contact.email}`} className="link-sweep font-mono text-[14px] text-cream/80 hover:text-cream">
+          <a href={`mailto:${contact.email}`} className="link-sweep inline-block py-2 font-mono text-[14px] text-cream/80 hover:text-cream">
             {contact.email}
           </a>
         </Reveal>
@@ -41,25 +41,25 @@ function Footer() {
 
         <div className="md:col-span-3">
           <span className="eyebrow text-mist">Explore</span>
-          <ul className="mt-5 space-y-3 font-ui text-[14px] text-cream/80">
+          <ul className="mt-4 space-y-1 font-ui text-[15px] text-cream/80">
             {[
               ['/en/home', 'Home'],
               ['/en/services', 'Services'],
               ['/en/services#pricing', 'Pricing'],
-              ['/en/ai-product', 'AI Product'],
+              ['/en/ai-brain', 'AI Brain'],
               ['/en/programme', 'Studio Programme'],
               ['/en/about-us', 'About'],
               ['/en/contact-us', 'Contact'],
             ].map(([to, label]) => (
               <li key={to}>
-                <Link to={to} className="link-sweep transition-colors hover:text-cream">{label}</Link>
+                <Link to={to} className="link-sweep inline-block py-1.5 transition-colors hover:text-cream">{label}</Link>
               </li>
             ))}
           </ul>
           <button
             type="button"
             onClick={openCommandPalette}
-            className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mist transition-colors hover:text-cream"
+            className="mt-6 hidden items-center gap-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mist transition-colors hover:text-cream lg:inline-flex"
           >
             or press <kbd className="rounded-[3px] border border-cream/20 px-1.5 py-0.5 font-mono normal-case tracking-wider">{shortcut}</kbd>
           </button>
@@ -95,9 +95,9 @@ function Footer() {
           </p>
 
           <nav aria-label="Legal" className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-widest">
-            <Link to="/en/privacy" className="text-cream transition-colors hover:text-signal">Privacy</Link>
+            <Link to="/en/privacy" className="inline-block py-3 text-cream transition-colors hover:text-signal">Privacy</Link>
             <span className="text-cream/30">·</span>
-            <Link to="/en/tos" className="text-cream transition-colors hover:text-signal">Terms</Link>
+            <Link to="/en/tos" className="inline-block py-3 text-cream transition-colors hover:text-signal">Terms</Link>
             <span className="text-cream/30">·</span>
             <BuildStamp className="text-cream/40" />
           </nav>

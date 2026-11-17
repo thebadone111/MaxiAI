@@ -23,7 +23,7 @@ const easeOut = (x) => 1 - Math.pow(1 - x, 3);
 const START = 0.42;
 const RADIUS = 6;
 
-export function HomeReveal({ caption }) {
+export function HomeReveal() {
   const frame = useRef(null);
   const inner = useRef(null);
   const listeners = useRef(new Set());
@@ -60,11 +60,6 @@ export function HomeReveal({ caption }) {
             <EditorReveal register={register} />
           </div>
         </div>
-        {caption && (
-          <p className="absolute inset-x-0 bottom-0 px-6 pb-8 text-center font-mono text-[10px] uppercase tracking-[0.24em] text-cream mix-blend-difference sm:px-10">
-            {caption}
-          </p>
-        )}
       </div>
     </section>
   );
@@ -83,7 +78,7 @@ function Steps({ items, dark }) {
   return (
     <div className={`grid grid-cols-1 gap-px border ${items.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'} ${dark ? 'border-cream/10 bg-cream/10' : 'border-stone bg-stone'}`}>
       {items.map((s, i) => (
-        <div key={s.title} className={`${dark ? 'bg-ink' : 'bg-cream'} lift p-10`}>
+        <div key={s.title} className={`${dark ? 'bg-ink' : 'bg-cream'} lift p-7 md:p-10`}>
           <Reveal variant="up" delay={i * 110}>
             <span className="font-mono text-[28px] font-light text-signal">{String(i + 1).padStart(2, '0')}</span>
             <h3 className={`mb-4 mt-6 font-display text-[24px] font-semibold ${dark ? 'text-cream' : 'text-ink'}`}>{s.title}</h3>

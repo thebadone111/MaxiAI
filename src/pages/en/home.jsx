@@ -14,7 +14,7 @@ function HomeEn() {
       <Hero
         eyebrow="Maxi AI Development · London"
         title={<>Software and <em>AI infrastructure</em>, built with the patience of a tradition.</>}
-        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and the custom AI-integrated software the next generation of creators is starting to need. London-based; we work with clients wherever they are."
+        lead="We design and build the systems modern businesses run on — secure websites, IT infrastructure, and a private AI brain that knows your business and acts on it. London-based; we work with clients wherever they are."
         actions={{
           primary: { to: '/en/contact-us', label: 'Talk to us' },
           secondary: { to: '/en/services#pricing', label: 'or see what we charge' },
@@ -31,16 +31,16 @@ function HomeEn() {
         <SectionHead
           eyebrow="The Practice"
           title={<>Two disciplines, one <em>workshop.</em></>}
-          lead="We run a small studio that does one thing well in two registers: dependable infrastructure for established businesses, and the bespoke software the next generation of creators needs to run their operations at scale."
+          lead="We run a small studio that does one thing well in two registers: dependable infrastructure for established businesses, and a private AI brain that turns everything a business knows into something it can use."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-stone border border-stone">
-          <Reveal variant="up" className="bg-cream p-12 lift">
+          <Reveal variant="up" className="bg-cream p-7 md:p-12 lift">
             <Index n="Tier 01" />
-            <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
+            <h3 className="font-display font-semibold text-[26px] md:text-[32px] mt-6 mb-5 leading-tight">
               Your on-demand <em className="text-signal not-italic">tech department.</em>
             </h3>
-            <p className="font-prose text-[18px] text-ink-soft leading-relaxed mb-8">
+            <p className="font-prose text-[17px] md:text-[18px] text-ink-soft leading-relaxed mb-8">
               Secure websites, cybersecurity frameworks, IT infrastructure, bespoke software. Every engagement runs through a single dedicated engineer — one point of contact, end to end. Retainers from {price.retainer} a month. The kind of relationship that survives a decade, not a procurement cycle.
             </p>
             <Link to="/en/services" className="btn-ghost">
@@ -48,23 +48,23 @@ function HomeEn() {
             </Link>
           </Reveal>
 
-          <Reveal variant="up" delay={150} className="bg-cream p-12 lift">
+          <Reveal variant="up" delay={150} className="bg-cream p-7 md:p-12 lift">
             <Index n="Tier 02" />
-            <h3 className="font-display font-semibold text-[32px] mt-6 mb-5 leading-tight">
-              Custom AI-integrated software for <em className="text-signal not-italic">creators.</em>
+            <h3 className="font-display font-semibold text-[26px] md:text-[32px] mt-6 mb-5 leading-tight">
+              Your company's own <em className="text-signal not-italic">AI brain.</em>
             </h3>
-            <p className="font-prose text-[18px] text-ink-soft leading-relaxed mb-8">
-              Cross-platform publishing, unified dashboards, bespoke operational infrastructure — built around the way you actually run your business. The product layer modern creators have outgrown the generic tools for.
+            <p className="font-prose text-[17px] md:text-[18px] text-ink-soft leading-relaxed mb-8">
+              A private AI wired into your email, documents and systems. It knows how the business runs, answers anyone on the team with sources, and does the work it's trusted with — learning as you go. Yours to keep.
             </p>
-            <Link to="/en/ai-product" className="btn-ghost">
-              See the product <span className="font-mono">→</span>
+            <Link to="/en/ai-brain" className="btn-ghost">
+              Meet the brain <span className="font-mono">→</span>
             </Link>
           </Reveal>
         </div>
       </Section>
 
       {/* The window that opens: the editor typing itself */}
-      <HomeReveal caption="Every engagement, written down and running" />
+      <HomeReveal />
 
       {/* What we believe */}
       <Section dark>
@@ -106,17 +106,17 @@ function HomeEn() {
           lead="We don't publish client work as a matter of course — discretion is part of what we're paid for. These four are the exceptions: businesses happy to be named."
         />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
           {[
             { name: 'Minifinans AB', sector: 'Financial services · Sweden', work: 'Website and AI integration.' },
             { name: 'Ashford Partners Ltd', sector: 'Advisory · United Kingdom', work: 'Corporate branding and digital suite.' },
             { name: 'Nordic Fiber', sector: 'Infrastructure · Sweden', work: 'Cybersecurity review and infrastructure.' },
             { name: 'sconcierge', sector: 'Hospitality · Malta', work: 'Operational software.' },
           ].map((c, i) => (
-            <Reveal key={i} variant="up" delay={i * 110} className="bg-ink p-10 flex flex-col justify-between min-h-[220px] lift">
+            <Reveal key={i} variant="up" delay={i * 110} className="bg-ink p-7 md:p-10 flex flex-col justify-between gap-6 lg:min-h-[260px] lift">
               <Index n={i + 1} />
               <div>
-                <h4 className="font-display font-semibold text-[24px] mt-6 text-cream">{c.name}</h4>
+                <h4 className="font-display font-semibold text-[24px] leading-tight text-cream">{c.name}</h4>
                 <p className="font-mono text-[11px] tracking-widest uppercase text-cream/70 mt-3 leading-snug">{c.sector}</p>
                 <p className="font-prose text-[15px] text-cream mt-4 leading-snug">{c.work}</p>
               </div>

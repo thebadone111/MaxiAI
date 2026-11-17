@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore
 import { useNavigate } from 'react-router-dom';
 import { contact, price } from '../data/site.js';
 import { lockScroll } from '../motion/smooth.js';
-import { KEY as INTRO_KEY } from '../intro/state.js';
 
 /*
  * The command palette — Ctrl/⌘ K, or "/", from anywhere.
@@ -31,7 +30,8 @@ function useCommands(close) {
     { group: 'Navigate', label: 'Pricing', hint: `care ${price.care}/mo · retainer ${price.retainer}/mo`, run: go('/en/services#pricing'), keywords: 'price cost charge rates money' },
     { group: 'Navigate', label: 'How we work', hint: 'Services', run: go('/en/services#how-we-work'), keywords: 'process' },
     { group: 'Navigate', label: 'Rebuild my homepage', hint: 'Step zero', run: go('/en/services#rebuild'), keywords: 'free website demo' },
-    { group: 'Navigate', label: 'AI Product', hint: 'Tier 02', run: go('/en/ai-product'), keywords: 'creators software' },
+    { group: 'Navigate', label: 'AI Brain', hint: 'Tier 02', run: go('/en/ai-brain'), keywords: 'ai brain knowledge assistant agent automation llm' },
+    { group: 'Navigate', label: 'How the AI brain works', hint: 'Tier 02', run: go('/en/ai-brain#how-it-works'), keywords: 'ai brain integration connect' },
     { group: 'Navigate', label: 'The Studio Programme', hint: '£0 build', run: go('/en/programme'), keywords: 'free website local business' },
     { group: 'Navigate', label: 'Apply for the programme', hint: 'Ten places', run: go('/en/programme#apply') },
     { group: 'Navigate', label: 'About', hint: 'London · 2024', run: go('/en/about-us'), keywords: 'founders team' },
@@ -51,10 +51,7 @@ function useCommands(close) {
 
     {
       group: 'Preferences', label: 'Replay the intro', hint: 'Reloads the page', keywords: 'animation',
-      run: () => {
-        try { sessionStorage.removeItem(INTRO_KEY); } catch { /* ignore */ }
-        window.location.reload();
-      },
+      run: () => { window.location.search = '?intro'; },
     },
   ], [go]);
 }

@@ -28,9 +28,9 @@ function AboutUsEn() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-stone border border-stone">
-          <Reveal variant="up" className="bg-cream p-12 lift">
+          <Reveal variant="up" className="bg-cream p-7 md:p-12 lift">
             <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">Co-founder</span>
-            <h3 className="font-display font-semibold text-[34px] mt-5 mb-3">Oliver Lee</h3>
+            <h3 className="font-display font-semibold text-[28px] md:text-[34px] mt-5 mb-3">Oliver Lee</h3>
             <p className="font-mono text-[11px] tracking-widest uppercase text-ink-mid mb-6">
               Commercial · Marketing · Brand
             </p>
@@ -39,9 +39,9 @@ function AboutUsEn() {
             </p>
           </Reveal>
 
-          <Reveal variant="up" delay={150} className="bg-cream p-12 lift">
+          <Reveal variant="up" delay={150} className="bg-cream p-7 md:p-12 lift">
             <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-signal">Co-founder</span>
-            <h3 className="font-display font-semibold text-[34px] mt-5 mb-3">Tiger Gjers</h3>
+            <h3 className="font-display font-semibold text-[28px] md:text-[34px] mt-5 mb-3">Tiger Gjers</h3>
             <p className="font-mono text-[11px] tracking-widest uppercase text-ink-mid mb-6">
               Technical lead · Architecture · Delivery
             </p>
@@ -63,7 +63,7 @@ function AboutUsEn() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
           {markets.map((m, i) => (
-            <Reveal key={m.country} variant="up" delay={i * 120} className="bg-ink p-10 lift">
+            <Reveal key={m.country} variant="up" delay={i * 120} className="bg-ink p-7 md:p-10 lift">
               <Index n={i + 1} />
               <h3 className="font-display font-semibold text-[28px] mt-6 text-cream">{m.country}</h3>
               <p className="font-prose text-[17px] text-cream leading-relaxed mt-4">{m.note}</p>

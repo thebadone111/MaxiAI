@@ -265,11 +265,21 @@
 .tk-live { color: var(--color-signal); }
 
 @media (max-width: 767px) {
-  .code-editor { grid-template-columns: 1fr; }
+  .code-editor { grid-template-columns: 1fr; --ln-w: 3ch; }
   .code-tree { display: none; }
-  .code-body { padding: 20px 16px; }
+  /* The longest line is 49 characters plus a 3ch gutter. A DM Mono
+     character is 0.6em wide, so this font size makes 52ch just fill the
+     screen less its padding: nothing runs off the edge. */
+  .code-body {
+    flex: none;
+    padding: 20px 16px;
+    font-size: clamp(8px, calc((100vw - 32px) / 31.5), 15px);
+  }
   .code-caret { left: 16px; top: 20px; }
-  .code-term { padding: 14px 16px 24px; }
+  .code-term {
+    padding: 14px 16px 24px;
+    font-size: clamp(8px, calc((100vw - 32px) / 26), 13px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

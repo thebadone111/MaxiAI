@@ -26,13 +26,13 @@ function Hero({ eyebrow, title, lead, actions, meta, status = STATUS, visual }) 
 
   return (
     <section className={`relative overflow-hidden bg-cream ${arrived ? 'is-in' : ''}`}>
-      <div className={`wrap relative pb-24 pt-20 md:pb-32 md:pt-28 ${visual ? 'lg:grid lg:grid-cols-12 lg:gap-12' : ''}`}>
+      <div className={`wrap relative pb-20 pt-14 md:pb-32 md:pt-28 ${visual ? 'lg:grid lg:grid-cols-12 lg:gap-12' : ''}`}>
         <div className={visual ? 'lg:col-span-7' : ''}>
           <span className="eyebrow hero-rise block" style={r(0, 500)}>{eyebrow}</span>
-          <span className="signal-rule hero-rule mb-10 mt-6" style={r(80)} />
+          <span className="signal-rule hero-rule mb-8 mt-5 md:mb-10 md:mt-6" style={r(80)} />
 
           <h1
-            className={`hero-rise max-w-[900px] font-display text-[44px] font-light leading-[1.02] text-ink ${
+            className={`hero-rise max-w-[900px] font-display text-[clamp(2.25rem,11vw,2.875rem)] font-light leading-[1.04] text-ink ${
               visual ? 'md:text-[68px] xl:text-[76px]' : 'md:text-[80px] xl:text-[88px]'
             }`}
             style={r(120, 700)}
@@ -42,7 +42,7 @@ function Hero({ eyebrow, title, lead, actions, meta, status = STATUS, visual }) 
 
           {lead && (
             <p
-              className="hero-rise mt-10 max-w-[720px] font-prose text-[19px] leading-[1.6] text-ink-soft md:text-[22px]"
+              className="hero-rise mt-8 max-w-[720px] font-prose text-[18px] leading-[1.6] text-ink-soft md:mt-10 md:text-[22px]"
               style={r(320, 700)}
             >
               {lead}
@@ -51,12 +51,12 @@ function Hero({ eyebrow, title, lead, actions, meta, status = STATUS, visual }) 
 
           {actions && (
             <div className="hero-rise" style={r(560, 900)}>
-              <Actions {...actions} className="mt-12" />
+              <Actions {...actions} className="mt-10 md:mt-12" />
             </div>
           )}
 
           {meta && (
-            <div className="hero-rise mt-14 flex flex-wrap gap-x-14 gap-y-5" style={r(700, 900)}>
+            <div className="hero-rise mt-12 flex flex-wrap gap-x-10 gap-y-5 md:mt-14 md:gap-x-14" style={r(700, 900)}>
               {meta.map((m, i) => (
                 <div key={i} className="flex flex-col gap-1.5">
                   <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mid">{m.label}</span>
@@ -68,7 +68,7 @@ function Hero({ eyebrow, title, lead, actions, meta, status = STATUS, visual }) 
 
           {status && (
             <div
-              className="hero-rise mt-16 inline-flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-stone pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mid"
+              className="hero-rise mt-12 inline-flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-stone pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mid"
               style={r(820, 900)}
             >
               <span className="inline-flex items-center gap-3">

@@ -1,20 +1,26 @@
 # Cloudflare Pages.
 #
-# Every real route is prerendered to its own HTML file by `npm run build`,
-# and Pages serves an existing static file ahead of any rule below. These
-# 301s therefore only catch the unprefixed aliases people type or link to.
+# Every real route is prerendered to its own HTML file by `npm run build`
+# (dist/en/home.html is served at /en/home), and Pages serves an existing
+# static file ahead of any rule below. These 301s only catch the unprefixed
+# aliases people type or link to, and the renamed AI page.
 #
-# The final catch-all is a safety net: if the deploy ever runs a build that
-# skips the prerender step, without it every route but / would 404.
+# There is deliberately no catch-all rewrite: an unknown path must get
+# dist/404.html with a real 404 status, not a soft 404 that search engines
+# index as a duplicate of the home page.
 /            /en/home        301
 /en          /en/home        301
 /home        /en/home        301
 /services    /en/services    301
 /programme   /en/programme   301
-/ai-product  /en/ai-product  301
+/ai-product  /en/ai-brain  301
+/ai-brain    /en/ai-brain  301
+/en/ai-product  /en/ai-brain  301
 /about       /en/about-us    301
 /about-us    /en/about-us    301
 /contact     /en/contact-us  301
 /contact-us  /en/contact-us  301
-
-/*           /index.html     200
+/privacy         /en/privacy  301
+/privacy-policy  /en/privacy  301
+/tos             /en/tos      301
+/terms           /en/tos      301

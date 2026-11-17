@@ -137,13 +137,6 @@ const sections = [
               the time of your request are processed transiently by our hosting provider in order to
               serve the page to you at all, and to absorb attacks and abuse.
             </>,
-            <>
-              <strong>Your IP address, by Google</strong> — our pages load typefaces from the Google
-              Fonts service, which means your browser makes a request to Google and Google receives
-              your IP address as a consequence. We do not receive anything back, and we do not use
-              this for any purpose of our own. We are naming it because it is a real disclosure of
-              your data to a third party, and most sites that do it do not say so.
-            </>,
           ]}
         />
         <H>If you use the enquiry form or write to us</H>
@@ -474,11 +467,6 @@ const sections = [
               'United States',
             ],
             [
-              'Google LLC',
-              'Serving the typefaces this site uses. Receives your IP address as an unavoidable consequence of your browser requesting the font files',
-              'United States',
-            ],
-            [
               'Our business email and document provider',
               'Where correspondence, proposals and records actually live',
               'United Kingdom / European Union',
@@ -520,9 +508,10 @@ const sections = [
         </P>
         <P>
           There are no advertising pixels, no Meta pixel, no LinkedIn Insight tag, no Google
-          Analytics, no session recording, no heatmaps and no third-party embeds beyond the font
-          files described in clause 03. If that ever changes, this clause will change with it before
-          the tracking goes live, not after.
+          Analytics, no session recording, no heatmaps and no third-party embeds of any kind — even
+          the typefaces are served from our own domain, so your browser never contacts a font
+          service. If that ever changes, this clause will change with it before the tracking goes
+          live, not after.
         </P>
         <P>
           Our separate dashboard at socials.maxiai.co.uk does use cookies — it has to, in order to
@@ -539,9 +528,9 @@ const sections = [
     body: (
       <>
         <P>
-          Our records are held in the United Kingdom and the European Economic Area. Three of the
-          providers in clause 06 — Cloudflare, EmailJS and Google — are United States companies, so
-          some personal data is transferred outside the UK.
+          Our records are held in the United Kingdom and the European Economic Area. Two of the
+          providers in clause 06 — Cloudflare and EmailJS — are United States companies, so some
+          personal data is transferred outside the UK.
         </P>
         <P>Those transfers are made under one or both of the safeguards the UK recognises:</P>
         <Bullets
@@ -784,6 +773,12 @@ function PrivacyEn() {
         <Alink href={`mailto:${E.privacyEmail}`}>{E.privacyEmail}</Alink> and reaches a founder, not
         a ticket queue. The terms governing use of this website are set out separately in our{' '}
         <Xlink to="/en/tos">Terms of Service</Xlink>.
+        <br />
+        <br />
+        <span className="text-cream/70">
+          Revised {legalUpdated}: the site no longer loads typefaces from Google, so Google is no
+          longer a recipient of any visitor data.
+        </span>
       </LegalFootNote>
     </>
   );

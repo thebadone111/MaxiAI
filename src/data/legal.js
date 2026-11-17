@@ -19,7 +19,7 @@ export const legalEntity = {
 
 // Both notices carry the same effective date. Update on any material change,
 // and say what changed in the revision note at the foot of each page.
-export const legalUpdated = '10 September 2026';
+export const legalUpdated = '17 November 2026';
 
 // The ICO's own contact details, reproduced so a complainant never has to
 // take our word for how to escalate past us.

@@ -70,6 +70,13 @@
     text-wrap: balance;
   }
 
+  /* On a phone a long word (a company name, "infrastructure") must break
+     rather than push out of its card. */
+  h1, h2, h3, h4 { overflow-wrap: break-word; }
+  @media (max-width: 639px) {
+    h3, h4 { hyphens: auto; }
+  }
+
   p {
     font-family: var(--font-ui);
     font-weight: 300;

@@ -9,7 +9,7 @@ import { Decode } from './live.jsx';
 
 export function Section({ children, dark = false, className = '', id }) {
   return (
-    <section id={id} className={`${dark ? 'bg-ink text-cream' : 'bg-cream text-ink'} py-24 md:py-32 ${className}`}>
+    <section id={id} className={`${dark ? 'bg-ink text-cream' : 'bg-cream text-ink'} py-20 md:py-32 ${className}`}>
       <div className="wrap">{children}</div>
     </section>
   );
@@ -28,19 +28,19 @@ export function Index({ n, className = '' }) {
 
 export function SectionHead({ eyebrow, title, lead, dark = false, align = 'left', children }) {
   return (
-    <div className={`${align === 'center' ? 'mx-auto text-center' : ''} mb-16 max-w-[820px]`}>
+    <div className={`${align === 'center' ? 'mx-auto text-center' : ''} mb-12 max-w-[820px] md:mb-16`}>
       <Reveal variant="fade">
         <Decode text={eyebrow} className="eyebrow" />
       </Reveal>
       <Reveal variant="rule" as="hr" delay={100} className={`mb-8 mt-5 ${align === 'center' ? 'mx-auto' : ''}`} />
       <Reveal variant="up" delay={180}>
-        <h2 className={`font-display text-[34px] font-light leading-[1.05] md:text-[56px] ${dark ? 'text-cream' : 'text-ink'}`}>
+        <h2 className={`font-display text-[clamp(1.875rem,8.5vw,2.25rem)] font-light leading-[1.08] md:text-[56px] md:leading-[1.05] ${dark ? 'text-cream' : 'text-ink'}`}>
           {title}
         </h2>
       </Reveal>
       {lead && (
         <Reveal variant="up" delay={300}>
-          <p className={`mt-8 font-prose text-[19px] leading-[1.65] md:text-[21px] ${dark ? 'text-cream/90' : 'text-ink-soft'}`}>
+          <p className={`mt-6 font-prose text-[18px] leading-[1.65] md:mt-8 md:text-[21px] ${dark ? 'text-cream/90' : 'text-ink-soft'}`}>
             {lead}
           </p>
         </Reveal>
@@ -55,7 +55,7 @@ export function FeatureGrid({ items, columns = 3, dark = false }) {
   return (
     <div className={`grid grid-cols-1 ${colsClass} gap-px border ${dark ? 'border-cream/10 bg-cream/10' : 'border-stone bg-stone'}`}>
       {items.map((it, i) => (
-        <div key={i} className={`${dark ? 'bg-ink' : 'bg-cream'} lift group relative p-10`}>
+        <div key={i} className={`${dark ? 'bg-ink' : 'bg-cream'} lift group relative p-7 md:p-10`}>
           <Reveal variant="up" delay={i * 90}>
             <Index n={i + 1} />
             <h3 className={`mb-4 mt-6 font-display text-[22px] font-semibold md:text-[26px] ${dark ? 'text-cream' : 'text-ink'}`}>
@@ -117,7 +117,7 @@ export function TwoColumnList({ columns }) {
   return (
     <div className="grid grid-cols-1 gap-px border border-stone bg-stone md:grid-cols-2">
       {columns.map((col, i) => (
-        <div key={i} className="bg-cream p-10 md:p-12">
+        <div key={i} className="bg-cream p-7 md:p-12">
           <Reveal variant="up" delay={i * 110}>
             <Index n={i + 1} />
             <h3 className="mb-6 mt-6 font-display text-[24px] font-semibold text-ink">{col.title}</h3>
@@ -163,24 +163,24 @@ export function CTA({
   secondary,
 }) {
   return (
-    <section className="bg-cream py-24 md:py-32">
+    <section className="bg-cream py-20 md:py-32">
       <div className="wrap">
         <Reveal variant="up">
-          <div className="cta-panel relative overflow-hidden rounded-[2px] bg-ink p-10 text-cream md:p-20">
+          <div className="cta-panel relative overflow-hidden rounded-[2px] bg-ink px-6 py-10 text-cream sm:p-10 md:p-20">
             <div aria-hidden="true" className="cta-glow" />
             <div aria-hidden="true" className="cta-grid" />
             <div className="relative max-w-[700px]">
               <Decode text={eyebrow} className="eyebrow" />
               <Reveal variant="rule" as="hr" delay={150} className="mb-8 mt-5" />
-              <h2 className="font-display text-[32px] font-light leading-[1.05] text-cream md:text-[52px]">
+              <h2 className="font-display text-[clamp(1.75rem,8vw,2.25rem)] font-light leading-[1.08] text-cream md:text-[52px] md:leading-[1.05]">
                 {title}
               </h2>
               {body && (
-                <p className="mt-8 max-w-[600px] font-prose text-[19px] leading-[1.65] text-cream/90 md:text-[21px]">
+                <p className="mt-6 max-w-[600px] font-prose text-[18px] leading-[1.65] text-cream/90 md:mt-8 md:text-[21px]">
                   {body}
                 </p>
               )}
-              <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-12">
                 <Link to={linkTo} className="btn-primary btn-signal">
                   {linkLabel}
                   <span>→</span>

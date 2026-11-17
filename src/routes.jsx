@@ -4,7 +4,7 @@ import Layout from './elems/layout.jsx';
 import HomeEn from './pages/en/home';
 import ServicesEn from './pages/en/services';
 import ProgrammeEn from './pages/en/programme';
-import AIProductEn from './pages/en/ai-product';
+import AIBrainEn from './pages/en/ai-brain';
 import AboutUsEn from './pages/en/about-us';
 import ContactUsEn from './pages/en/contact-us';
 import PrivacyEn from './pages/en/privacy';
@@ -29,7 +29,8 @@ function AppRoutes() {
         <Route path="/en/home" element={<HomeEn />} />
         <Route path="/en/services" element={<ServicesEn />} />
         <Route path="/en/programme" element={<ProgrammeEn />} />
-        <Route path="/en/ai-product" element={<AIProductEn />} />
+        <Route path="/en/ai-brain" element={<AIBrainEn />} />
+        <Route path="/en/ai-product" element={<Navigate to="/en/ai-brain" replace />} />
         <Route path="/en/about-us" element={<AboutUsEn />} />
         <Route path="/en/contact-us" element={<ContactUsEn />} />
 
@@ -44,7 +45,8 @@ function AppRoutes() {
       <Route path="/home" element={<Navigate to="/en/home" replace />} />
       <Route path="/services" element={<Navigate to="/en/services" replace />} />
       <Route path="/programme" element={<Navigate to="/en/programme" replace />} />
-      <Route path="/ai-product" element={<Navigate to="/en/ai-product" replace />} />
+      <Route path="/ai-product" element={<Navigate to="/en/ai-brain" replace />} />
+      <Route path="/ai-brain" element={<Navigate to="/en/ai-brain" replace />} />
       <Route path="/about-us" element={<Navigate to="/en/about-us" replace />} />
       <Route path="/about" element={<Navigate to="/en/about-us" replace />} />
       <Route path="/contact-us" element={<Navigate to="/en/contact-us" replace />} />

@@ -5,11 +5,14 @@
   crawlers that don't run JavaScript still see them.
 */
 
+// The canonical origin. www and maxiai.pages.dev both redirect here.
+export const ORIGIN = 'https://maxiai.co.uk';
+
 export const routeMeta = {
   '/en/home': {
     title: 'Maxi AI Development — Software, security and IT infrastructure for growing businesses',
     description:
-      'A small London studio providing websites, cybersecurity, IT infrastructure and bespoke software to businesses in the UK, Sweden, Malta and Hong Kong. One dedicated engineer per client.',
+      'A small London studio providing websites, cybersecurity, IT infrastructure and a private AI brain for your company — for businesses in the UK, Sweden, Malta and Hong Kong. One dedicated engineer per client.',
   },
   '/en/services': {
     title: 'Outsourced IT support, security and web development for small businesses — London',
@@ -21,10 +24,10 @@ export const routeMeta = {
     description:
       'We build local businesses a landing page and register the domain, at no cost. You cover the care plan at £100 a month. Ten places a year, London and Stockholm.',
   },
-  '/en/ai-product': {
-    title: 'Custom software for creator businesses — Maxi AI Development',
+  '/en/ai-brain': {
+    title: 'Your company’s own AI brain — Maxi AI Development',
     description:
-      'Bespoke publishing tools, unified dashboards and operational infrastructure for creators who have outgrown off-the-shelf software. Built to own, not rent.',
+      'A private AI connected to your email, documents and business systems. It knows how your company works, answers with sources, acts with your approval and keeps learning. Built by a London studio.',
   },
   '/en/about-us': {
     title: 'About Maxi AI Development — a small London software and IT studio',

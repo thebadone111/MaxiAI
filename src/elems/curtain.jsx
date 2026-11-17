@@ -7,7 +7,7 @@ import './chrome.css';
 const NAMES = {
   '/en/home': 'Home',
   '/en/services': 'Services',
-  '/en/ai-product': 'AI Product',
+  '/en/ai-brain': 'The company brain',
   '/en/programme': 'The Studio Programme',
   '/en/about-us': 'About',
   '/en/contact-us': 'Contact',

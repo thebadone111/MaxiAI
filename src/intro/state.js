@@ -4,8 +4,10 @@ import { createContext, useContext } from 'react'
  * Whether this visit sees the intro, and the handoff signal. Ported from
  * Minifinans (src/intro/state.js), adapted for a prerendered site.
  *
- * Once per visit, not once per page load: sessionStorage, so moving around
- * the site does not replay it, but coming back tomorrow does.
+ * It plays when a visitor arrives from outside the site — not on a reload,
+ * back/forward, or an internal link — and nothing is stored on their device
+ * to decide that. (Moving around the site is client-side navigation, so the
+ * intro never replays within a visit anyway.)
  *
  * The decision is made TWICE, identically, and that is deliberate:
  *
@@ -42,18 +44,10 @@ import { createContext, useContext } from 'react'
 export const IntroDone = createContext(true)
 export const useIntroDone = () => useContext(IntroDone)
 
-export const KEY = 'maxi:intro'
 export const PENDING = 'intro-pending'
 
 const params = () => new URLSearchParams(window.location.search)
 
-export function markIntroSeen() {
-  try {
-    sessionStorage.setItem(KEY, '1')
-  } catch {
-    /* storage blocked: it will play again, which is the lesser failure */
-  }
-}
 
 // Set by the head script; see the note above.
 export const introPending = () =>

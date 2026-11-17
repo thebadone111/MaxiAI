@@ -98,7 +98,9 @@ intro's exit: eyebrow 0 → rule 80 → h1 120 → lead 320 → actions 560 → 
 
 ## 5. The intro ("Signal")
 
-[`src/intro/`](src/intro). It plays once per visit (`sessionStorage` key `maxi:intro`) and holds
+[`src/intro/`](src/intro). It plays when a visitor arrives from outside the site (not on a reload,
+back/forward or internal link). **Nothing is stored on the device to decide this**, because the
+privacy notice promises no cookies and no local or session storage. It holds
 for 5.2s, or until the first click, key or scroll.
 
 The story: points drift in → organise into a layered network → wires connect with activations →
@@ -133,7 +135,7 @@ and render complete in the prerendered HTML.
 | Home reveal scene | **The editor that opens**: `care-plan.ts` types itself as you scroll, and `maxi deploy` runs |
 | `services` | Infrastructure topology, drawn on scroll |
 | `about` | The four markets, with live local times |
-| `aiProduct` | One post fanning out to six channels |
+| `aiBrain` | The company brain: email, docs, CRM and finance flow in, approved actions flow out |
 | `programme` | The care plan as a 90-day uptime record |
 
 Drawing on scroll is one registered custom property, `--p` (0→1), written by `useDraw()`.
@@ -169,7 +171,24 @@ A stock-photography variant was built alongside and rejected. It is in the histo
   decoding is off.
 - The focus ring is 2px signal, offset 3px.
 
-## 9. Things that will bite you
+## 9. Launch and SEO
+
+- **Canonical origin:** `https://maxiai.co.uk` (`ORIGIN` in [`src/data/meta.js`](src/data/meta.js)).
+  www and `maxiai.pages.dev` redirect to it.
+- **Output:** [`prerender.js`](prerender.js) writes `dist/en/<page>.html`, which Cloudflare Pages
+  serves at `/en/<page>`, the URL every link uses, with no 308 to a trailing slash. Each page
+  gets its own title and description, a canonical URL, Open Graph and Twitter tags (image:
+  [`public/og.png`](public/og.png), rendered by [`tools/brand/og_image.py`](tools/brand/og_image.py))
+  and Organization JSON-LD. The 404 page is `noindex`.
+- **Generated at build:** `sitemap.xml` and `robots.txt`, both from the prerender route list.
+- **[`public/_redirects`](public/_redirects):** aliases and the renamed AI page. There is
+  **no catch-all rewrite**, so unknown paths get `404.html` with a real 404 status.
+- **[`public/_headers`](public/_headers):** security headers, and a year of immutable caching
+  for `/assets/*`.
+- The prerendered root is wrapped in `<!--email_off-->`, so Cloudflare's email obfuscation does
+  not rewrite the HTML React hydrates.
+
+## 10. Things that will bite you
 
 - **The site is prerendered** (`npm run build` → client, SSR, `prerender.js`). Nothing may read
   `window` during render. Anything media-query dependent must use the hooks in §4, or

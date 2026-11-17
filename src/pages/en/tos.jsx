@@ -67,7 +67,7 @@ const sections = [
         <H>Client engagements</H>
         <P>
           Any work we do for you — a website build, a care plan, a retainer, a security assessment,
-          bespoke software, a place on the Studio Programme — is governed by the separate written
+          bespoke software, an AI brain, a place on the Studio Programme — is governed by the separate written
           agreement for that engagement: the proposal, statement of work, or contract we both sign.
           Where anything on this site differs from that agreement, the signed agreement prevails.
           Nothing on this site varies, supplements or overrides it.
@@ -158,7 +158,7 @@ const sections = [
         <P>
           We own, or are licensed to use, all intellectual property rights in the site and in the
           material published on it: the text, the layout and design, the graphics, the logo and
-          lockup, the photography, and the underlying code. Those rights are protected by copyright
+          lockup, the illustrations and diagrams, and the underlying code. Those rights are protected by copyright
           and trade mark laws and are reserved.
         </P>
         <P>

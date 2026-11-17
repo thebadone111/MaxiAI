@@ -215,35 +215,48 @@ export function MarketMap({ dark }) {
   );
 }
 
-/* ─── AI Product: one source of truth, every channel ──────────────────── */
+/* ─── AI Brain: knowledge flows in, actions flow out ─────────────────── */
 
-const CHANNELS = ['instagram', 'tiktok', 'youtube', 'x', 'linkedin', 'newsletter'];
+const SOURCES = [
+  { label: 'email', sub: 'inbox · sent' },
+  { label: 'docs', sub: 'drive · wiki' },
+  { label: 'crm', sub: 'clients' },
+  { label: 'finance', sub: 'invoices' },
+];
+const ACTIONS = [
+  { label: 'draft reply', sub: 'awaits ok' },
+  { label: 'update crm', sub: 'logged' },
+  { label: 'book meeting', sub: 'calendar' },
+  { label: 'weekly report', sub: 'fri 08:00' },
+];
+const col = (i) => 53 + i * 98;
 
-export function FanOut({ dark }) {
+export function BrainMap({ dark }) {
   const ref = useDraw();
-  const y0 = 80;
-  const step = 56;
+  const queries = useTicker(214, (v) => v + 1 + Math.round(Math.random() * 2), 2600);
   return (
     <div ref={ref} className="absolute inset-0">
-      <Panel label="publish / one source" status="scheduled" dark={dark} className="h-full">
+      <Panel label="company brain / your-business" status="learning" dark={dark} className="h-full">
         <svg viewBox="0 0 400 440" className="code-svg" aria-hidden="true">
-          {CHANNELS.map((c, i) => {
-            const y = y0 + i * step;
-            return <Wire key={c} d={`M146 220 C220 220 210 ${y} 268 ${y}`} s={0.12 + i * 0.05} pulse dur={2.2} delay={i * 0.3} />;
-          })}
-          <g className="code-node" style={{ '--s': 0 }} transform="translate(92 220)">
-            <rect x="-54" y="-40" width="108" height="80" rx="2" className="hot" />
-            <text y="-14" textAnchor="middle" className="code-node-label">post.md</text>
-            <text y="4" textAnchor="middle" className="code-node-sub">caption · cuts</text>
-            <text y="20" textAnchor="middle" className="code-node-sub">schedule 18:00</text>
-          </g>
-          {CHANNELS.map((c, i) => (
-            <g key={c} className="code-node" style={{ '--s': 0.3 + i * 0.06 }} transform={`translate(318 ${y0 + i * step})`}>
-              <rect x="-50" y="-15" width="100" height="30" rx="2" />
-              <text y="4" textAnchor="middle" className="code-node-label">{c}</text>
-            </g>
+          {/* knowledge in */}
+          {SOURCES.map((n, i) => (
+            <Wire key={n.label} d={`M${col(i)} 78 C${col(i)} 140 200 120 200 176`} s={0.1 + i * 0.04} pulse dur={2.2 + i * 0.3} delay={i * 0.35} />
           ))}
-          <text x="200" y="428" textAnchor="middle" className="code-caption" style={{ '--s': 0.7 }}>formatted per platform · one dashboard</text>
+          {/* actions out */}
+          {ACTIONS.map((n, i) => (
+            <Wire key={n.label} d={`M200 264 C200 320 ${col(i)} 300 ${col(i)} 362`} s={0.32 + i * 0.04} pulse dur={2.4 + i * 0.25} delay={0.8 + i * 0.35} />
+          ))}
+          {SOURCES.map((n, i) => <Node key={n.label} x={col(i)} y={61} label={n.label} sub={n.sub} s={i * 0.04} />)}
+
+          <g className="code-node" style={{ '--s': 0.2 }} transform="translate(200 220)">
+            <rect x="-112" y="-44" width="224" height="88" rx="2" className="hot" />
+            <text y="-18" textAnchor="middle" className="code-node-label">company brain</text>
+            <text y="0" textAnchor="middle" className="code-node-sub">memory · reasoning · permissions</text>
+            <text y="22" textAnchor="middle" className="code-node-sub tabular">{queries} answers today · all cited</text>
+          </g>
+
+          {ACTIONS.map((n, i) => <Node key={n.label} x={col(i)} y={379} label={n.label} sub={n.sub} s={0.4 + i * 0.05} />)}
+          <text x="200" y="428" textAnchor="middle" className="code-caption" style={{ '--s': 0.7 }}>knows · acts with approval · learns</text>
         </svg>
       </Panel>
     </div>
@@ -321,7 +334,7 @@ function Lines({ lines, refs }) {
   return lines.map((line, i) => (
     <div key={i} className="code-line">
       <span className="code-ln">{String(i + 1).padStart(2, ' ')}</span>
-      <span ref={(el) => { refs.current[i] = el; }} className="code-text" style={{ width: `${lineLen(line)}ch` }}>
+      <span ref={(el) => { refs.current[i] = el; }} className="code-text">
         {line.length ? line.map(([cls, t], j) => <span key={j} className={`tk-${cls}`}>{t}</span>) : ' '}
       </span>
     </div>
@@ -357,7 +370,7 @@ export function EditorReveal({ register }) {
         const len = Math.max(1, lineLen(line));
         const n = Math.max(0, Math.min(len, left));
         const el = codeRefs.current[i];
-        if (el) el.style.width = `${line.length ? n : 0}ch`;
+        if (el) el.style.width = n >= len && line.length ? '' : `${line.length ? n : 0}ch`;
         if (!placed && left < len) {
           placed = true;
           caretLine = i;
@@ -367,7 +380,7 @@ export function EditorReveal({ register }) {
       });
       TERM.forEach((_, i) => {
         const el = termRefs.current[i];
-        if (el) el.style.width = i < shownTerm ? `${lineLen(TERM[i])}ch` : '0ch';
+        if (el) el.style.width = i < shownTerm ? '' : '0ch';
       });
       // The caret is one absolutely positioned element moved by transform —
       // never re-parented, so React's tree is left alone.
