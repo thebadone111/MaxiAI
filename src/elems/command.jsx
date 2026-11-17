@@ -32,8 +32,6 @@ function useCommands(close) {
     { group: 'Navigate', label: 'Rebuild my homepage', hint: 'Step zero', run: go('/en/services#rebuild'), keywords: 'free website demo' },
     { group: 'Navigate', label: 'AI Brain', hint: 'Tier 02', run: go('/en/ai-brain'), keywords: 'ai brain knowledge assistant agent automation llm' },
     { group: 'Navigate', label: 'How the AI brain works', hint: 'Tier 02', run: go('/en/ai-brain#how-it-works'), keywords: 'ai brain integration connect' },
-    { group: 'Navigate', label: 'The Studio Programme', hint: '£0 build', run: go('/en/programme'), keywords: 'free website local business' },
-    { group: 'Navigate', label: 'Apply for the programme', hint: 'Ten places', run: go('/en/programme#apply') },
     { group: 'Navigate', label: 'About', hint: 'London · 2024', run: go('/en/about-us'), keywords: 'founders team' },
     { group: 'Navigate', label: 'Contact', hint: 'One working day', run: go('/en/contact-us'), keywords: 'talk message form' },
     { group: 'Navigate', label: 'Privacy notice', hint: 'Legal', run: go('/en/privacy') },

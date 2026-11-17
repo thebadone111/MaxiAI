@@ -139,14 +139,9 @@ const sections = [
             </>,
           ]}
         />
-        <H>If you use the enquiry form or write to us</H>
+        <H>If you write to us</H>
         <Bullets
           items={[
-            <>
-              <strong>What the form asks for</strong> — first name, last name, email address, a
-              subject line, and the message you write. Nothing else is collected, and there is no
-              hidden field beyond a spam trap and a timestamp.
-            </>,
             <>
               <strong>Whatever you choose to put in the message</strong> — which is the part we have
               no control over. Please do not send us confidential material, special category data
@@ -462,11 +457,6 @@ const sections = [
               'United States, with a global edge network',
             ],
             [
-              'EmailJS',
-              'Transporting the enquiry form to our inbox. The form contents pass through their service and are not retained by us there',
-              'United States',
-            ],
-            [
               'Our business email and document provider',
               'Where correspondence, proposals and records actually live',
               'United Kingdom / European Union',
@@ -528,9 +518,9 @@ const sections = [
     body: (
       <>
         <P>
-          Our records are held in the United Kingdom and the European Economic Area. Two of the
-          providers in clause 06 — Cloudflare and EmailJS — are United States companies, so some
-          personal data is transferred outside the UK.
+          Our records are held in the United Kingdom and the European Economic Area. One of the
+          providers in clause 06 — Cloudflare — is a United States company, so some personal data is
+          transferred outside the UK.
         </P>
         <P>Those transfers are made under one or both of the safeguards the UK recognises:</P>
         <Bullets
@@ -569,7 +559,7 @@ const sections = [
           rows={[
             ['Aggregate website analytics', 'Retained by Cloudflare in aggregate form; contains no personal data we can tie to you'],
             ['Technical connection and security logs', 'Short-lived, and in the ordinary course no more than 30 days'],
-            ['Enquiry form submissions and correspondence that goes nowhere', '24 months from the last message either way'],
+            ['Enquiries and correspondence that go nowhere', '24 months from the last message either way'],
             ['Prospect records where there was no engagement', '12 months from the last meaningful contact'],
             ['Suppression list (people who opted out)', 'Indefinitely — that is the point of it. Minimal data only'],
             ['Client contracts, proposals and project correspondence', '6 years after the engagement ends, matching the limitation period for contract claims'],
@@ -605,7 +595,6 @@ const sections = [
             'Access is limited to the two founders, on the principle of least privilege — nobody has standing access to something they do not need.',
             'Devices are encrypted at rest, kept patched, and locked when unattended.',
             'Client system credentials are held in a password manager, never in documents, email or code.',
-            'The enquiry form carries a spam trap rather than a third-party CAPTCHA, so no additional tracking is introduced to fight tracking.',
             'Backups are encrypted, and restoration is tested rather than assumed.',
           ]}
         />
@@ -776,8 +765,9 @@ function PrivacyEn() {
         <br />
         <br />
         <span className="text-cream/70">
-          Revised {legalUpdated}: the site no longer loads typefaces from Google, so Google is no
-          longer a recipient of any visitor data.
+          Revised {legalUpdated}: the site no longer loads typefaces from Google, and the
+          enquiry form (and with it EmailJS) has been removed — you contact us by email. Neither
+          Google nor EmailJS now receives any visitor data.
         </span>
       </LegalFootNote>
     </>

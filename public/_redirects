@@ -12,7 +12,8 @@
 /en          /en/home        301
 /home        /en/home        301
 /services    /en/services    301
-/programme   /en/programme   301
+/programme   /en/services    301
+/en/programme  /en/services  301
 /ai-product  /en/ai-brain  301
 /ai-brain    /en/ai-brain  301
 /en/ai-product  /en/ai-brain  301

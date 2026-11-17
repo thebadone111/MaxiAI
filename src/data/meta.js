@@ -19,11 +19,6 @@ export const routeMeta = {
     description:
       'Websites and hosting, Cyber Essentials and security, Microsoft 365 and IT infrastructure, and bespoke software — from one dedicated engineer. London, working across the UK, Sweden, Malta and Hong Kong.',
   },
-  '/en/programme': {
-    title: 'A free website for your business — The Studio Programme by Maxi AI Development',
-    description:
-      'We build local businesses a landing page and register the domain, at no cost. You cover the care plan at £100 a month. Ten places a year, London and Stockholm.',
-  },
   '/en/ai-brain': {
     title: 'Your company’s own AI brain — Maxi AI Development',
     description:

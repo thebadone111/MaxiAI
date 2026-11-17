@@ -138,7 +138,6 @@ and render complete in the prerendered HTML.
 | `services` | Infrastructure topology, drawn on scroll |
 | `about` | The four markets, with live local times |
 | `aiBrainHero` | The company brain diagram (email, docs, CRM and finance flow in, approved actions flow out), drawn as the page arrives |
-| `programme` | The care plan as a 90-day uptime record |
 
 Drawing on scroll is one registered custom property, `--p` (0→1), written by `useDraw()`.
 Each node carries its own start, `--s`. The initial value is 1, so without JavaScript every

@@ -67,7 +67,7 @@ const sections = [
         <H>Client engagements</H>
         <P>
           Any work we do for you — a website build, a care plan, a retainer, a security assessment,
-          bespoke software, an AI brain, a place on the Studio Programme — is governed by the separate written
+          bespoke software, an AI brain — is governed by the separate written
           agreement for that engagement: the proposal, statement of work, or contract we both sign.
           Where anything on this site differs from that agreement, the signed agreement prevails.
           Nothing on this site varies, supplements or overrides it.
@@ -181,8 +181,8 @@ const sections = [
     body: (
       <>
         <P>
-          The site has one input: the enquiry form. When you use it, or when you email us at an
-          address published here:
+          The site has no forms. The only way to send us anything through it is to email the
+          address published here, and when you do:
         </P>
         <Bullets
           items={[
@@ -190,7 +190,7 @@ const sections = [
             'you accept that ordinary email is not a secure channel, and that we cannot guarantee the confidentiality of anything in transit to us;',
             'you should not send confidential, commercially sensitive or legally privileged material in a first approach. Send us enough to have a conversation, and we will agree a proper route for the rest;',
             'no non-disclosure obligation arises simply because you sent us something. If you need one, ask, and we will sign a sensible NDA before the detailed conversation rather than after it;',
-            'you must not send special category personal data — health, ethnicity, religion, political opinion, trade union membership, sexual orientation, genetic or biometric data — through the form. We do not need it and do not want to hold it.',
+            'you must not send special category personal data — health, ethnicity, religion, political opinion, trade union membership, sexual orientation, genetic or biometric data — in a first approach. We do not need it and do not want to hold it.',
           ]}
         />
         <P>
@@ -250,12 +250,6 @@ const sections = [
             ['Errors', 'If a price is published in obvious error we are not bound by it, and we will correct it rather than argue about it'],
           ]}
         />
-        <P>
-          Where the site describes an offer with limited places — the Studio Programme, for instance
-          — availability is limited and stated in good faith at the time of writing. Describing it
-          here does not oblige us to accept any particular applicant, and the terms of that
-          arrangement are set out in the agreement you sign if we take you on.
-        </P>
       </>
     ),
   },

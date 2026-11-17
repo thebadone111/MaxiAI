@@ -110,7 +110,7 @@ export function PriceTable({ rows, footnote }) {
 
 /**
  * TwoColumnList — "what's covered" against "what starts a separate
- * conversation". Used on the programme page, where being explicit about
+ * conversation". For pages where being explicit about
  * the boundary is the whole point.
  */
 export function TwoColumnList({ columns }) {

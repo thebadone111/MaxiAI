@@ -385,38 +385,6 @@ export function AskBrain({ register }) {
   );
 }
 
-/* ─── Programme: the care plan, as an uptime record ───────────────────── */
-
-// Ninety days, deterministic: two short dips, the rest full.
-const DAYS = Array.from({ length: 90 }, (_, i) => (i === 23 ? 0.72 : i === 61 ? 0.86 : 1));
-
-export function Uptime({ dark }) {
-  const ref = useDraw(0.05, 0.5);
-  return (
-    <div ref={ref} className="absolute inset-0">
-      <Panel label="care plan / your-business.co.uk" status="up" dark={dark} className="h-full">
-        <div className="flex h-full flex-col justify-between p-6">
-          <div>
-            <p className="code-big tabular">99.98<span>%</span></p>
-            <p className="code-sub">uptime · last 90 days</p>
-          </div>
-          <div className="code-bars" aria-hidden="true">
-            {DAYS.map((h, i) => (
-              <span key={i} style={{ '--h': h, '--s': (i / 90) * 0.6 }} className={h < 1 ? 'dip' : ''} />
-            ))}
-          </div>
-          <dl className="code-list">
-            <div><dt>backups</dt><dd>daily ✓</dd></div>
-            <div><dt>ssl</dt><dd>auto-renews</dd></div>
-            <div><dt>domain</dt><dd>in your name</dd></div>
-            <div><dt>changes</dt><dd>2 working days</dd></div>
-          </dl>
-        </div>
-      </Panel>
-    </div>
-  );
-}
-
 /* ─── Home reveal: the editor that opens ──────────────────────────────── */
 
 const K = (t) => ['k', t];

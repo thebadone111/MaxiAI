@@ -7,7 +7,6 @@ import { openCommandPalette, useShortcutLabel } from './command.jsx';
 const LINKS = [
   { to: '/en/services', label: 'Services' },
   { to: '/en/ai-brain', label: 'AI Brain' },
-  { to: '/en/programme', label: 'Programme' },
   { to: '/en/about-us', label: 'About' },
 ];
 

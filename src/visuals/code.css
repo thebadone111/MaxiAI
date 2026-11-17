@@ -141,45 +141,6 @@
   color: var(--color-cream);
 }
 
-/* Uptime record */
-.code-big {
-  font-family: var(--font-display);
-  font-size: clamp(44px, 5vw, 72px);
-  font-weight: 300;
-  line-height: 1;
-  color: var(--color-cream);
-}
-.code-big span { color: var(--color-signal); font-size: 0.5em; margin-left: 0.08em; }
-.code-sub {
-  margin-top: 10px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-mist);
-}
-.code-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 96px;
-}
-.code-bars > span {
-  flex: 1;
-  height: calc(var(--h) * 100%);
-  background: color-mix(in oklab, var(--color-cream) 72%, transparent);
-  transform-origin: 50% 100%;
-  transform: scaleY(clamp(0, (var(--p) - var(--s)) * 5, 1));
-}
-.code-bars > span.dip { background: var(--color-signal); }
-.code-list > div {
-  display: flex;
-  justify-content: space-between;
-  padding: 9px 0;
-  border-top: 1px solid color-mix(in oklab, var(--color-cream) 10%, transparent);
-  font-size: 12px;
-}
-.code-list dd { color: var(--color-cream); }
-
 /* ─── The editor that opens ─────────────────────────────────────────── */
 
 .code-editor {

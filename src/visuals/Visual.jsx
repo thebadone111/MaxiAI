@@ -1,5 +1,5 @@
 import { useHydrated, useMinWidth } from '../motion/hooks.js';
-import { BrainMap, LiveSystem, MarketMap, Topology, Uptime } from './code.jsx';
+import { BrainMap, LiveSystem, MarketMap, Topology } from './code.jsx';
 
 /*
  * The visuals registry: pages name a slot, and the slot renders its
@@ -11,7 +11,6 @@ const REGISTRY = {
   about: (p) => <MarketMap {...p} />,
   aiBrain: (p) => <BrainMap {...p} />,
   aiBrainHero: () => <BrainMap hero />,
-  programme: (p) => <Uptime {...p} />,
 };
 
 /**

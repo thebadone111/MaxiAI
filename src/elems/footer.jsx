@@ -47,7 +47,6 @@ function Footer() {
               ['/en/services', 'Services'],
               ['/en/services#pricing', 'Pricing'],
               ['/en/ai-brain', 'AI Brain'],
-              ['/en/programme', 'Studio Programme'],
               ['/en/about-us', 'About'],
               ['/en/contact-us', 'Contact'],
             ].map(([to, label]) => (

@@ -3,7 +3,6 @@ import Layout from './elems/layout.jsx';
 
 import HomeEn from './pages/en/home';
 import ServicesEn from './pages/en/services';
-import ProgrammeEn from './pages/en/programme';
 import AIBrainEn from './pages/en/ai-brain';
 import AboutUsEn from './pages/en/about-us';
 import ContactUsEn from './pages/en/contact-us';
@@ -28,7 +27,8 @@ function AppRoutes() {
       <Route element={<Layout />}>
         <Route path="/en/home" element={<HomeEn />} />
         <Route path="/en/services" element={<ServicesEn />} />
-        <Route path="/en/programme" element={<ProgrammeEn />} />
+        {/* The Studio Programme was withdrawn on 17 Nov 2026. */}
+        <Route path="/en/programme" element={<Navigate to="/en/services" replace />} />
         <Route path="/en/ai-brain" element={<AIBrainEn />} />
         <Route path="/en/ai-product" element={<Navigate to="/en/ai-brain" replace />} />
         <Route path="/en/about-us" element={<AboutUsEn />} />
@@ -44,7 +44,7 @@ function AppRoutes() {
       {/* Unprefixed aliases */}
       <Route path="/home" element={<Navigate to="/en/home" replace />} />
       <Route path="/services" element={<Navigate to="/en/services" replace />} />
-      <Route path="/programme" element={<Navigate to="/en/programme" replace />} />
+      <Route path="/programme" element={<Navigate to="/en/services" replace />} />
       <Route path="/ai-product" element={<Navigate to="/en/ai-brain" replace />} />
       <Route path="/ai-brain" element={<Navigate to="/en/ai-brain" replace />} />
       <Route path="/about-us" element={<Navigate to="/en/about-us" replace />} />
