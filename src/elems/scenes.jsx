@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { useHydrated, useMinWidth, useReducedMotion, useScrollProgress } from '../motion/hooks.js';
-import { EditorReveal } from '../visuals/code.jsx';
+import { AskBrain, EditorReveal } from '../visuals/code.jsx';
 import { Section, SectionHead } from './section.jsx';
 import Reveal from './reveal.jsx';
 
@@ -16,14 +16,18 @@ const easeOut = (x) => 1 - Math.pow(1 - x, 3);
  *
  * After Minifinans' ImageReveal. A window at 42% of the screen opens to full
  * bleed as you scroll; its content counter-scales so it stays at natural
- * size — the window opens around the editor, which types itself as it
+ * size — the window opens around the content, which plays itself as it
  * does — and the corner radius is divided by the frame's scale so it stays
  * a constant size on screen and lands at 0. Transforms only.
+ *
+ * `children(register)` renders the content; `register(fn)` subscribes it to
+ * fn(progress, opened) on every scroll frame. Home shows the editor typing
+ * a care plan; the AI Brain page shows the brain answering a question.
  */
 const START = 0.42;
 const RADIUS = 6;
 
-export function HomeReveal() {
+function RevealScene({ label, children }) {
   const frame = useRef(null);
   const inner = useRef(null);
   const listeners = useRef(new Set());
@@ -45,7 +49,7 @@ export function HomeReveal() {
   }, { span: true, rest: 1 });
 
   return (
-    <section ref={ref} className="relative bg-cream" style={{ height: '260vh' }} aria-label="Our work, in practice">
+    <section ref={ref} className="relative bg-cream" style={{ height: '260vh' }} aria-label={label}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div
           ref={frame}
@@ -57,11 +61,27 @@ export function HomeReveal() {
             className="will-move absolute inset-0"
             style={{ transform: `scale(${1 / START})` }}
           >
-            <EditorReveal register={register} />
+            {children(register)}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+export function HomeReveal() {
+  return (
+    <RevealScene label="Our work, in practice">
+      {(register) => <EditorReveal register={register} />}
+    </RevealScene>
+  );
+}
+
+export function BrainReveal() {
+  return (
+    <RevealScene label="The company brain, answering a question">
+      {(register) => <AskBrain register={register} />}
+    </RevealScene>
   );
 }
 
@@ -76,7 +96,7 @@ export function HomeReveal() {
  */
 function Steps({ items, dark }) {
   return (
-    <div className={`grid grid-cols-1 gap-px border ${items.length >= 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'} ${dark ? 'border-cream/10 bg-cream/10' : 'border-stone bg-stone'}`}>
+    <div className={`grid grid-cols-1 gap-px border ${items.length === 3 ? 'md:grid-cols-3' : items.length === 4 ? 'md:grid-cols-2 xl:grid-cols-4' : 'md:grid-cols-2'} ${dark ? 'border-cream/10 bg-cream/10' : 'border-stone bg-stone'}`}>
       {items.map((s, i) => (
         <div key={s.title} className={`${dark ? 'bg-ink' : 'bg-cream'} lift p-7 md:p-10`}>
           <Reveal variant="up" delay={i * 110}>

@@ -10,6 +10,7 @@ const REGISTRY = {
   services: (p) => <Topology {...p} />,
   about: (p) => <MarketMap {...p} />,
   aiBrain: (p) => <BrainMap {...p} />,
+  aiBrainHero: () => <BrainMap hero />,
   programme: (p) => <Uptime {...p} />,
 };
 

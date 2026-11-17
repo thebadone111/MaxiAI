@@ -54,7 +54,7 @@ function HomeEn() {
               Your company's own <em className="text-signal not-italic">AI brain.</em>
             </h3>
             <p className="font-prose text-[17px] md:text-[18px] text-ink-soft leading-relaxed mb-8">
-              A private AI wired into your email, documents and systems. It knows how the business runs, answers anyone on the team with sources, and does the work it's trusted with — learning as you go. Yours to keep.
+              A private AI wired into your email, documents and systems. It knows how the business runs, answers anyone on the team with sources, and does the work it's trusted with — and learns as you go.
             </p>
             <Link to="/en/ai-brain" className="btn-ghost">
               Meet the brain <span className="font-mono">→</span>

@@ -231,12 +231,18 @@ const ACTIONS = [
 ];
 const col = (i) => 53 + i * 98;
 
-export function BrainMap({ dark }) {
+export function BrainMap({ dark, hero = false }) {
   const ref = useDraw();
+  const arrived = useIntroDone();
   const queries = useTicker(214, (v) => v + 1 + Math.round(Math.random() * 2), 2600);
   return (
-    <div ref={ref} className="absolute inset-0">
-      <Panel label="company brain / your-business" status="learning" dark={dark} className="h-full">
+    <div ref={hero ? undefined : ref} className="absolute inset-0">
+      <Panel
+        label="company brain / your-business"
+        status="learning"
+        dark={dark}
+        className={`h-full ${hero ? `code-hero ${arrived ? 'is-in' : ''}` : ''}`}
+      >
         <svg viewBox="0 0 400 440" className="code-svg" aria-hidden="true">
           {/* knowledge in */}
           {SOURCES.map((n, i) => (
@@ -259,6 +265,122 @@ export function BrainMap({ dark }) {
           <text x="200" y="428" textAnchor="middle" className="code-caption" style={{ '--s': 0.7 }}>knows · acts with approval · learns</text>
         </svg>
       </Panel>
+    </div>
+  );
+}
+
+/* ─── AI Brain reveal: the brain answering a question ─────────────────── */
+
+const QUESTION = 'What did we quote Northgate for the website rebuild — and have they paid?';
+const ANSWER = 'You quoted £4,800 + VAT on 14 March, in proposal v2 [1]. Invoice INV-1042 went out on 2 April [2] and is now 12 days overdue. Their accounts contact is Sam Patel [3].';
+const CITED = [
+  { n: 1, kind: 'email', title: 'Re: Northgate — revised quote', meta: '14 Mar · you → sam@northgate' },
+  { n: 2, kind: 'finance', title: 'INV-1042 · £5,760.00', meta: 'sent 2 Apr · unpaid' },
+  { n: 3, kind: 'crm', title: 'Northgate Dental', meta: 'accounts: Sam Patel' },
+  { n: 4, kind: 'docs', title: 'proposal-northgate-v2.pdf', meta: 'drive · signed' },
+];
+
+// One beat of the scene as 0..1 within [a, b] of scroll progress.
+const beat = (p, a, b) => clamp01((p - a) / (b - a));
+
+function Typed({ text, typedRef, className = '' }) {
+  // The invisible copy reserves the final size, so nothing below moves while
+  // the visible copy types into the same box.
+  return (
+    <span className={`relative block ${className}`}>
+      <span className="invisible" aria-hidden="true">{text}</span>
+      <span ref={typedRef} className="absolute inset-0" aria-hidden="true">{text}</span>
+    </span>
+  );
+}
+
+/**
+ * The company brain, answering a question. It fills the opening window on
+ * the AI Brain page and plays as the window opens: the question types, four
+ * sources light up as they are searched, the answer writes itself with
+ * citations, then the brain proposes an action — which waits for a person
+ * to approve it. Every state is a pure function of scroll progress, so it
+ * reverses when you scroll back.
+ */
+export function AskBrain({ register }) {
+  const q = useRef(null);
+  const a = useRef(null);
+  const root = useRef(null);
+  const sources = useRef([]);
+  const status = useRef(null);
+
+  useEffect(() => {
+    let last = '';
+    return register((p) => {
+      const qn = Math.round(beat(p, 0.1, 0.26) * QUESTION.length);
+      const found = Math.floor(beat(p, 0.28, 0.44) * CITED.length + 0.0001);
+      const an = Math.round(beat(p, 0.46, 0.7) * ANSWER.length);
+      const stage = p < 0.28 ? 'ask' : p < 0.46 ? 'search' : p < 0.74 ? 'answer' : p < 0.86 ? 'propose' : 'approved';
+      const key = `${qn}|${found}|${an}|${stage}`;
+      if (key === last) return;
+      last = key;
+      if (q.current) q.current.textContent = QUESTION.slice(0, qn);
+      if (a.current) a.current.textContent = ANSWER.slice(0, an);
+      sources.current.forEach((el, i) => el?.classList.toggle('lit', i < found));
+      if (status.current) {
+        status.current.textContent =
+          stage === 'ask' ? 'listening' : stage === 'search' ? `searching · ${found}/${CITED.length} sources` : `answered from ${CITED.length} sources · 1.4s`;
+      }
+      if (root.current) root.current.dataset.stage = stage;
+    });
+  }, [register]);
+
+  return (
+    <div ref={root} className="ask" data-stage="approved">
+      <aside className="ask-rail" aria-hidden="true">
+        <p className="ask-rail-head">sources</p>
+        {CITED.map((c, i) => (
+          <div key={c.n} ref={(el) => { sources.current[i] = el; }} className="ask-source lit">
+            <span className="ask-kind">{c.kind}</span>
+            <span className="ask-title">{c.title}</span>
+            <span className="ask-meta">{c.meta}</span>
+          </div>
+        ))}
+        <p className="ask-rail-foot">permissions: you · finance · sales</p>
+      </aside>
+
+      <div className="ask-main">
+        <div className="ask-top">
+          <span>company brain</span>
+          <span className="inline-flex items-center gap-2"><span className="pulse-dot" /> <span ref={status}>answered from 4 sources · 1.4s</span></span>
+        </div>
+
+        <div className="ask-thread" aria-hidden="true">
+          <div className="ask-msg ask-you">
+            <span className="ask-who">you</span>
+            <Typed text={QUESTION} typedRef={q} className="ask-bubble" />
+          </div>
+
+          <div className="ask-chips">
+            {CITED.map((c) => <span key={c.n} className="ask-chip">[{c.n}] {c.kind}</span>)}
+          </div>
+
+          <div className="ask-msg ask-brain">
+            <span className="ask-who">brain</span>
+            <Typed text={ANSWER} typedRef={a} className="ask-bubble" />
+          </div>
+
+          <div className="ask-action">
+            <p className="ask-action-head">suggested action</p>
+            <p className="ask-action-body">Draft a polite reminder to Sam Patel with INV-1042 attached.</p>
+            <div className="ask-buttons">
+              <span className="ask-btn ask-approve"><span className="ask-wait">Approve</span><span className="ask-done">✓ Approved · sent 09:41 · logged</span></span>
+              <span className="ask-btn">Edit draft</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="sr-only">
+          An example of the company brain at work: asked what a client was quoted and whether they have
+          paid, it finds the quote email, the invoice, the CRM record and the signed proposal, answers
+          with citations, and suggests a payment reminder that waits for a person to approve it.
+        </p>
+      </div>
     </div>
   );
 }

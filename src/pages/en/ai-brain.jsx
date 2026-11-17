@@ -2,7 +2,7 @@ import Hero from '../../elems/hero.jsx';
 import Reveal from '../../elems/reveal.jsx';
 import PageMeta from '../../elems/pagemeta.jsx';
 import { Section, SectionHead, FeatureGrid, RuledPoints, CTA, Index } from '../../elems/section.jsx';
-import { Split } from '../../visuals/Visual.jsx';
+import { BrainReveal, Manifesto, ProcessTrack } from '../../elems/scenes.jsx';
 
 /*
  * Tier 02 — the company brain.
@@ -47,19 +47,24 @@ function AIBrainEn() {
         }}
         meta={[
           { label: 'Connects to', value: 'Email · Docs · CRM · Finance' },
-          { label: 'Lives in', value: 'Infrastructure you own' },
+          { label: 'Acts', value: 'With your approval' },
           { label: 'Engagement', value: 'Build + retainer' },
         ]}
+        visual="aiBrainHero"
       />
 
-      <Section>
+      <Section dark>
         <SectionHead
+          dark
           eyebrow="What it is"
           title={<>Not a chatbot. A <em>memory</em> with hands.</>}
-          lead="Off-the-shelf AI assistants know the internet. They don't know your clients, your prices, the decision you made in March, or why you made it. A company brain does — because it's wired into the places that knowledge already lives."
         />
+        <div className="mb-16 max-w-[1000px] md:mb-20">
+          <Manifesto text="Off-the-shelf AI assistants know the internet. They don't know your clients, your prices, the decision you made in March, or why you made it. A company brain does — because it's wired into the places that knowledge already lives." />
+        </div>
 
         <FeatureGrid
+          dark
           columns={3}
           items={[
             {
@@ -78,27 +83,16 @@ function AIBrainEn() {
         />
       </Section>
 
-      <Section dark id="how-it-works">
-        <Split visual="aiBrain" dark>
-          <SectionHead
-            dark
-            eyebrow="How it works"
-            title={<>Wired into the systems you <em>already run.</em></>}
-            lead="No new platform to move to. The brain plugs into the tools your team uses today and sits quietly behind them."
-          />
-          <ol className="grid grid-cols-1 gap-px border border-cream/10 bg-cream/10 sm:grid-cols-2">
-            {STEPS.map((s, i) => (
-              <li key={s.title} className="bg-ink p-7 md:p-8">
-                <Reveal variant="up" delay={(i % 2) * 100}>
-                  <Index n={i + 1} />
-                  <h3 className="mb-3 mt-4 font-display text-[24px] font-semibold text-cream">{s.title}</h3>
-                  <p className="font-prose text-[16px] leading-relaxed text-cream/85">{s.body}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </Split>
-      </Section>
+      {/* The window that opens: the brain answering a real-shaped question */}
+      <BrainReveal />
+
+      <ProcessTrack
+        id="how-it-works"
+        eyebrow="How it works"
+        title={<>Wired into the systems you <em>already run.</em></>}
+        lead="No new platform to move to. The brain plugs into the tools your team uses today and sits quietly behind them."
+        items={STEPS}
+      />
 
       <Section>
         <SectionHead
@@ -125,8 +119,8 @@ function AIBrainEn() {
 
         <div className="grid grid-cols-1 gap-px border border-stone bg-stone md:grid-cols-3">
           {[
-            { title: 'Yours to keep', body: 'The brain, the data and the code belong to you. It runs in infrastructure you own and can take with you — no per-seat pricing creep, no platform pivot that breaks it on a Tuesday.' },
-            { title: 'Private by design', body: 'Access follows your existing permissions, every action it takes is logged, and your business data is never used to train anyone else’s model.' },
+            { title: 'Built around yours', body: 'Shaped around how your business actually runs — your clients, your prices, the way decisions get made — because it is built on your own systems, not bolted on beside them.' },
+            { title: 'Permissions and a paper trail', body: 'It sees only what the person asking is allowed to see, and every action it takes is logged — so you can always check what it did, and why.' },
             { title: 'Built by people who run one', body: 'We run our own company on a brain like this every day. We know where it earns its keep — and where a human should stay in the loop.' },
           ].map((s, i) => (
             <div key={i} className="bg-cream p-7 md:p-10">

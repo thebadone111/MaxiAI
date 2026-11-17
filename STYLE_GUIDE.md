@@ -93,8 +93,9 @@ intro's exit: eyebrow 0 → rule 80 → h1 120 → lead 320 → actions 560 → 
 | Scene | Where | Fallback |
 |---|---|---|
 | `HomeReveal`: a window at 42% of the screen opens to full bleed; the content counter-scales | Home, after "Two disciplines" | Reduced motion: fully open |
-| `ProcessTrack`: a sticky horizontal track with a counter and a progress rule | Services, "How we work" | Below 1280px, under reduced motion, and in the prerender: the plain row of steps |
-| `Manifesto`: words light one by one | Home, "What we believe" | Fully lit |
+| `BrainReveal`: the same window; inside, the brain answers a question (question types, sources light, answer writes with citations, an action waits for approval) | AI Brain, after "What it is" | Reduced motion: the finished exchange |
+| `ProcessTrack`: a sticky horizontal track with a counter and a progress rule | Services "How we work", AI Brain "How it works" | Below 1280px, under reduced motion, and in the prerender: the plain row of steps |
+| `Manifesto`: words light one by one | Home "What we believe", AI Brain "What it is" | Fully lit |
 
 ## 5. The intro ("Signal")
 
@@ -135,7 +136,7 @@ and render complete in the prerendered HTML.
 | Home reveal scene | **The editor that opens**: `care-plan.ts` types itself as you scroll, and `maxi deploy` runs |
 | `services` | Infrastructure topology, drawn on scroll |
 | `about` | The four markets, with live local times |
-| `aiBrain` | The company brain: email, docs, CRM and finance flow in, approved actions flow out |
+| `aiBrainHero` | The company brain diagram (email, docs, CRM and finance flow in, approved actions flow out), drawn as the page arrives |
 | `programme` | The care plan as a 90-day uptime record |
 
 Drawing on scroll is one registered custom property, `--p` (0→1), written by `useDraw()`.
